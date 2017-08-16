@@ -1,0 +1,25 @@
+/*用户列表样式*/
+.userTableDiv{
+    height: 100%;
+    width: 100%;
+    padding: 0 20px;
+    overflow: hidden;
+}
+.queryInput ul li{
+    margin-right: 10px;
+}
+.searchGroupDiv{
+    width: 100%;
+}
+.tableContent{
+    height: 100%;
+    padding-top: 30px;
+}
+.btnGroup{
+    position: absolute;
+    top: 10px;
+    right: 40px;
+}
+.userTableQuery{
+    margin-top: 10px;
+}

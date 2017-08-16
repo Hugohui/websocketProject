@@ -1,0 +1,174 @@
+/*
+*公共样式
+*/
+s{
+    text-decoration: none;
+}
+
+/*状态色*/
+.status{
+    display: inline-block;
+    padding: 2px 3px;
+    border-radius: 3px;
+    font-size: 12px;
+    color: #fff;
+}
+.status.status-success{/*已完成*/
+    background-color: #5cb85c;
+    border-color: #46b8da;
+}
+.status.status-trans{/*运输中*/
+    background-color: #5bc0de;
+    border-color: #d43f3a;
+}
+.status.status-unusual{/*异常*/
+    background-color: #d9534f;
+    border-color: #d43f3a;
+}
+
+/*车辆具体信息，当前位置*/
+.activePosition{
+    color: red;
+}
+
+/*空柜*/
+.bg-counterBlank{
+    background-color: rgb(193,191,191);
+}
+/*满柜*/
+.bg-counterFull{
+    background-color: rgb(142,142,142);
+}
+
+/*鼠标over提示框*/
+.showDetailDiv{
+    border:1px solid #ccc;
+    padding: 5px;
+    background-color: #fff;
+    border-radius: 3px;
+    font-weight: normal;
+    display: none;
+    z-index: 10000;
+}
+
+/*车辆信息投递路线*/
+.showPositionAll{
+    left: 0px;
+    max-height: 72px;
+    overflow-y: auto;
+}
+
+/*窝小白扫地路线*/
+.WXB_showPositionAll{
+    background-color: #fff;
+    left: 0px;
+    max-height: 120px;
+    overflow-y: auto;
+}
+
+/*loading*/
+.loadingDiv{
+    position: absolute;
+    left: 50%;
+    top: 50%;
+    transform: translate(-50%,-50%);
+}
+.loadingDiv img{
+    width: 50%;
+    height: 50%;
+}
+
+
+.fl{
+    float: left;
+}
+.fr{
+    float: right;
+}
+.pr{
+    position: relative;
+}
+.pa{
+    position: absolute;
+}
+
+/*查询按钮*/
+.queryInput ul{
+    overflow: hidden;
+}
+.queryInput ul li{
+    float: left;
+}
+.queryInput input{
+    width: 160px;
+    height: 32px;
+    padding: 4px 5px;
+    border: 1px solid #cccccc;
+    border-radius: 4px;
+    outline: none;
+}
+.queryDiv{
+    position: absolute;
+    width: 100%;
+    top: 0;
+    left: 0;
+    height: 50px;
+    padding: 10px 20px;
+}
+.selectGroup{
+    width: 160px;
+    height: 32px;
+    display: flex;
+    border-radius: 3px;
+    overflow: hidden;
+    border: 1px solid #cccccc;
+    font-size: 12px;
+}
+.selectGroup div{
+    height: 100%;
+    flex: 1;
+    text-align: center;
+    line-height: 32px;
+    cursor: pointer;
+}
+.selectGroup div:first-child{
+    border-right:1px solid #cccccc;
+}
+.selectGroup div i{
+    display: none;
+}
+.selectGroup div.active{
+    background-color: #337ab7;
+    color: #fff;
+}
+/*模糊查找输入框*/
+.fuzzySearchInp{
+    vertical-align: middle;
+    height: 30px;
+    border: 1px solid #ccc;
+    border-radius: 4px 0 0 4px;
+    width: 220px;
+    padding: 0 4px;
+}
+
+/*表单验证*/
+.has-error-border{
+    border-color: #a94442;
+}
+.has-error-text{
+    color: #a94442;
+}
+form>div>span{
+    position: absolute;
+    top: 8px;
+    right: -150px;
+    display: block;
+    width: 150px;
+}
+
+/*红色字体*/
+.redText{
+    color: red;
+}
+
+

@@ -1,0 +1,217 @@
+<!DOCTYPE html>
+<html lang="zh">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>idriver+后台管理系统</title>
+    <link rel="shortcut icon" href="img/favicon.ico" />
+
+    <!-- 页面初始化样式-->
+    <link rel="stylesheet" href="css/pageReset.css"/>
+
+    <!-- 引入样式-->
+    <link rel="stylesheet" href="framework/bootstrap-3.3.7/css/bootstrap.css">
+    <link rel="stylesheet" href="framework/fontawesome/css/font-awesome.css">
+    <link rel="stylesheet" href="css/common/sidebar-menu.css">
+    <link rel="stylesheet" href="framework/dataTables-1.10.15/css/jquery.dataTables.css"/>
+    <link rel="stylesheet" href="framework/cityselect/cityselect/cityLayout.css"/>
+    <link rel="stylesheet" href="framework/toastr/toastr.css"/>
+
+    <!-- 主页面样式-->
+    <link rel="stylesheet" href="css/index.css">
+
+    <!-- 公共样式-->
+    <link rel="stylesheet" href="css/common/common.css"/>
+    <link rel="stylesheet" href="css/common/icon.css"/>
+
+    <!-- 其他页面样式-->
+    <link rel="stylesheet" href="css/usersManage.css"/><!--用户管理-->
+    <link rel="stylesheet" href="css/managersManage.css"/><!--管理员管理-->
+    <link rel="stylesheet" href="css/orderTable.css"/><!--订单相关-->
+    <link rel="stylesheet" href="css/carDistribute.css"/><!--车辆分布-->
+    <link rel="stylesheet" href="css/carsTable.css"/><!--车辆列表-->
+    <link rel="stylesheet" href="css/carsTroubleTableDiv.css"/><!--故障列表-->
+    <link rel="stylesheet" href="css/carDetail.css"/><!--车辆具体信息-->
+
+    <script src="framework/angular/angular.js"></script>
+    <script src="framework/angular/angular-ui-router.js"></script>
+    <script src="framework/angular/angular-websocket.js"></script>
+
+    <!-- 高德地图-->
+    <script type="text/javascript" src="http://webapi.amap.com/maps?v=1.3&key=15848791c6bc70521628d5da64c080f0&plugin=AMap.Autocomplete,AMap.PlaceSearch"></script>
+    <script src="js/mapTools.js"></script>
+
+</head>
+<body ng-app="mainStart">
+<header class="row">
+    <div class="col-sm-2 logo">
+        <a href="#/" class="logoA">
+            <img src="img/logo.png" alt=""/>
+        </a>
+    </div>
+    <div class="col-sm-8 headerMid">
+        idriver+后台管理平台
+    </div>
+    <div class="col-sm-2 headerRight">
+        <div class="headerTime">
+        </div>
+        <div class="headerMsg">
+            <ul>
+                <li>
+                    <a href="#/carManage/carsTroubleTable" title="故障" class="carTroubleBtn">
+                        <i class="fa fa-envelope-open" aria-hidden="true"></i>
+                    </a>
+                </li>
+                <li class="headerUserInfo pr">
+                    <a href="javascript:;">
+                        <i class="fa fa-user-circle" aria-hidden="true"></i>
+                    </a>
+                    <div class="headerUserInfoDiv">
+                        <div class="userInfoDivHead"></div>
+                        <div class="userInfoDivBody">
+                            <a href="javascript:;" id="changePwd">修改密码</a>
+                            <a href="javascript:;" id="signOut">退出</a>
+                        </div>
+                    </div>
+                </li>
+            </ul>
+        </div>
+    </div>
+</header>
+<aside class="main-sidebar">
+    <section class="sidebar">
+        <ul class="sidebar-menu">
+            <!--<li class="header">IDRIVER+TECHNOLOGIES</li>-->
+            <li class="treeview active">
+                <a href="#/">
+                    <i class="fa fa-home"></i>
+                    <span>首页</span>
+                    <!--<i class="fa fa-angle-left pull-right"></i>-->
+                </a>
+                <!--<ul class="treeview-menu">-->
+                <!--<li><a href="#"><i class="fa fa-circle-o"></i> 子菜单</a></li>-->
+                <!--<li><a href="#"><i class="fa fa-circle-o"></i> 子菜单</a></li>-->
+                <!--</ul>-->
+            </li>
+            <li class="treeview">
+                <a href="#/accountManage">
+                    <i class="fa fa-users"></i>
+                    <span>账号管理</span>
+                    <i class="fa fa-angle-left pull-right"></i>
+                    <!--<span class="label label-primary pull-right">1</span>-->
+                    <!--<small class="label pull-right label-info">new</small>-->
+                </a>
+                <ul class="treeview-menu" style="display: none;">
+                    <li><a href="#/accountManage/usersManage"><i class="fa fa-circle-o"></i> 用户管理</a></li>
+                    <li><a href="#/accountManage/managerManage"><i class="fa fa-circle-o"></i> 管理员管理</a></li>
+                </ul>
+            </li>
+            <li>
+                <a href="#/orderManage">
+                    <i class="fa fa-th"></i>
+                    <span>订单管理</span>
+                    <!--<small class="label pull-right label-info">new</small>-->
+                    <i class="fa fa-angle-left pull-right"></i>
+                </a>
+                <ul class="treeview-menu">
+                    <li><a href="#/orderManage/allOrder"><i class="fa fa-circle-o"></i> 全部订单</a></li>
+                    <li><a href="#/orderManage/unusualOrder"><i class="fa fa-circle-o"></i> 异常订单</a></li>
+                    <li><a href="#/orderManage/transOrder"><i class="fa fa-circle-o"></i> 运输中</a></li>
+                    <li><a href="#/orderManage/completeOrder"><i class="fa fa-circle-o"></i> 已完成</a></li>
+                </ul>
+            </li>
+            <li class="treeview">
+                <a href="#/carManage" class="carManageSideBtn">
+                    <i class="fa fa-car"></i>
+                    <span>车辆管理</span>
+                    <i class="fa fa-angle-left pull-right"></i>
+                </a>
+                <ul class="treeview-menu">
+                    <li><a href="#/carManage/carDistribute"><i class="fa fa-circle-o"></i> 车辆分布</a></li>
+                    <li><a href="#/carManage/carsTable"><i class="fa fa-circle-o"></i> 车辆列表</a></li>
+                    <li><a href="#/carManage/carsTroubleTable" class="carSideBtn"><i class="fa fa-circle-o"></i> 故障列表</a></li>
+                </ul>
+            </li>
+            <!--<li class="header">HELPS</li>-->
+            <li><a class="userGuideA" href="doc/用户指南.docx"><i class="fa fa-file text-red"></i> <span>用户指南</span></a></li>
+        </ul>
+    </section>
+</aside>
+<section class="mainView">
+    <div data-ui-view=""></div>
+</section>
+<!--退出系统模态框-->
+<div class="modal fade" id="signOutModal" tabindex="-1" role="dialog" aria-labelledby="signOutModalLabel">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                <h4 class="modal-title" id="signOutModalLabel">退出系统</h4>
+            </div>
+            <div class="modal-body">
+                <h3>确定退出系统？</h3>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default" data-dismiss="modal">取消</button>
+                <button type="button" class="btn btn-primary" id="okSignOutBtn">确定</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!--修改密码模态框-->
+<div class="modal fade" id="changePwdModal" tabindex="-1" role="dialog" aria-labelledby="changePwdModal">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                <h4 class="modal-title">密码修改</h4>
+            </div>
+            <div class="modal-body">
+                <div class="row">
+                    <div class="col-xs-6 col-xs-offset-3 form-group">
+                        <i class="fa fa-asterisk " aria-hidden="true"></i>
+                        <label>
+                            新的登录密码
+                        </label>
+                        <input type="text" placeholder="" class="form-control"/>
+                    </div>
+                    <div class="col-xs-6 col-xs-offset-3 form-group">
+                        <i class="fa fa-asterisk" aria-hidden="true"></i>
+                        <label>
+                            请再输入一次密码
+                        </label>
+                        <input type="text" placeholder="" class="form-control"/>
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default" data-dismiss="modal">取消</button>
+                <button type="button" class="btn btn-primary" id="okchangePwd">确定</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script src="js/shared/jquery-2.1.1.min.js" type="text/javascript"></script>
+<script src="framework/bootstrap-3.3.7/js/bootstrap.js"></script>
+<script src="framework/dataTables-1.10.15/js/jquery.dataTables.js"></script>
+<script src="framework/cityselect/cityselect/cityselect.js"></script>
+<script src="framework/echarts/echarts.common.min.js"></script>
+<script src="js/shared/sidebar-menu.js"></script>
+<script src="framework/toastr/toastr.js"></script>
+
+<!--index页面初始化-->
+<script src="js/initIndex.js"></script>
+
+<!--公共js-->
+<script src="js/shared/common.js"></script>
+<script src="js/shared/jsmpeg.min.js"></script><!--视频推流-->
+
+<script src="js/main.js"></script>
+<script src="js/services.js"></script>
+<script src="js/controllers.js"></script>
+<script src="js/handleCar.js"></script>
+</body>
+</html>

@@ -1,0 +1,110 @@
+<!--用户管理页面-->
+<div class="mainViewPort">
+    <!-- 面包屑导航-->
+    <div class="breadNav">
+        <ul class="breadcrumb">
+            <li>
+                您的位置：
+                账号管理
+                <span class="divider"></span>
+            </li>
+            <li class="active">
+                用户管理
+            </li>
+        </ul>
+    </div>
+
+    <!-- 用户列表-->
+    <div class="userTableDiv pr">
+        <div class="row-fluid searchGroupDiv pa">
+<!--            <div class="queryInput userTableQuery">
+                <ul>
+                    <li><input type="text" placeholder="用户名"/></li>
+                    <li><input type="text" placeholder="联系电话"/></li>
+                </ul>
+            </div>-->
+            <div class="btnGroup">
+                <div class="input-group">
+                    <input type="text" placeholder="用户名/联系电话" class="fuzzySearchInp" id="queryUserInp">
+                    <button type="button" class="btn btn-sm btn-primary" ng-click="searchUser()"><i class="fa fa-search"></i>搜索
+                    </button>
+                </div>
+            </div>
+        </div>
+        <div class="tableContent">
+            <table id="userTable" class="display table-striped table-bordered table-hover table-condensed" cellspacing="0" width="100%">
+                <thead>
+                <tr>
+                    <th>用户名</th>
+                    <th>密码</th>
+                    <th>联系电话</th>
+                    <th>注册时间</th>
+                    <th>操作</th>
+                </tr>
+                </thead>
+            </table>
+        </div>
+
+    </div>
+</div>
+
+<!--修改用户信息模态框-->
+<div class="modal fade" id="userUpdateModal" tabindex="-1" role="dialog" aria-labelledby="userUpdateModal">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" ng-click="resetForm()" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                <h4 class="modal-title" id="userUpdateModalLabel">用户信息修改</h4>
+            </div>
+            <div class="modal-body">
+                <div class="row">
+                    <form id="updateUserInfoForm" name="updateUserInfoForm" novalidate>
+                        <div class="col-xs-6 col-xs-offset-3 form-group pr">
+                            <input type="password" placeholder="密码" class="form-control" name="userNewPwd" ng-model="user.userNewPwd" ng-class="{'has-error-border':updateUserInfoForm.userNewPwd.$dirty  && updateUserInfoForm.userNewPwd.$invalid}" ng-keyup="checkPwd()" required/>
+                            <span ng-show="updateUserInfoForm.userNewPwd.$dirty  && updateUserInfoForm.userNewPwd.$invalid" ng-class="{'has-error-text':updateUserInfoForm.userNewPwd.$dirty  && updateUserInfoForm.userNewPwd.$invalid}">
+                                <span ng-show="updateUserInfoForm.userNewPwd.$error.required">请输入密码</span>
+                            </span>
+                        </div>
+                        <div class="col-xs-6 col-xs-offset-3 form-group pr">
+                            <input type="password" placeholder="确认密码" class="form-control" ng-model="user.userNewPwd2" name="userNewPwd2" ng-class="{'has-error-border':updateUserInfoForm.userNewPwd2.$dirty && updateUserInfoForm.userNewPwd2.$invalid || isNotSame}" ng-keyup="checkPwd()" ng-focus="hideError()" required/>
+                            <span ng-class="{'has-error-text':updateUserInfoForm.userNewPwd2.$dirty && updateUserInfoForm.userNewPwd2.$invalid ||isNotSame}" ng-show="updateUserInfoForm.userNewPwd2.$dirty && updateUserInfoForm.userNewPwd2.$invalid ||isNotSame">
+                                <span ng-if="isNotSame">两次密码不一致</span><span ng-if="updateUserInfoForm.userNewPwd2.$error.required">请再次输入密码</span>
+                            </span>
+                        </div>
+                        <div class="col-xs-6 col-xs-offset-3 form-group">
+                            <input type="text" placeholder="电话号码" class="form-control" ng-model="user.userNewPhone" name="userNewPhone" ng-class="{'has-error-border':updateUserInfoForm.userNewPhone.$dirty && updateUserInfoForm.userNewPhone.$invalid}" ng-pattern="/^1[3|7｜4|5|8][0-9]\d{4,8}$/" ng-minlength="11" ng-maxlength="11" required/>
+                            <span ng-class="{'has-error-text':updateUserInfoForm.userNewPhone.$dirty && updateUserInfoForm.userNewPhone.$invalid}" ng-show="updateUserInfoForm.userNewPhone.$dirty && updateUserInfoForm.userNewPhone.$invalid">
+                                <span ng-show="updateUserInfoForm.userNewPhone.$error.required">电话号码不能为空</span>
+                                <span ng-show="updateUserInfoForm.userNewPhone.$error.pattern || updateUserInfoForm.userNewPhone.$error.maxlength || updateUserInfoForm.userNewPhone.$error.minlength">手机号码不合法</span>
+                            </span>
+                        </div>
+                    </form>
+
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default" data-dismiss="modal" ng-click="resetForm()">取消</button>
+                <button type="button" class="btn btn-primary" id="okUpdateUser" ng-disabled="updateUserInfoForm.userNewPwd.$invalid||updateUserInfoForm.userNewPwd2.$invalid ||isNotSame||updateUserInfoForm.userNewPhone.$invalid">确定</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!--删除用户模态框-->
+<div class="modal fade" id="deleteUserModal" tabindex="-1" role="dialog" aria-labelledby="deleteUserModal">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                <h4 class="modal-title" id="deleteUserModalLabel">删除用户</h4>
+            </div>
+            <div class="modal-body">
+                <h3>用户删除将无法找回，确定删除？</h3>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default" data-dismiss="modal">取消</button>
+                <button type="button" class="delete btn btn-primary" id="okDeleteUser">确定</button>
+            </div>
+        </div>
+    </div>
+</div>

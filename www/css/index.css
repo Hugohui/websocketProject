@@ -1,0 +1,200 @@
+/*
+*主页面样式
+*
+*/
+header{
+    position: fixed;
+    top:0;
+    left: 0;
+    height: 90px;
+    width: 100%;
+    min-width: 414px;
+    background-color: #222d32;
+    line-height: 90px;
+    text-align: center;
+    color: #fff;
+    z-index: 811;
+}
+header a.logoA{
+    display: block;
+    width: 245px;
+    height: auto;
+}
+header .headerMid{
+    font-size: 36px;
+}
+header .headerRight{
+    height: 90px;
+}
+header .headerRight .headerTime{
+    position: absolute;
+    top: 10px;
+    right: 0;
+    width: 100%;
+    height: 30px;
+    line-height: 30px;
+}
+header .headerRight .headerMsg{
+    position: absolute;
+    bottom: 15px;
+    right: 0;
+    width: 100%;
+    height: 30px;
+    line-height: 30px;
+}
+.headerRight .headerMsg ul{
+    display: flex;
+    width: 160px;
+    margin: 0 auto;
+    padding:  0 30px;
+}
+.headerRight .headerMsg ul li{
+    float: left;
+    flex: 1;
+    cursor: pointer;
+}
+.headerRight .headerMsg a{
+    color: #fff;
+}
+.headerRight .headerMsg .headerUserInfo:hover{
+    background-color: #fff;
+    border:1px solid #cccccc;
+    border-bottom:none;
+}
+.headerRight .headerMsg .headerUserInfo:hover>a{
+    color: #1b6d85;
+}
+.headerRight .headerMsg .headerUserInfoDiv{
+    width: 120px;
+    background-color: #fff;
+    border:1px solid #cccccc;
+    border-top:none;
+    position: absolute;
+    top: 30px;
+    right: -1px;
+    display: none;
+}
+.headerRight .headerMsg .headerUserInfoDiv .userInfoDivHead{
+    color: #444;
+    border-bottom: 1px solid #c0c0c0;
+    height: 30px;
+}
+.headerMsg .headerUserInfoDiv .userInfoDivBody button{
+    position: absolute;
+    bottom: 5px;
+    left: 50%;
+    transform: translateX(-50%);
+}
+.headerMsg .headerUserInfoDiv .userInfoDivBody a{
+    display: inline-block;
+    width: 100%;
+    color: #444;
+}
+.headerMsg .headerUserInfoDiv .userInfoDivBody a:hover{
+    text-decoration: none;
+    color: #C81623;
+}
+.main-sidebar{
+    position: absolute;
+    top: 0;
+    left: 0;
+    height: 100%;
+    min-height: 100%;
+    width: 200px;
+    z-index: 810;
+    background-color: #222d32;
+    padding-top: 90px;
+    transition: all 1s;
+}
+.mainView{
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    padding-left: 200px;
+    padding-top: 90px;
+    transition: all 1s;
+}
+.mainView>div{
+    height: 100%;
+}
+.mainViewPort{
+    width: 100%;
+    height: 100%;
+    position: relative;
+    padding-top: 35px;
+}
+.mainViewPort .homeContent{
+    height: 100%;
+    overflow: hidden;
+}
+.mainViewPort .homeContent>div{
+    height: 100%;
+}
+
+.mainViewPort .homeConHandle{
+    border-left: 1px solid #cccccc;
+}
+.mainViewPort .homeConHandle h4{
+    font-size: 16px;
+    font-weight: 700;
+    margin-bottom: 0;
+}
+.mainViewPort .homeConHandle .queryCarDiv{
+}
+.queryCarDiv .queryInput ul li{
+    margin: 10px 0 0 10px;
+}
+.mainViewPort .homeConHandle .carStaChartDiv{
+    width: 100%;
+    height: 100%;
+}
+
+#changePwdModal i{
+    color: #d9534f;
+    font-size: 12px;
+}
+
+.conditionQuery{
+    min-height: 200px;
+}
+
+#areaPageTop{
+    right: 35%;
+    top: 5px;
+    transform: translateX(15px);
+}
+
+#areaPageTop input{
+    border: 1px solid #ccc;
+    border-radius: 3px;
+    width: 180px;
+    padding: 3px 5px;
+}
+
+/*面包屑*/
+.breadNav{
+    height: 35px;
+    width: 100%;
+    border-bottom: 1px solid #ccc;
+    position: absolute;
+    top:0;
+    left: 0;
+}
+
+/*媒体查询*/
+@media only screen and (max-width: 768px) {
+    .headerMid{
+        display: none;
+    }
+    .headerRight{
+        display: none;
+    }
+    .main-sidebar{
+        left: -230px;
+    }
+    .mainView{
+        padding-left: 0;
+    }
+}

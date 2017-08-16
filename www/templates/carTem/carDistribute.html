@@ -1,0 +1,202 @@
+<div class="mainViewPort">
+    <!-- 面包屑导航-->
+    <div class="breadNav">
+        <ul class="breadcrumb">
+            <li>
+                您的位置：
+                车辆管理
+                <span class="divider"></span>
+            </li>
+            <li class="active">
+                车辆分布
+            </li>
+        </ul>
+    </div>
+    <div class="row carDistributeRow">
+        <!-- 条件查询-->
+        <div class="carDistrQueryCar">
+            <div class="queryInput">
+                <ul>
+                    <li><input type="text" placeholder="车辆编号"/></li>
+                    <li>
+                        <div class="isTransDiv selectGroup">
+                            <div>
+                                <i class="fa fa-check"></i>运输中
+                            </div>
+                            <div><i class="fa fa-check"></i>静止</div>
+                        </div>
+                    </li>
+                    <li>
+                        <div class="isTransDiv selectGroup">
+                            <div>
+                                <i class="fa fa-check"></i>无故障
+                            </div>
+                            <div><i class="fa fa-check"></i>故障</div>
+                        </div>
+                    </li>
+                </ul>
+            </div>
+            <div class="btnGroup">
+                <button class="btn btn-primary btn-sm">
+                    <i class="fa fa-search" aria-hidden="true"></i> 搜索
+                </button>
+                <button class="btn btn-default btn-sm" ng-click="clearQueryInp()">
+                    清空条件
+                </button>
+            </div>
+        </div>
+
+        <!-- 地图-->
+        <div class="col-sm-12 carDistributeDiv" id="carDistributeDiv"></div>
+    </div>
+</div>
+
+<!--车辆详细信息模态框-->
+<div class="modal fade" id="carDetailModal" tabindex="-1" role="dialog" aria-labelledby="signOutModalLabel">
+    <div class="modal-carDetail" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                <h4 class="modal-title">车辆信息</h4>
+            </div>
+            <div class="modal-body row carDetailDiv">
+                <!-- 左-->
+                <div class="carDetailLeft col-xs-6">
+                    <!--车辆基本信息和控制checkbox-->
+                    <div class="basicInfo">
+                        <div>车辆编号：HU-NHC342</div>
+                        <div>车辆状态：在线</div>
+                        <div class="radioBox">
+                            <label>
+                                <input type="checkbox" id="monitorCheckbox"/>视频监控
+                            </label>
+                            <label>
+                                <input type="checkbox" id="hanbleCheckbox"/>车辆操作
+                            </label>
+                        </div>
+                    </div>
+                    <!--货柜-->
+                    <div class="counterDiv">
+                        <div class="rowBox">
+                            <div class="bg-info">空柜</div>
+                            <div class="bg-primary">HEJUKMM-32</div>
+                            <div class="bg-info">空柜</div>
+                        </div>
+                        <div class="rowBox">
+                            <div class="bg-primary">HEJUKMM-32</div>
+                            <div class="bg-primary">HEJUKMM-32</div>
+                            <div class="bg-primary">HEJUKMM-32</div>
+                        </div>
+                        <div class="rowBox">
+                            <div class="bg-primary">HDDFANNJ-33</div>
+                            <div class="bg-info">空柜</div>
+                            <div class="bg-primary">HDDFANNJ-33</div>
+                        </div>
+                    </div>
+                    <!--车辆操作-->
+                    <div class="carHandle">
+                        <div>
+                            <h4>操作说明：</h4>
+                        </div>
+                    </div>
+                    <!--tabs信息显示-->
+                    <div class="carInfoTabsDiv pr">
+                        <ul class="nav nav-pills carInfoTabs pa">
+                            <li role="presentation" class="active" value="0"><a href="javascript:;">基础信息</a></li>
+                            <li role="presentation" value="1"><a href="javascript:;">故障信息</a></li>
+                            <!--<li role="presentation" value="2"><a href="javascript:;">信息统计</a></li>-->
+                        </ul>
+                        <div class="carInfoContent">
+                            <div class="carBasicInfo active">
+                                <div class="batteryInfo">
+                                    <div class="batteryTitle">电池</div>
+                                    <div class="batteryContent">
+                                        <div class="batteryIcon">
+                                            <div class="batteryBody battery battery55">
+                                                <!--<ul>
+                                                    <li class="active"></li>
+                                                    <li class="active"></li>
+                                                    <li class="active"></li>
+                                                    <li></li>
+                                                    <li></li>
+                                                </ul>-->
+                                            </div>
+                                            <!--<div class="batteryHeader"></div>-->
+                                        </div>
+                                        <div class="batteryMsg">
+                                            <p>总电量：40000mAh</p>
+                                            <p>剩余电量：55%</p>
+                                            <p>续航里程：200km</p>
+                                            <p>电压：36V</p>
+                                            <p>电流：12A</p>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div>
+                                    <div>
+                                        <div class="infoTitle">
+                                            CPU使用率
+                                        </div>
+                                        <div class="infoMsg">5%</div>
+                                    </div>
+                                    <div>
+                                        <div class="infoTitle">内存使用率</div>
+                                        <div class="infoMsg">44%</div>
+                                    </div>
+                                    <div>
+                                        <div class="infoTitle">存储使用率</div>
+                                        <div class="infoMsg">30%</div>
+                                    </div>
+                                    <div>
+                                        <div class="infoTitle">电池温度</div>
+                                        <div class="infoMsg">30℃</div>
+                                    </div>
+                                </div>
+                                <div>
+                                    <div>
+                                        <div class="infoTitle">速度</div>
+                                        <div class="infoMsg">60km/h</div>
+                                    </div>
+                                    <div>
+                                        <div class="infoTitle">前轮转角</div>
+                                        <div class="infoMsg">-50</div>
+                                    </div>
+                                    <div>
+                                        <div class="infoTitle">油门阀值</div>
+                                        <div class="infoMsg">20</div>
+                                    </div>
+                                    <div>
+                                        <div class="infoTitle">刹车</div>
+                                        <div class="infoMsg">0</div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="carTroubleInfo">
+                                <p class="pr"><span class="pa carTroubleTime">2017-7-17 10:20:34</span>电池故障，电池无法供电，电池电压电流不稳定，电池故障，电池无法供电，电池电压电流不稳定，电池故障，电池无法供电，电池电压电流不稳定电池故障，电池无法供电，电池电压电流不稳定</p>
+                                <p class="pr"><span class="pa carTroubleTime">2017-7-17 10:20:34</span>电池故障，电池无法供电，电池电压电流不稳定，电池故障，电池无法供电，电池电压电流不稳定，电池故障，电池无法供电，电池电压电流不稳定电池故障，电池无法供电，电池电压电流不稳定</p>
+                                <p class="pr"><span class="pa carTroubleTime">2017-7-17 10:20:34</span>电池故障，电池无法供电，电池电压电流不稳定，电池故障，电池无法供电，电池电压电流不稳定，电池故障，电池无法供电，电池电压电流不稳定电池故障，电池无法供电，电池电压电流不稳定</p>
+                                <p class="pr"><span class="pa carTroubleTime">2017-7-17 10:20:34</span>电池故障，电池无法供电，电池电压电流不稳定，电池故障，电池无法供电，电池电压电流不稳定，电池故障，电池无法供电，电池电压电流不稳定电池故障，电池无法供电，电池电压电流不稳定</p>
+                                <p class="pr"><span class="pa carTroubleTime">2017-7-17 10:20:34</span>电池故障，电池无法供电，电池电压电流不稳定，电池故障，电池无法供电，电池电压电流不稳定，电池故障，电池无法供电，电池电压电流不稳定电池故障，电池无法供电，电池电压电流不稳定</p>
+                                <p class="pr"><span class="pa carTroubleTime">2017-7-17 10:20:34</span>电池故障，电池无法供电，电池电压电流不稳定，电池故障，电池无法供电，电池电压电流不稳定，电池故障，电池无法供电，电池电压电流不稳定电池故障，电池无法供电，电池电压电流不稳定</p>
+
+                            </div>
+                            <!--<div class="carStatInfo">统计信息</div>-->
+                        </div>
+                    </div>
+                    <!--监控视频-->
+                    <div class="carMonitorVideo" style="display: none;">
+                    </div>
+                </div>
+                <!-- 右-->
+                <div class="carDetailRight col-xs-6">
+                    <div class="carMapDiv" id="carMap"></div>
+                    <div class="carLineDiv">
+                        <p>当前位置：<span class="currentPosition">北京市昌平区回龙观</span></p>
+                        <p>下一投递点：<span class="nextPosition">北京市昌平区东三旗地铁站</span></p>
+                        <p class="plannedLine" title="北京市昌平区回龙观东大街338&rarr;北京市昌平区回龙观&rarr;北京市昌平区东三旗地铁站&rarr;北京市昌平区天通苑北&rarr;北京市昌平区天通苑北&rarr;北京市昌平区天通苑北&rarr;北京市昌平区天通苑北&rarr;北京市昌平区天通苑北&rarr;北京市昌平区天通苑北&rarr;北京市昌平区天通苑北">投递路线：北京市昌平区回龙观东大街338&rarr;<span class="activePosition">北京市昌平区回龙观</span>&rarr;span北京市昌平区东三旗地铁站&rarr;北京市昌平区天通苑北&rarr;北京市昌平区天通苑北&rarr;北京市昌平区天通苑北&rarr;北京市昌平区天通苑北&rarr;北京市昌平区天通苑北&rarr;北京市昌平区天通苑北&rarr;北京市昌平区天通苑北</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

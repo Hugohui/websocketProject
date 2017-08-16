@@ -1,0 +1,373 @@
+/**
+*车辆具体信息弹层样式
+*/
+.carDetailDiv{
+}
+
+/*左*/
+.carDetailDiv .carDetailLeft{
+    min-height: 500px;
+}
+
+/*车辆信息和复选框*/
+.carDetailDiv .carDetailLeft .basicInfo{
+    display: flex;
+    height: 30px;
+    line-height: 30px;
+}
+.carDetailLeft .basicInfo>div{
+    flex: 1;
+}
+.carDetailLeft .basicInfo label{
+    margin-right: 15px;
+}
+.carDetailLeft .basicInfo input{
+    vertical-align:text-bottom;
+    margin-bottom:2px;
+}
+
+.radioBox{
+    padding-left: 200px;
+}
+
+/*小车图标*/
+.carIconDiv{
+    height: 120px;
+    margin-left: 15px;
+    padding-top: 30px;
+    text-align: center;
+}
+.carIconDiv img{
+    width: 101px;
+    height: 60px;
+}
+
+/*货柜*/
+.carDetailLeft .counterDiv{
+    height: 120px;
+    margin-top: 24px;
+    margin-bottom:7px;
+    padding-right: 0px;
+    margin-left: 15px;
+    color: #444;
+}
+.carDetailLeft .counterDiv .rowBox{
+    display: flex;
+}
+.carDetailLeft .counterDiv .rowBox>div{
+    flex: 1;
+    height: 35px;
+    line-height: 35px;
+    text-align: center;
+    margin-left: 5px;
+    margin-bottom: 5px;
+    border-radius: 8px;
+}
+
+/*窝小白位置*/
+.WXBPosition{
+    padding: 15px !important;
+}
+.WXBPosition .spanTitle{
+    font-size: 14px;
+    font-weight: 600;
+}
+
+.WXBPosition .plannedLine{
+    width: 100%;
+    line-height: 20px;
+    max-height: 60px;
+    overflow: hidden;
+    display: -webkit-box;
+    -webkit-line-clamp: 3;
+    -webkit-box-orient: vertical;
+}
+
+.carStatus{
+    margin-left: -15px;
+    padding-right: 0;
+    min-height: 151px;
+}
+
+
+
+/*车辆操控区*/
+.carDetailLeft .carHandle{
+    height: 130px;
+    margin-top: 10px;
+    margin-bottom: 11px;
+    border: 1px solid #dddddd;
+    display: none;
+    padding: 5px;
+    border-radius: 8px;
+}
+.carHandle .handleInstruction{
+    line-height: 28px;
+}
+.carHandle .handleInstruction>span:first-child{
+    font-size: 14px;
+    font-weight: 600;
+    margin: 0;
+    width: 75px;
+    height: 20px;
+    line-height: 20px;
+}
+.carHandle .handleControl{
+    margin: 5px 5px 0 5px;
+    border-top: 1px dashed #ccc;
+    padding-top: 5px;
+}
+.carHandle .handleControl .handleControlCont{
+    position: relative;
+    display: flex;
+    padding-left: 70px;
+}
+.carHandle .handleControl .handleControlCont>span{
+    font-size: 14px;
+    font-weight: 600;
+    position: absolute;
+    top: 0;
+    left: -5px;
+}
+.carHandle .handleControl .handleControlCont label{
+    flex: 1;
+    position: relative;
+    font-weight: normal;
+    margin-right: 20px;
+    width: 120px;
+}
+.carHandle .handleControl .handleControlCont label span{
+    position: absolute;
+    top: 0;
+}
+
+.steeringWheel{
+
+}
+
+
+.carHandle .handleInstruction .handleInstruCont{
+    float: left;
+}
+
+.carDetailLeft .carInfoTabsDiv{
+    padding-top: 40px;
+}
+.carDetailLeft .carInfoTabsDiv a{
+    padding: 5px 10px;
+}
+.carDetailLeft .carInfoTabsDiv .carInfoTabs{
+    width: 100%;
+    top:0;
+    left: 0;
+}
+.carInfoTabsDiv .nav-pills a{
+    color: rgb(76,76,76);
+}
+.carInfoTabsDiv .nav-pills > li.active > a, .carInfoTabsDiv .nav-pills > li.active > a:hover, .nav-pills > li.active > a:focus{
+    color: #fff;
+    background-color: rgb(76,76,76);
+}
+.carDetailLeft .carInfoTabsDiv .carInfoContent{
+    width: 100%;
+    height: 295px;
+    min-height: 295px;
+    border: 1px solid rgb(160,160,160);
+    border-radius: 8px;
+}
+.carInfoTabsDiv .carInfoContent>div{
+    width: 100%;
+    height: 100%;
+    display: none;
+}
+/*基础信息*/
+.carInfoTabsDiv .carInfoContent>div:first-child{
+    overflow: hidden;
+    font-size: 16px;
+    font-weight: 600;
+}
+.carInfoTabsDiv .carInfoContent>div:first-child>div{
+    width: 33.33%;
+    height: 100%;
+    float: left;
+    border-right: 1px solid rgb(160,160,160);
+}
+.carInfoTabsDiv .carInfoContent>div:first-child>div:last-child{
+    border-right: none;
+}
+.carInfoTabsDiv .carInfoContent>div.active{
+    display: block;
+}
+/*电池信息*/
+.carInfoTabsDiv .carInfoContent .batteryInfo>div:first-child{
+    float: left;
+    width: 45px;
+    height: 100%;
+    border-right: 1px solid rgb(160,160,160);
+    text-align: center;
+    position: relative;
+}
+.carInfoTabsDiv .carInfoContent .batteryInfo>div:first-child span{
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%,-50%);
+}
+.carInfoTabsDiv .carInfoContent .batteryInfo .batteryContent{
+    height: 243px;
+}
+
+
+.carInfoContent .batteryInfo .batteryContent>div{
+    height: 100px;
+    position: relative;
+}
+.carInfoContent .batteryInfo .batteryContent>div:first-child{
+    padding-left: 5px;
+}
+.carInfoContent .batteryInfo .batteryContent>div .batteryBody{
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-25%,-50%);
+}
+.batteryInfo .batteryContent>div .batteryBody ul{
+    height: 100%;
+    width: 100%;
+    overflow: hidden;
+}
+.batteryInfo .batteryContent>div .batteryBody ul li{
+    float: left;
+    width: 20px;
+    height: 100%;
+    margin-right: 7px;
+}
+/*电量*/
+.batteryInfo .batteryContent>div .batteryBody ul li.active{
+    background-color: #5cb85c;
+}
+
+.batteryInfo .batteryContent>div .batteryBody ul li:last-child{
+    margin-right: 0;
+}
+
+.carInfoContent .batteryInfo .batteryContent>div .batteryHeader{
+    width: 10px;
+    height: 25px;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translateY(-50%);
+    border: 1px solid #444;
+    border-left: 1px solid #fff;
+    margin-left: 62px;
+}
+.carInfoContent .batteryInfo .batteryContent .batteryMsg{
+    margin-top: -10px;
+}
+.carInfoContent .batteryInfo .batteryContent>div>p{
+    margin: 0;
+    font-size: 16px;
+    padding: 0 0 5px 30%;
+}
+
+.carInfoTabsDiv .carInfoContent>div:first-child>div:not(.batteryInfo)>div{
+    height: 25%;
+}
+.carInfoTabsDiv .carInfoContent>div:first-child>div:not(.batteryInfo)>div{
+    border-bottom: 1px solid rgb(160,160,160);
+}
+.carInfoTabsDiv .carInfoContent>div:first-child>div:not(.batteryInfo)>div:nth-child(4){
+    border-bottom: none;
+}
+
+.carInfoTabsDiv .carInfoContent .carBasicInfo{
+    overflow: hidden;
+}
+.carInfoTabsDiv .carInfoContent .carBasicInfo .infoTitle{
+    float: left;
+    width:90px;
+    height: 73px;
+    line-height: 73px;
+    text-align: center;
+    border-right: 1px solid rgb(160,160,160);
+}
+.carInfoTabsDiv .carInfoContent .carBasicInfo .infoMsg{
+    width: 50%;
+    float: left;
+    text-align: center;
+    height: 73px;
+    line-height: 73px;
+    padding-left: 20px;
+}
+.pt25{
+    padding-top: 25px;
+}
+.lh96{
+    line-height: 96px;
+}
+
+/*故障信息*/
+.carInfoTabsDiv .carInfoContent>div:nth-child(2){
+    padding: 15px;
+    max-height: 293px;
+    overflow: auto;
+}
+
+.carInfoTabsDiv .carTroubleInfo p{
+    padding-left: 130px;
+}
+
+.carInfoTabsDiv .carTroubleInfo .carTroubleTime{
+    width: 130px;
+    top: 0;
+    left: 0;
+}
+
+/*监控视频*/
+.carDetailLeft .carMonitorVideo{
+    height: 335px;
+    border: 1px solid #ddd;
+    border-radius: 8px;
+}
+.carMonitorVideo{
+    background-color: #111;
+    text-align: center;
+}
+.carMonitorVideo canvas{
+    width: 447px;
+    height: 333px;
+}
+/*右*/
+.carDetailDiv .carDetailRight{
+    min-height: 480px;
+    border-radius: 8px 8px 0 0;
+}
+.carDetailDiv .carDetailRight>div:first-child{
+    border-radius: 8px 8px 0 0;
+}
+.carDetailDiv .carDetailRight>div:first-child canvas{
+    border-radius: 8px 8px 0 0;
+}
+.carDetailDiv .carDetailRight .carMapDiv{
+    width: 100%;
+    min-height: 400px;
+    border: 1px solid rgb(160,160,160);
+    overflow: hidden;
+}
+.carDetailDiv .carDetailRight .carLineDiv{
+    width: 100%;
+    min-height: 110px;
+    border: 1px solid rgb(160,160,160);
+    border-top: none;
+    padding: 15px 15px 10px 15px;
+    font-weight: 600;
+    border-radius: 0 0 8px 8px;
+}
+.carDetailRight .carLineDiv .plannedLine{
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space:nowrap;
+    line-clamp: 3;
+    box-orient: vertical;
+}

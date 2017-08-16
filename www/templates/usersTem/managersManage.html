@@ -1,0 +1,159 @@
+<div class="mainViewPort">
+    <!-- 面包屑导航-->
+    <div class="breadNav">
+        <ul class="breadcrumb">
+            <li>
+                您的位置：
+                账号管理
+                <span class="divider"></span>
+            </li>
+            <li class="active">
+                管理员管理
+            </li>
+        </ul>
+    </div>
+
+    <!-- 管理员列表-->
+    <div class="managersTableDiv pr">
+
+        <!--条件查询栏-->
+        <div class="queryDiv pr">
+            <div class="handleBtn">
+                <button class="btn btn-primary btn-sm" id="addMannager"><i class="fa">+</i>添加</button>
+            </div>
+            <div class="btnGroup">
+                <div class="input-group">
+                    <input type="text" placeholder="管理员/联系电话" class="fuzzySearchInp">
+                    <button type="button" class="btn btn-sm btn-primary" ng-click="searchManager()"><i class="fa fa-search"></i>搜索
+                    </button>
+                </div>
+            </div>
+        </div>
+
+        <div class="managersTableCon">
+            <table id="managersTable" class="display table-striped table-bordered table-hover table-condensed" cellspacing="0" width="100%">
+                <thead>
+                <tr>
+                    <th>管理员</th>
+                    <th>密码</th>
+                    <th>联系电话</th>
+                    <th>操作</th>
+                </tr>
+                </thead>
+            </table>
+        </div>
+    </div>
+</div>
+
+<!--添加管理员模态框-->
+<div class="modal fade" id="addManagerModal" tabindex="-1" role="dialog" aria-labelledby="addManagerModal">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" ng-click="resetUpdateForm()" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                <h4 class="modal-title">添加管理员</h4>
+            </div>
+            <div class="modal-body">
+                <div class="row">
+                    <form id="addManageForm" name="addManageForm" novalidate>
+                        <div class="col-xs-6 col-xs-offset-3 form-group pr">
+                            <input type="text" placeholder="用户名" id="manageName" class="form-control" ng-class="{'has-error-border':addManageForm.manageName.$dirty && addManageForm.manageName.$invalid}" name="manageName" ng-model="manager.manageName" required/>
+                            <span ng-class="{'has-error-text':addManageForm.manageName.$dirty && addManageForm.manageName.$invalid}" ng-show="addManageForm.manageName.$dirty && addManageForm.manageName.$invalid">
+<span ng-show="addManageForm.manageName.$error.required">用户名不能为空</span>
+</span>
+                        </div>
+                        <div class="col-xs-6 col-xs-offset-3 form-group pr">
+                            <input type="password" placeholder="密码" id="managePwd" class="form-control" name="managePwd" ng-model="manager.managePwd" ng-class="{'has-error-border':addManageForm.managePwd.$dirty && addManageForm.managePwd.$invalid}" ng-keyup="checkPwd()"  required/>
+                            <span ng-class="{'has-error-text':addManageForm.managePwd.$dirty&&addManageForm.managePwd.$invalid}" ng-show="addManageForm.managePwd.$dirty&&addManageForm.managePwd.$invalid">
+                                <span ng-show="addManageForm.managePwd.$error.required">请输入密码</span>
+                            </span>
+                        </div>
+                        <div class="col-xs-6 col-xs-offset-3 form-group pr">
+                            <input type="password" class="form-control" pw-check="managePwd" ng-model="manager.confirmPassword" name="confirmPassword" ng-class="{'has-error-border':addManageForm.confirmPassword.$dirty&&addManageForm.confirmPassword.$error.pwmatch || addManageForm.confirmPassword.$dirty&&addManageForm.confirmPassword.$error.required}" placeholder="确认密码" required/>
+                            <span ng-class="{'has-error-text':addManageForm.confirmPassword.$error.pwmatch}" ng-if="addManageForm.confirmPassword.$error.pwmatch">
+                                <span ng-if="addManageForm.confirmPassword.$error.pwmatch && !addManageForm.confirmPassword.$error.required">两次密码不一致</span>
+                            </span>
+                            <span ng-class="{'has-error-text':addManageForm.confirmPassword.$dirty&&addManageForm.confirmPassword.$error.required}" ng-if="addManageForm.confirmPassword.$dirty&&addManageForm.confirmPassword.$error.required">
+                                <span ng-if="addManageForm.confirmPassword.$error.required">请再次输入密码</span>
+                            </span>
+                        </div>
+                        <div class="col-xs-6 col-xs-offset-3 form-group pr">
+                            <input type="text" placeholder="电话号码" class="form-control" ng-model="manager.phoneNum" name="phoneNum" ng-class="{'has-error-border':addManageForm.phoneNum.$dirty&&addManageForm.phoneNum.$invalid}" required ng-minlength="11" ng-maxlength="11" ng-pattern="/^1[3|4|7｜5|8][0-9]\d{4,8}$/"/>
+                            <span ng-class="{'has-error-text':addManageForm.phoneNum.$dirty&&addManageForm.phoneNum.$invalid}" ng-show="addManageForm.phoneNum.$dirty&&addManageForm.phoneNum.$invalid">
+                                <span ng-show="addManageForm.phoneNum.$error.required">电话号码不能为空</span>
+                                <span ng-show="addManageForm.phoneNum.$error.minlength||addManageForm.phoneNum.$error.maxlength||addManageForm.phoneNum.$error.pattern">手机号码不合法</span>
+                            </span>
+                        </div>
+                    </form>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default" data-dismiss="modal" ng-click="resetUpdateForm()">取消</button>
+                <button type="button" class="btn btn-primary" id="okAddManager" ng-disabled="addManageForm.manageName.$invalid||addManageForm.managePwd.$invalid||addManageForm.managePwd2.$invalid||addManageForm.confirmPassword.$error.pwmatch||addManageForm.phoneNum.$invalid" ng-click="okAddManager()">确定</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!--管理员信息修改模态框-->
+<div class="modal fade" id="managerUpdateModal" tabindex="-1" role="dialog" aria-labelledby="managerUpdateModal">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" ng-click="resetForm()" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                <h4 class="modal-title">管理员信息修改</h4>
+            </div>
+            <div class="modal-body">
+                <div class="row">
+                    <form  name="updateManageForm" novalidate>
+                        <div class="col-xs-6 col-xs-offset-3 form-group pr">
+                            <input type="password" placeholder="密码"  id="manageInpPwd" class="form-control" name="managePwd" ng-model="updateManager.managePwd" ng-class="{'has-error-border':updateManageForm.managePwd.$dirty && updateManageForm.managePwd.$invalid}" ng-keyup="checkUpdatePwd()" required/>
+                            <span ng-class="{'has-error-text':updateManageForm.managePwd.$dirty&&updateManageForm.managePwd.$invalid}" ng-show="updateManageForm.managePwd.$dirty&&updateManageForm.managePwd.$invalid">
+                                <span ng-show="updateManageForm.managePwd.$error.required">请输入密码</span>
+                            </span>
+                        </div>
+                        <div class="col-xs-6 col-xs-offset-3 form-group pr">
+                            <input type="password" class="form-control" pw-check="manageInpPwd" ng-model="updateManager.confirmPassword" name="confirmPassword" ng-class="{'has-error-border':updateManageForm.confirmPassword.$dirty&&updateManageForm.confirmPassword.$error.pwmatch || updateManageForm.confirmPassword.$dirty&&updateManageForm.confirmPassword.$error.required}" placeholder="确认密码" required/>
+                            <span ng-class="{'has-error-text':updateManageForm.confirmPassword.$error.pwmatch}" ng-if="updateManageForm.confirmPassword.$error.pwmatch">
+                                <span ng-if="updateManageForm.confirmPassword.$error.pwmatch && !updateManageForm.confirmPassword.$error.required">两次密码不一致</span>
+                            </span>
+                            <span ng-class="{'has-error-text':updateManageForm.confirmPassword.$dirty&&updateManageForm.confirmPassword.$error.required}" ng-if="updateManageForm.confirmPassword.$dirty&&updateManageForm.confirmPassword.$error.required">
+                                <span ng-if="updateManageForm.confirmPassword.$error.required">请再次输入密码</span>
+                            </span>
+                        </div>
+                        <div class="col-xs-6 col-xs-offset-3 form-group pr">
+                            <input type="text" placeholder="电话号码" class="form-control" ng-model="updateManager.phoneNum" name="phoneNum" ng-class="{'has-error-border':updateManageForm.phoneNum.$dirty&&updateManageForm.phoneNum.$invalid}" required ng-minlength="11" ng-maxlength="11" ng-pattern="/^1[3|4|7｜5|8][0-9]\d{4,8}$/"/>
+                            <span ng-class="{'has-error-text':updateManageForm.phoneNum.$dirty&&updateManageForm.phoneNum.$invalid}" ng-show="updateManageForm.phoneNum.$dirty&&updateManageForm.phoneNum.$invalid">
+                                <span ng-show="updateManageForm.phoneNum.$error.required">电话号码不能为空</span>
+                                <span ng-show="updateManageForm.phoneNum.$error.minlength||updateManageForm.phoneNum.$error.maxlength||updateManageForm.phoneNum.$error.pattern">手机号码不合法</span>
+                            </span>
+                        </div>
+                    </form>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default" data-dismiss="modal" ng-click="resetForm()">取消</button>
+                <button type="button" class="btn btn-primary"  ng-disabled="updateManageForm.manageName.$invalid||updateManageForm.managePwd.$invalid||updateManageForm.managePwd2.$invalid||updateManageForm.phoneNum.$invalid" ng-click="okUpdateManager()">确定</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!--删除管理员模态框-->
+<div class="modal fade" id="deleteManagerModal" tabindex="-1" role="dialog" aria-labelledby="deleteManagerModal">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                <h4 class="modal-title" id="deleteManagerModalLabel">删除管理员</h4>
+            </div>
+            <div class="modal-body">
+                <h3>管理员删除将无法找回，确定删除？</h3>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default" data-dismiss="modal">取消</button>
+                <button type="button" class="delete btn btn-primary" id="okDeleteUser">确定</button>
+            </div>
+        </div>
+    </div>
+</div>

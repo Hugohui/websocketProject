@@ -1,0 +1,47 @@
+/*车辆分布样式*/
+.carDistributeRow{
+    height: 100%;
+    position: relative;
+    padding-top: 50px;
+}
+.carDistributeRow .carDistrQueryCar{
+    position: absolute;
+    top:0;
+    left:0;
+    width: 100%;
+    height: auto;
+    border-bottom: 1px solid #ccc;
+}
+.carDistributeRow .carDistrQueryCar .btnGroup{
+    position: absolute;
+    top:10px;
+    right: 30px;
+}
+.carDistributeRow .carDistrQueryCar input{
+    width: 160px;
+    height: 32px;
+    padding: 4px 5px;
+    border: 1px solid #cccccc;
+    border-radius: 4px;
+    outline: none;
+}
+.carDistributeRow .carDistrQueryCar .queryInput{
+    height: 45px;
+    width: 100%;
+    position: absolute;
+    top: 8px;
+    left: 0;
+}
+.carDistrQueryCar .queryInput ul{
+    overflow: hidden;
+    padding-right: 150px;
+}
+.carDistrQueryCar .queryInput ul li{
+    float: left;
+    margin-left: 15px;
+    margin-bottom: 10px;
+}
+.carDistributeRow .carDistributeDiv{
+    height: 100%;
+    border-top: 1px solid #ccc;
+}

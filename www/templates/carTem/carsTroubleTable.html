@@ -1,0 +1,43 @@
+<div class="mainViewPort">
+    <!-- 面包屑导航-->
+    <div class="breadNav">
+        <ul class="breadcrumb">
+            <li>
+                您的位置：
+                车辆管理
+                <span class="divider"></span>
+            </li>
+            <li class="active">
+                故障列表
+            </li>
+        </ul>
+    </div>
+    <div class="carsTroubleTableDiv pr">
+
+        <!-- 查询栏-->
+        <div class="queryDiv">
+            <div class="btnGroup">
+                <div class="input-group">
+                    <input type="text" placeholder="车辆编号" class="fuzzySearchInp">
+                    <button type="button" class="btn btn-sm btn-primary" ng-click="searchTroubleCar()"><i class="fa fa-search"></i>搜索
+                    </button>
+                </div>
+            </div>
+        </div>
+
+        <!-- 列表-->
+        <div class="carsTroubleTableCon">
+            <table id="carsTroubleTable" class="display table-striped table-bordered table-hover table-condensed" cellspacing="0" width="100%">
+                <thead>
+                <tr>
+                    <th>车辆编号</th>
+                    <th>故障类型</th>
+                    <th>当前位置</th>
+                    <th>停运时间</th>
+                    <th>操作</th>
+                </tr>
+                </thead>
+            </table>
+        </div>
+    </div>
+</div>
