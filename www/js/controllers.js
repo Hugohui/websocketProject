@@ -482,11 +482,6 @@ function renderDataShowModal(e) {
     //调整地图为最佳视野
     carLineMap.setZoomAndCenter(18, [carPoint.split(',')[0],carPoint.split(',')[1]]);
 }
-
-<<<<<<< HEAD
-
-=======
->>>>>>> 车辆分布页面车辆展示，以及单车信息展示
 /**
  * 建立首页websocket
  */
