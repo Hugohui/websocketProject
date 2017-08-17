@@ -602,9 +602,20 @@ function creatCarWs(carOptions) {
             //显示运行状态文字
             $('#carStatus').html(carStatusStr);
             //切换小车图标显示
-            var imgPng = 'img/WXB_static.png',
-                imgGif = 'img/WXB_gif.gif';
-            carStatus == 0?$('.carIconDiv>img').attr('src',imgGif):$('.carIconDiv>img').attr('src',imgPng);
+            var WXB_imgPng = 'img/WXB_static.png',
+                WXB_imgGif = 'img/WXB_gif.gif',
+                WBD_imgPng = 'img/WBD_static.png',
+                WBD_imgGif = 'img/WBD_gif.gif';
+
+            //根据车辆类型设置车辆状态图标
+            switch(carOptions.carType){
+                case '1'://窝必达
+                    carStatus == 0?$('.carIconDiv>img').attr('src',WBD_imgGif):$('.carIconDiv>img').attr('src',WBD_imgPng);
+                    break;
+                case '2'://窝小白
+                    carStatus == 0?$('.carIconDiv>img').attr('src',WXB_imgGif):$('.carIconDiv>img').attr('src',WXB_imgPng);
+                    break;
+            }
 
             /*************显示货柜信息************/
             //货柜信息显示
@@ -707,7 +718,7 @@ function creatCarWs(carOptions) {
             //点的图标
             var carIcon = {
                 "1":"img/carMap.png",   //窝必达
-                "2":"img/WXB_map.png"    //扫地车
+                "2":"img/WXB_map.png"    //窝小白
             }
             carLineMap.remove(markers);
 
