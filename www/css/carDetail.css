@@ -99,7 +99,7 @@
 .carHandle .handleInstruction{
     line-height: 28px;
 }
-.carHandle .handleInstruction>span:first-child{
+.carHandle .handleInstruction>div>span:first-child{
     font-size: 14px;
     font-weight: 600;
     margin: 0;
@@ -108,7 +108,7 @@
     line-height: 20px;
 }
 .carHandle .handleControl{
-    margin: 5px 5px 0 5px;
+    margin: 10px 5px 0 5px;
     border-top: 1px dashed #ccc;
     padding-top: 5px;
 }

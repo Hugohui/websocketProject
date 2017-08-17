@@ -1949,6 +1949,8 @@ function checkBox() {
             } else {
                 $('.carMonitorVideo').hide();
                 $('.carInfoTabsDiv').show();
+                //恢复视频加载动画
+                $('.carMonitorVideo').html('<div class="loadingDiv"><img src="./img/loading.gif" alt=""/></div>');
                 //关闭车辆视频连接
                 //发送操作请求
                 var data = {
