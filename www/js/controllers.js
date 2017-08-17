@@ -1022,12 +1022,13 @@ function initManagersTable() {
 
 }
 
-///9999999999
+///99555
+///999955599999
 
 /**
  * 初始化订单列表
  */
-var allOrderTable;
+var allOrderTable;//99999
 function initAllOrderTable() {
     try {
         var scrollY = $('.allOrderTableDiv').height() - $('.queryDiv').height() - 85;
