@@ -491,6 +491,14 @@ function creatHomeWs(map) {
     }
     handleHomeWebsocket(websocketOptions, function (msg) {
 
+        //判断是否是在首页或者车辆分布页面，只有在首页和车辆分布页面进行websocket数据传输
+        var pathUrl = window.location.href;
+        if(!(pathUrl.split('#')[1] == '/' || pathUrl.split('#')[1] == '/carManage/carDistribute')){
+            //在其他页面关闭已经连接的websocket
+            homeWs.close();
+            return;
+        }
+
         //点的图标
         var carIcon = {
             "1":"img/carMap.png",   //窝必达
@@ -553,7 +561,12 @@ function creatHomeWs(map) {
                 {value: status.idle_car, name: '空闲车辆'},
                 {value: status.waiting_car, name: '等待车辆'}
             ];
-            drawCarPie(carData);
+
+            //车辆分布页面不需要画饼状图
+            if(pathUrl.split('#')[1] == '/'){
+                drawCarPie(carData);
+            }
+
         }
     });
 }
