@@ -1028,7 +1028,7 @@ function initManagersTable() {
 /**
  * 初始化订单列表
  */
-var allOrderTable;//99999
+var allOrderTable;
 function initAllOrderTable() {
     try {
         var scrollY = $('.allOrderTableDiv').height() - $('.queryDiv').height() - 85;
