@@ -915,6 +915,11 @@ var managersTable;
 function initManagersTable() {
     //8888888888888
     //999999
+    //999999
+    //999999
+    //999999
+    //999999
+    //999999
         var scrollY = $('.managersTableDiv').height() - $('.queryDiv').height() - 85;
         //提示信息
         var lang = {
