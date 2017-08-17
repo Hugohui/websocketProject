@@ -599,7 +599,12 @@ function creatCarWs(carOptions) {
             /************车辆运行状态*************/
             var carStatus = rData.data.status;
             var carStatusStr = carStatus == 0?'运输中':'停止';//0 运输中  1停止
+            //显示运行状态文字
             $('#carStatus').html(carStatusStr);
+            //切换小车图标显示
+            var imgPng = 'img/WXB_static.png',
+                imgGif = 'img/WXB_gif.gif';
+            carStatus == 0?$('.carIconDiv>img').attr('src',imgGif):$('.carIconDiv>img').attr('src',imgPng);
 
             /*************显示货柜信息************/
             //货柜信息显示
