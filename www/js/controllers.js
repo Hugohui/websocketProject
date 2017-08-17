@@ -419,13 +419,6 @@ function renderDataShowModal(e) {
         }
     });
 
-    //9999999
-    //555522
-    //555522
-    //555522
-    //555522
-
-
     //建立单车websocket
     creatCarWs({
         carId:carId,//车辆id
