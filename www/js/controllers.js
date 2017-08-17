@@ -913,7 +913,6 @@ function initUsersTable() {
  */
 var managersTable;
 function initManagersTable() {
-    try {
         var scrollY = $('.managersTableDiv').height() - $('.queryDiv').height() - 85;
         //提示信息
         var lang = {
@@ -1014,10 +1013,6 @@ function initManagersTable() {
             ]
         }).api();
         //此处需调用api()方法,否则返回的是JQuery对象而不是DataTables的API对象
-    } catch (ex) {
-        catchTheException('initManagersTable', ex);
-    }
-
 }
 
 /**
