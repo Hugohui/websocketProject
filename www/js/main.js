@@ -1,6 +1,4 @@
 //页面路由
-//页面路由
-//页面路由
 var mainStart = angular.module('mainStart',['ui.router','ngWebSocket'])
     .config(['$stateProvider','$urlRouterProvider', function($stateProvider,$urlRouterProvider){
         $urlRouterProvider.when('','/');
