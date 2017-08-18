@@ -19,10 +19,27 @@ mainStart
         //关闭单车信息弹层
         $scope.closeCarDetail = function () {
             closeCarOpenHomeWs();
+            //车辆操控
             if($('#hanbleCheckbox').is(':checked')){
                 $('#hanbleCheckbox').prop('checked',false);
+                //控制台
                 $('.carHandle').hide();
+
+                //货柜
                 $('.counterDiv').show();
+
+                //状态图标
+                $('.carStatus').show();
+            }
+            //视频监控
+            if($('#monitorCheckbox').is(':checked')){
+                $('#monitorCheckbox').prop('checked',false);
+                //隐藏视频
+                $('.carMonitorVideo').hide();
+
+                //显示车辆信息
+                $('.carInfoTabsDiv').show();
+
             }
         }
 
@@ -269,10 +286,27 @@ mainStart
         //关闭单车信息弹层
         $scope.closeCarDetail = function () {
             closeCarOpenHomeWs();
+            //车辆操控
             if($('#hanbleCheckbox').is(':checked')){
                 $('#hanbleCheckbox').prop('checked',false);
+                //控制台
                 $('.carHandle').hide();
+
+                //货柜
                 $('.counterDiv').show();
+
+                //状态图标
+                $('.carStatus').show();
+            }
+            //视频监控
+            if($('#monitorCheckbox').is(':checked')){
+                $('#monitorCheckbox').prop('checked',false);
+                //隐藏视频
+                $('.carMonitorVideo').hide();
+
+                //显示车辆信息
+                $('.carInfoTabsDiv').show();
+
             }
         }
 
@@ -1921,7 +1955,11 @@ function checkBox() {
             var carId = $('#carId').html();
 
             if ($('#monitorCheckbox').prop('checked')) {
+
+                //显示视频
                 $('.carMonitorVideo').show();
+
+                //隐藏信息和故障
                 $('.carInfoTabsDiv').hide();
                 //连接该车辆视频
                 //code...
