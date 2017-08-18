@@ -18,7 +18,23 @@ mainStart
 
         //关闭单车信息弹层
         $scope.closeCarDetail = function () {
+            //关闭单车websocket
             closeCarOpenHomeWs();
+
+            //关闭窗口时如果视频窗口可见，则关闭视频推流
+            if($('.carMonitorVideo').is(':visible')){
+                //发送操作请求
+                var data = {
+                    action:"webControl",
+                    params:{
+                        "car_id":$('#carId').html(),
+                        "opType":5,
+                        "opVal":0//关闭
+                    }
+                }
+                //发送求情
+                videoController(data);
+            }
             //车辆操控
             if($('#hanbleCheckbox').is(':checked')){
                 $('#hanbleCheckbox').prop('checked',false);
@@ -1972,27 +1988,20 @@ function checkBox() {
                         "opVal":1//开启
                     }
                 }
-                $.ajax({
-                    type:'POST',
-                    url:'http://192.168.1.105:8184',
-                    data:data,
-                    dataType:'jsonp',
-                    jsonp:'callback',
-                    jsonpCallback:'success_jsonpCallback',
-                    success:function(data){
-                        //data.result 0:控制成功   -1：控制失败
-                        if(data.result == 0){
-                            $('.carMonitorVideo').html('<canvas id="video-canvas"></canvas>')
-                            var canvas = $('#video-canvas').get(0);
-                            var url = 'ws://192.168.1.105:8082/';
-                            new JSMpeg.Player(url, {canvas: canvas});
-                        }else{
-                            $('.carMonitorVideo').html('获取视频监控失败！').css({
-                                color:'red',
-                                lineHeight:'333px',
-                                fontSize:'20px'
-                            });
-                        }
+                //发送控制请求
+                videoController(data,function(data){
+                    //data.result 0:控制成功   -1：控制失败
+                    if(data.result == 0){
+                        $('.carMonitorVideo').html('<canvas id="video-canvas"></canvas>')
+                        var canvas = $('#video-canvas').get(0);
+                        var url = 'ws://192.168.1.105:8082/';
+                        new JSMpeg.Player(url, {canvas: canvas});
+                    }else{
+                        $('.carMonitorVideo').html('获取视频监控失败！').css({
+                            color:'red',
+                            lineHeight:'333px',
+                            fontSize:'20px'
+                        });
                     }
                 });
             } else {
@@ -2010,17 +2019,8 @@ function checkBox() {
                         "opVal":0//关闭
                     }
                 }
-                $.ajax({
-                    type:'POST',
-                    url:'http://192.168.1.105:8184',
-                    data:data,
-                    dataType:'jsonp',
-                    jsonp:'callback',
-                    jsonpCallback:'success_jsonpCallback',
-                    success:function(data){
-                        //data.result 0:控制成功   -1：控制失败
-                    }
-                });
+                //发送求情
+                videoController(data);
             }
         });
 
@@ -2060,6 +2060,24 @@ function checkBox() {
         catchTheException('checkBox', ex);
     }
 }
+
+/**
+ * 视频推流
+ * @param data  请求数据
+ * @param callback  回调函数
+ */
+function videoController(data,callback){
+    $.ajax({
+        type:'POST',
+        url:'http://192.168.1.105:8184',
+        data:data,
+        dataType:'jsonp',
+        jsonp:'callback',
+        jsonpCallback:'success_jsonpCallback',
+        success:callback
+    });
+}
+
 /**
  * 修改用户信息
  */
