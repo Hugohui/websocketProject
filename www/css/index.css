@@ -161,6 +161,7 @@ header .headerRight .headerMsg{
 }
 
 #areaPageTop{
+    height:30px;
     right: 35%;
     top: 5px;
     transform: translateX(15px);
