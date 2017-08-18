@@ -290,6 +290,7 @@ mainStart
 
     //车辆管理控制器
     .controller('carDistributeContr', ['$scope', function ($scope) {//车辆分布
+
         //initDisMap();
         initHomeMap();
 
