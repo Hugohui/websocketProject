@@ -373,8 +373,9 @@ var homeWs, homeMap;
 function initHomeMap() {
     //初始化
     homeMap = new AMap.Map('homeMap', {
+        resizeEnable: true,
         //center: [116.45645, 40.079607],//默认中心点
-        zoom: 10//地图缩放级别
+        zoom: 11//地图缩放级别
     });
 
     //添加地图工具条
@@ -529,7 +530,7 @@ function renderDataShowModal(e) {
     $('#carDetailModal').modal('show');
 
     //调整地图为最佳视野
-    carLineMap.setZoomAndCenter(18, [carPoint.split(',')[0],carPoint.split(',')[1]]);
+    carLineMap.setZoomAndCenter(16, [carPoint.split(',')[0],carPoint.split(',')[1]]);
 }
 /**
  * 建立首页websocket
@@ -593,7 +594,8 @@ function creatHomeWs(map) {
                         },
                         title: title,   //点的title
                         map: map,
-                        icon:carIcon[carType]    //点的图标
+                        icon:carIcon[carType],    //点的图标
+                        offset: new AMap.Pixel(-15, -10),//图标以点为中心
                     });
 
                     //给每一个点添加双击事件
@@ -603,6 +605,7 @@ function creatHomeWs(map) {
                     marks.push(marker);
                 });
             }
+            map.setFitView();
 
             /**********车辆活动状态************/
             //首页车辆活动统计
@@ -777,7 +780,8 @@ function creatCarWs(carOptions) {
             var marker = new AMap.Marker({
                 position: [carOptions.carPoint.split(',')[0], carOptions.carPoint.split(',')[1]],
                 map: carLineMap,
-                icon:carIcon[carOptions.carType]//根据车辆的类型设置图标
+                icon:carIcon[carOptions.carType],//根据车辆的类型设置图标
+                offset: new AMap.Pixel(-15, -10),//图标以点为中心
             });
 
             //将点放到点数组中
