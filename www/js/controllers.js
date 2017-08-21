@@ -1167,28 +1167,27 @@ function initAllOrderTable() {
                 param.start = data.start;//开始的记录序号
                 param.page = (data.start / data.length) + 1;//当前页码
                 //请求数据
-               /* param.queryData = {
-                    username:"",
-                    phone:"",
-                    order_id:"",
-                    car_id:"",
-                    location_id:""
-                 };*/
+                param.queryData = {
+                    username:data.username,
+                    phone:data.phone,
+                    order_id:data.order_id,
+                    car_id:data.car_id,
+                    location_id:data.location_id
+                 };
                 //$('.queryInput>ul input').val() == '' ? param.queryData = {} : param.queryData = {
                 //    queryUser: $('.queryInput>ul input').val()
                 //}
-                if($("input[type='text']").val() == '' ){
+                if(data.username==''|| data.phone==''||data.order_id==''||data.car_id==''||data.location_id==''){
                     param.queryData = {};
                 }else{
-                    param.queryData = {
-                       queryUser: $("input[type='text']").each(function () {
-                            var value = $(this).val();
-                        })
+                    aram.queryData = {
+                        queryUser:data.username,
+                        queryPhone:data.phone,
+                        order_id: data.order_id,
+                        car_id: data.car_id,
+                        location_id: data.location_id
                     }
                 }
-
-
-
                 //ajax请求数据
                 $.ajax({
                     type: 'POST',
@@ -1313,25 +1312,27 @@ function initUnusualOrderTable() {
                 param.start = data.start;//开始的记录序号
                 param.page = (data.start / data.length) + 1;//当前页码
                 //请求数据
-                /* param.queryData = {
-                 username:"",
-                 phone:"",
-                 order_id:"",
-                 car_id:"",
-                 location_id:""
-                 };*/
+                param.queryData = {
+                    username: data.username,
+                    phone: data.phone,
+                    order_id: data.order_id,
+                    car_id: data.car_id,
+                    location_id: data.location_id
+                };
                 //$(".queryInput>ul>input").val() == '' ? param.queryData = {} : param.queryData = {
                 //    queryUser: $(".queryInput>ul>input").val()
                 //}
-                if($("input[type='text']").val() == '' ){
+                if(data.username==''|| data.phone==''||data.order_id==''||data.car_id==''||data.location_id==''){
                     param.queryData = {};
                 }else{
-                    param.queryData = {
-                        queryUser: $("input[type='text']").each(function () {
-                            var value = $(this).val();
-                        })
+                    aram.queryData = {
+                        queryUser:data.username,
+                        queryPhone:data.phone,
+                        order_id: data.order_id,
+                        car_id: data.car_id,
+                        location_id: data.location_id
                     }
-                };
+                }
                     //ajax请求数据
                     $.ajax({
                         type: 'POST',
@@ -1442,20 +1443,22 @@ function initTransOrderTable() {
                 param.start = data.start;//开始的记录序号
                 param.page = (data.start / data.length) + 1;//当前页码
                 //请求数据
-              /*  param.queryData = {
-                    username:"",
-                    phone:"",
-                    order_id:"",
-                    car_id:"",
-                    location_id:""
-                };*/
-                if($("input[type='text']").val() == '' ){
+                param.queryData = {
+                    username: data.username,
+                    phone: data.phone,
+                    order_id: data.order_id,
+                    car_id: data.car_id,
+                    location_id: data.location_id
+                };
+                if(data.username==''|| data.phone==''||data.order_id==''||data.car_id==''||data.location_id==''){
                     param.queryData = {};
                 }else{
-                    param.queryData = {
-                        queryUser: $("input[type='text']").each(function () {
-                            var value = $(this).val();
-                        })
+                    aram.queryData = {
+                        queryUser:data.username,
+                        queryPhone:data.phone,
+                        order_id: data.order_id,
+                        car_id: data.car_id,
+                        location_id: data.location_id
                     }
                 };
                 //ajax请求数据
@@ -1568,22 +1571,24 @@ function initCompleteOrderTable() {
                 param.start = data.start;//开始的记录序号
                 param.page = (data.start / data.length) + 1;//当前页码
                 //请求数据
-              /*  param.queryData = {
-                    username:"",
-                    phone:"",
-                    order_id:"",
-                    car_id:"",
-                    location_id:""
-                };*/
-                if($("input[type='text']").val() == '' ){
+                param.queryData = {
+                    username: data.username,
+                    phone: data.phone,
+                    order_id: data.order_id,
+                    car_id: data.car_id,
+                    location_id: data.location_id
+                };
+                if(data.username==''|| data.phone==''||data.order_id==''||data.car_id==''||data.location_id==''){
                     param.queryData = {};
                 }else{
-                    param.queryData = {
-                        queryUser: $("input[type='text']").each(function () {
-                            var value = $(this).val();
-                        })
+                    aram.queryData = {
+                        queryUser:data.username,
+                        queryPhone:data.phone,
+                        order_id: data.order_id,
+                        car_id: data.car_id,
+                        location_id: data.location_id
                     }
-                };
+                }
                 //ajax请求数据
                 $.ajax({
                     type: 'POST',
@@ -1691,24 +1696,22 @@ function initCarsTable() {
                 param.start = data.start;//数据库开始查询的序号
                 param.page = (data.start / data.length) + 1;//当前页码
                 //请求数据
-                /*param.queryData = {
-                   car_id:"",
-                    area:"",
-                    hitch:""
-                 };*/
+                param.queryData = {
+                   car_id:data.car_id,
+                    area:data.area,
+                    hitch:data.hitch
+                 };
 
 
-                if($("input[type='text']").val() == '' ){
+                if(data.car_id==''|| data.area==''||data.hitch==''){
                     param.queryData = {};
-                }else{
-                    param.queryData = {
-                        queryUser: $("input[type='text']").each(function () {
-                            var value = $(this).val();
-                        })
+                }else {
+                    aram.queryData = {
+                        car_id: data.car_id,
+                        area: data.area,
+                        hitch: data.hitch
                     }
                 };
-
-
 
                 //ajax请求数据
                 $.ajax({
@@ -1812,9 +1815,6 @@ function initCarsTroubleTable() {
             }],
             ajax: function (data, callback, settings) {
                 //封装请求参数
-                var data={
-
-                }
                 var param = {};
                 param.limit = data.length;//页面显示记录条数，在页面显示每页显示多少项的时候
                 param.start = data.start;//开始的记录序号
