@@ -60,6 +60,7 @@ header .headerRight .headerMsg{
     background-color: #fff;
     border:1px solid #cccccc;
     border-bottom:none;
+    border-radius: 4px 4px 0 0;
 }
 .headerRight .headerMsg .headerUserInfo:hover>a{
     color: #1b6d85;
@@ -73,6 +74,7 @@ header .headerRight .headerMsg{
     top: 30px;
     right: -1px;
     display: none;
+    border-radius: 4px 0 4px 4px;
 }
 .headerRight .headerMsg .headerUserInfoDiv .userInfoDivHead{
     color: #444;
