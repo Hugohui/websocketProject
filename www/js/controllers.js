@@ -435,7 +435,7 @@ function renderDataShowModal(e) {
     |请求车辆的路径规划信息，并在地图上显示
     |--------------------------------------
      */
-    var uploadUrl = 'http://192.168.1.105:8184';
+    var uploadUrl = 'http://111.204.101.170:8184';
     var uploadDate = {
         action:"uploadMap",
         params:""
@@ -774,11 +774,22 @@ function creatCarWs(carOptions) {
                 "1":"img/carMap.png",   //窝必达
                 "2":"img/WXB_map.png"    //窝小白
             }
+
+            var position = rData.data.position;
+
+            //console.log(position);
+            //绘制实时走过的线路
+            //先进行坐标转换
+            var currentPosition = GPS.gcj_encrypt(position.lat,position.lon);
+            if($.inArray(currentPosition.lat+','+currentPosition.lon,markersLine) == -1){//点不重复
+                markersLine.push(currentPosition.lat+','+currentPosition.lon);
+            }
+
             carLineMap.remove(markers);
 
             //在地图上画点
             var marker = new AMap.Marker({
-                position: [carOptions.carPoint.split(',')[0], carOptions.carPoint.split(',')[1]],
+                position: [Number(currentPosition.lon),Number(currentPosition.lat)],
                 map: carLineMap,
                 icon:carIcon[carOptions.carType],//根据车辆的类型设置图标
                 offset: new AMap.Pixel(-15, -10),//图标以点为中心
@@ -786,16 +797,6 @@ function creatCarWs(carOptions) {
 
             //将点放到点数组中
             markers.push(marker);
-
-            var position = rData.data.position;
-
-            //console.log(position);
-            //绘制实时走过的线路
-            //先进行坐标转换
-            var currentPosition = GPS.gcj_encrypt(position.lon,position.lat)
-            if($.inArray(currentPosition.lat+','+currentPosition.lon,markersLine) == -1){//点不重复
-                markersLine.push(currentPosition.lat+','+currentPosition.lon);
-            }
 
             var lineArr  = [];
             $.each(markersLine,function(index,value){
@@ -955,7 +956,7 @@ function initUsersTable() {
             //ajax请求数据
             $.ajax({
                 type: 'POST',
-                url:'http://192.168.1.105:8184',
+                url:'http://111.204.101.170:8184',
                 data: '{action:"usersManage",params:' + param + '}',
                 dataType: 'jsonp',
                 jsonp : "callback",
@@ -1061,7 +1062,7 @@ function initManagersTable() {
                 //ajax请求数据
                 $.ajax({
                     type: 'POST',
-                    url:'http://192.168.1.105:8184',
+                    url:'http://111.204.101.170:8184',
                     data: '{action:"managersManage",params:' + param + '}',
                     dataType: 'jsonp',
                     jsonp : "callback",
@@ -1191,7 +1192,7 @@ function initAllOrderTable() {
                 //ajax请求数据
                 $.ajax({
                     type: 'POST',
-                    url:'http://192.168.1.105:8184',
+                    url:'http://111.204.101.170:8184',
                     data: '{action:"allOrder",params:' + param + '}',
                     dataType: 'jsonp',
                     jsonp : "callback",
@@ -1336,7 +1337,7 @@ function initUnusualOrderTable() {
                     //ajax请求数据
                     $.ajax({
                         type: 'POST',
-                        url: 'http://192.168.1.105:8184',
+                        url: 'http://111.204.101.170:8184',
                         data: '{"action":"unusualOrder","params":' + param + '}',
                         dataType: 'jsonp',
                         jsonp: "callback",
@@ -1464,7 +1465,7 @@ function initTransOrderTable() {
                 //ajax请求数据
                 $.ajax({
                     type: 'POST',
-                    url:'http://192.168.1.105:8184',
+                    url:'http://111.204.101.170:8184',
                     data: '{"action":"transOrder","params":' + param + '}',
                     dataType: 'jsonp',
                     jsonp : "callback",
@@ -1592,7 +1593,7 @@ function initCompleteOrderTable() {
                 //ajax请求数据
                 $.ajax({
                     type: 'POST',
-                    url:'http://192.168.1.105:8184',
+                    url:'http://111.204.101.170:8184',
                     data: '{"action":"completeOrder","params":' + param + '}',
                     dataType: 'jsonp',
                     jsonp : "callback",
@@ -1716,7 +1717,7 @@ function initCarsTable() {
                 //ajax请求数据
                 $.ajax({
                     type: 'POST',
-                    url:'http://192.168.1.105:8184',
+                    url:'http://111.204.101.170:8184',
                     data: '{"action":"carsTable","params":' + param + '}',
                     dataType: 'jsonp',
                     jsonp : "callback",
@@ -1833,7 +1834,7 @@ function initCarsTroubleTable() {
                 //ajax请求数据
                 $.ajax({
                     type: 'POST',
-                    url:'http://192.168.1.105:8184',
+                    url:'http://111.204.101.170:8184',
                     data: '{"action":"carsTable","params":' + param + '}',
                     dataType: 'jsonp',
                     jsonp : "callback",
@@ -1999,7 +2000,7 @@ function checkBox() {
                     if(data.result == 0){
                         $('.carMonitorVideo').html('<canvas id="video-canvas"></canvas>')
                         var canvas = $('#video-canvas').get(0);
-                        var url = 'ws://192.168.1.105:8082/';
+                        var url = 'ws://111.204.101.170:8082/';
                         new JSMpeg.Player(url, {canvas: canvas});
                     }else{
                         $('.carMonitorVideo').html('获取视频监控失败！').css({
@@ -2043,6 +2044,11 @@ function checkBox() {
 
                 //隐藏位置信息（针对窝小白）
                 $('.WXBPosition').hide();
+
+                //控制车辆进入控制驾驶
+                handleAjax(10,0,$('#carId').html(),function(data){
+                    //控制成功
+                });
             } else {
                 $('.carHandle').hide();
 
@@ -2058,12 +2064,43 @@ function checkBox() {
                     //$('.WXBPosition').show();
                 }
 
+                //控制车辆退出控制驾驶
+                handleAjax(4,0,$('#carId').html(),function(data){
+                    //控制成功
+                });
 
             }
         });
     } catch (ex) {
         catchTheException('checkBox', ex);
     }
+}
+
+/**
+ * 车辆操控
+ * @param type  操控类型
+ * @param val   操控值
+ * @param carId 车辆id
+ */
+function handleAjax(type,val,carId,callback){
+    var data = {
+        action:"webControl",
+        params:{
+            car_id:carId,
+            opType:type,
+            opVal:val
+        }
+    }
+    //发送操作请求
+    $.ajax({
+        type:'POST',
+        url:'http://111.204.101.170:8184',
+        data:data,
+        dataType:'jsonp',
+        jsonp:'callback',
+        jsonpCallback:'success_jsonpCallback',
+        success:callback
+    });
 }
 
 /**
@@ -2074,7 +2111,7 @@ function checkBox() {
 function videoController(data,callback){
     $.ajax({
         type:'POST',
-        url:'http://192.168.1.105:8184',
+        url:'http://111.204.101.170:8184',
         data:data,
         dataType:'jsonp',
         jsonp:'callback',
@@ -2100,7 +2137,7 @@ function updateUserInfo() {
         };
         $.ajax({
             type: 'POST',
-            url: 'http://192.168.1.105:8184',
+            url: 'http://111.204.101.170:8184',
             data: data,
             dataType: 'jsonp',
             jsonp: "callback",
@@ -2140,7 +2177,7 @@ function deleteUserInfo() {
         };
         $.ajax({
             type: 'POST',
-            url: 'http://192.168.1.105:8184',
+            url: 'http://111.204.101.170:8184',
             data: data,
             dataType: 'jsonp',
             jsonp: "callback",
@@ -2179,7 +2216,7 @@ function addMannager() {
         };
         $.ajax({
             type: 'POST',
-            url: 'http://192.168.1.105:8184',
+            url: 'http://111.204.101.170:8184',
             data: data,
             dataType: 'jsonp',
             jsonp: "callback",
@@ -2217,7 +2254,7 @@ function updateManagerInfo() {
         };
         $.ajax({
             type: 'POST',
-            url: 'http://192.168.1.105:8184',
+            url: 'http://111.204.101.170:8184',
             data: data,
             dataType: 'jsonp',
             jsonp: "callback",
@@ -2257,7 +2294,7 @@ function deleteManagerInfo() {
         };
         $.ajax({
             type: 'POST',
-            url: 'http://192.168.1.105:8184',
+            url: 'http://111.204.101.170:8184',
             data: data,
             dataType: 'jsonp',
             jsonp: "callback",
@@ -2286,7 +2323,8 @@ function handleHomeWebsocket(options, callback) {
         var defaultOption = {
             data: ''//请求数据
         }
-        var url = 'ws://192.168.1.105:8188';
+        //var url = 'ws://111.204.101.170:8188';
+        var url = 'ws://111.204.101.170:8188';
         homeWs = new WebSocket(url)
         var relOptions = $.extend({}, defaultOption, options);
         //建立连接
@@ -2318,7 +2356,7 @@ function handleHomeWebsocket(options, callback) {
 function handleCarWebsocket(options, callback) {
     try {
         var defaultOption = {
-            url: 'ws://192.168.1.105:8188',//请求地址
+            url: 'ws://111.204.101.170:8188',//请求地址
             data: ''//请求数据
         }
         var relOptions = $.extend({}, defaultOption, options);
