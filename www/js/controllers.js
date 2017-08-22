@@ -781,8 +781,8 @@ function creatCarWs(carOptions) {
             //绘制实时走过的线路
             //先进行坐标转换
             var currentPosition = GPS.gcj_encrypt(position.lat,position.lon);
-            if($.inArray(currentPosition.lat+','+currentPosition.lon,markersLine) == -1){//点不重复
-                markersLine.push(currentPosition.lat+','+currentPosition.lon);
+            if($.inArray(currentPosition.lon+','+currentPosition.lat,markersLine) == -1){//点不重复
+                markersLine.push(currentPosition.lon+','+currentPosition.lat);
             }
 
             carLineMap.remove(markers);
