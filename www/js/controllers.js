@@ -399,7 +399,10 @@ function initHomeMap() {
     }
 
     //建立首页websocket
-    creatHomeWs(homeMap);
+    var dataOption = {
+        data: '{"action":"home","params":{}}'
+    };
+    creatHomeWs(homeMap,dataOption);
 }
 
 /**
@@ -535,12 +538,10 @@ function renderDataShowModal(e) {
 /**
  * 建立首页websocket
  */
-function creatHomeWs(map) {
+function creatHomeWs(map,options) {
 
     //websocket配置
-    var websocketOptions = {
-        data: '{"action":"home","params":{}}'
-    }
+    var websocketOptions = options;
     handleHomeWebsocket(websocketOptions, function (msg) {
 
         //判断是否是在首页或者车辆分布页面，只有在首页和车辆分布页面进行websocket数据传输
@@ -821,7 +822,10 @@ function creatCarWs(carOptions) {
 function closeCarOpenHomeWs() {
 
     //打开首页sebsocket
-    creatHomeWs(homeMap);
+    var dataOption = {
+        data: '{"action":"home","params":{}}'
+    };
+    creatHomeWs(homeMap,dataOption);
     //关闭单车websocket
     carWs.close();
 
@@ -835,6 +839,7 @@ function closeCarOpenHomeWs() {
 /**
  * 地图车辆条件查询
  */
+/*body={"action":"home","params":{"car_id":"13439163725","status":"13439163725","hitch":"1"}}*/
 function searchMapCar(){
     //车辆编号
     var carId = $('#searchCarId').val();
@@ -842,7 +847,13 @@ function searchMapCar(){
     //状态
 
     //是否故障
-    //
+
+    homeWs.close();
+    //打开首页sebsocket
+    var dataOption = {
+        data: '{"action":"home","params":{}}'
+    };
+    creatHomeWs(homeMap,dataOption);
 }
 
 /**
