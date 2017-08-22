@@ -125,6 +125,8 @@
                 //发送刹车请求
                 handleAjax(2,1,carId);
 
+                carConfig.state.speed = 0;
+                showSpeed();
             }else{
                 //页面显示刹车信息
                 $('.isCtrlCar').html('释放');
@@ -197,7 +199,7 @@
 
         /*********车辆加速***********/
         //加速类型0x01
-        if(carConfig.keypress.up && $('.gearsHtml').html() != 'N'){
+        if(carConfig.keypress.up && $('.gearsHtml').html() != 'N'&&!carConfig.keypress.ctrl){
 
             //操控类型
             //YDate.handleYData.type =carConfig.gears[$('.gearsHtml').html()];//D - 1 - 前进；R - 2 - 后退；N - 3 - 空档
@@ -206,7 +208,11 @@
             //加速
             //当速度小于1500或者当
             if(carConfig.state.speed<1500){
-                carConfig.state.speed +=0.1+carConfig.state.speed*0.05;
+                if(carConfig.state.speed<=450){
+                    carConfig.state.speed +=0.1+carConfig.state.speed*0.1;
+                }else{
+                    carConfig.state.speed +=0.1+carConfig.state.speed*0.05;
+                }
 
                 //获取倍数
                 var tempValue = String((carConfig.state.speed/150)).split('.')[0];
@@ -238,7 +244,11 @@
 
             //减速
             if(carConfig.state.speed>0){
-                carConfig.state.speed -=carConfig.state.speed*0.05+0.1;
+                if(carConfig.state.speed<=450){
+                    carConfig.state.speed -=carConfig.state.speed*0.1+0.1;
+                }else{
+                    carConfig.state.speed -=carConfig.state.speed*0.05+0.1;
+                }
 
                 //获取倍数
                 var tempValue = String((carConfig.state.speed/150)).split('.')[0];
@@ -272,11 +282,11 @@
 
             if(carConfig.state.wheelAng>=0&&carConfig.state.wheelAng<30){
                 //转向角度
-                carConfig.state.wheelAng +=0.05+ carConfig.state.wheelAng*0.05;
+                carConfig.state.wheelAng +=0.1+ carConfig.state.wheelAng*0.1;
 
             }else if(carConfig.state.wheelAng>=-30&&carConfig.state.wheelAng<-2){
                 //转向角度
-                carConfig.state.wheelAng -=0.05+ carConfig.state.wheelAng*0.05;
+                carConfig.state.wheelAng -=0.1+ carConfig.state.wheelAng*0.1;
 
             }else if(carConfig.state.wheelAng>=-2&&carConfig.state.wheelAng<0){
                 carConfig.state.wheelAng = 0;
@@ -311,11 +321,11 @@
         if(carConfig.keypress.left){//左转
 
             if(carConfig.state.wheelAng>0&&carConfig.state.wheelAng<=30){//角度为正值
-                carConfig.state.wheelAng -=0.05+ carConfig.state.wheelAng*0.05;
-            }else if(carConfig.state.wheelAng>-30&&carConfig.state.wheelAng<=-2){//角度为负值
-                carConfig.state.wheelAng +=0.05+ carConfig.state.wheelAng*0.05;
-            }else if(carConfig.state.wheelAng>-2 && carConfig.state.wheelAng <=0){
-                carConfig.state.wheelAng = -2;
+                carConfig.state.wheelAng -=0.1+ carConfig.state.wheelAng*0.1;
+            }else if(carConfig.state.wheelAng>-30&&carConfig.state.wheelAng<=-1.5){//角度为负值
+                carConfig.state.wheelAng +=0.1+ carConfig.state.wheelAng*0.1;
+            }else if(carConfig.state.wheelAng>-1.5 && carConfig.state.wheelAng <=0){
+                carConfig.state.wheelAng = -1.5;
             }else if(carConfig.state.wheelAng>30){
                 carConfig.state.wheelAng = 30;
             }else{
@@ -345,14 +355,18 @@
             XData.handleXData.value =0;
         }
 
-        //页面显示车辆油门百分比
-        var speedPercent = ((carConfig.state.speed)/15).toFixed(0)>100?'100':((carConfig.state.speed)/15).toFixed(0);
-        $('.speedPercent').html(speedPercent);
+        showSpeed();
 
         //页面显示转向角度百分比
         var wheelAngPerpent= (carConfig.state.wheelAng*100/30).toFixed(0);
         $('.wheelAngPercent').html(wheelAngPerpent);
 
+    }
+
+    function showSpeed(){
+        //页面显示车辆油门百分比
+        var speedPercent = ((carConfig.state.speed)/15).toFixed(0)>100?'100':((carConfig.state.speed)/15).toFixed(0);
+        $('.speedPercent').html(speedPercent);
     }
 
     /**
