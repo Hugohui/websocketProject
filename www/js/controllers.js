@@ -530,7 +530,7 @@ function renderDataShowModal(e) {
     $('#carDetailModal').modal('show');
 
     //调整地图为最佳视野
-    carLineMap.setZoomAndCenter(16, [carPoint.split(',')[0],carPoint.split(',')[1]]);
+    carLineMap.setZoomAndCenter(18, [carPoint.split(',')[0],carPoint.split(',')[1]]);
 }
 /**
  * 建立首页websocket
