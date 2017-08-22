@@ -836,7 +836,7 @@ function searchMapCar(){
     //状态
 
     //是否故障
-
+    //
 }
 
 /**
