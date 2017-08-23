@@ -68,8 +68,8 @@ mainStart
             $('.queryInput input').val('');
             $('.selectGroup>div.active').click();
 
-            //重新绘制地图
-            initHomeMap();
+            //websocket切换
+            closeSearchWs();
         }
 
         //窝必达单车信息，全部线路
@@ -369,7 +369,7 @@ mainStart
 /**
  * 主页地图初始化
  */
-var homeWs, homeMap;
+var homeWs, homeMap,searchWs;
 function initHomeMap() {
     //初始化
     homeMap = new AMap.Map('homeMap', {
@@ -410,11 +410,6 @@ function initHomeMap() {
  */
 var carWs,carLineMap;
 function renderDataShowModal(e) {
-
-    //关闭首页websocket
-    homeWs.close();
-    //获取车辆信息，渲染数据
-    //code...
 
     //获取车辆id和车辆类型
     var carId = this.getTitle(),
@@ -542,8 +537,8 @@ function creatHomeWs(map,options) {
 
     //websocket配置
     var websocketOptions = options;
-    handleHomeWebsocket(websocketOptions, function (msg) {
-
+    homeWs = handleWebsocket(websocketOptions, function (msg) {
+console.log('首页socket');
         //判断是否是在首页或者车辆分布页面，只有在首页和车辆分布页面进行websocket数据传输
         var pathUrl = window.location.href;
         if(!(pathUrl.split('#')[1] == '/' || pathUrl.split('#')[1] == '/carManage/carDistribute')){
@@ -552,76 +547,51 @@ function creatHomeWs(map,options) {
             return;
         }
 
-        //点的图标
-        var carIcon = {
-            "1":"img/carMap.png",   //窝必达
-            "2":"img/WXB_map.png"    //扫地车
-        }
-        var rData = $.parseJSON(msg.data).resData,
-            pointData = rData.data,
-            status = rData.status;
+        var rData = $.parseJSON(msg.data).resData;
+        var status = rData.status;
         if (!msg.data.result) {
-            var carIdArr = [],
-                carPositionArr = [],
-                typeArr = [];//1：窝必达 2：扫地车
-            $.each(pointData, function (index, value) {
-                carIdArr.push(value.car_id);
-                typeArr.push(value.type);
-                var str = "" + value.gps_lon + "," + value.gps_lat + "";
-                carPositionArr.push(str);
-            });
-            //定义空数组，保存要添加的点
-            var marks = [];
 
-            //清空地图上的覆盖物
-            map.clearMap();
-
-            //遍历点数据，进行画点
-            for (let i = 0; i < carPositionArr.length; i++) {
-
-                //获取对应车辆的id，作为点的title
-                let title = '' + carIdArr[i];
-
-                //获取对应车辆的类型，后续做类型判断和显示
-                let carType = typeArr[i];
-
-                //先将gps点转换为高德地图坐标点，然后地图画点
-                AMap.convertFrom(carPositionArr[i], "gps", function (status, result) {
-                    var marker = new AMap.Marker({
-                        position: [result.locations[0].lng, result.locations[0].lat],
-                        extData:{       //给点设置自定义属性
-                          type:carType,
-                          carPoint:result.locations[0].lng+','+result.locations[0].lat
-                        },
-                        title: title,   //点的title
-                        map: map,
-                        icon:carIcon[carType],    //点的图标
-                        offset: new AMap.Pixel(-15, -10),//图标以点为中心
-                    });
-
-                    //给每一个点添加双击事件
-                    AMap.event.addListener(marker, 'click', renderDataShowModal);
-
-                    //保存已经添加了的点，方便后续做只显示可视区域内的点
-                    marks.push(marker);
-                });
-            }
-            map.setFitView();
+            drawMarker(map,rData);
 
             /**********车辆活动状态************/
-            //首页车辆活动统计
-            var carData = [
-                {value: status.trans_car, name: '运输中'},
-                {value: status.hitch_car, name: '故障车辆'},
-                {value: status.idle_car, name: '空闲车辆'},
-                {value: status.waiting_car, name: '等待车辆'}
-            ];
-
             //车辆分布页面不需要画饼状图
             if(pathUrl.split('#')[1] == '/'){
-                drawCarPie(carData);
+                drawCarPie(status);
             }
 
+        }
+    });
+}
+
+/**
+ * 建立查询websocket
+ * @param map   地图
+ * @param options   数据
+ */
+function creatSearchWs(map,options){
+    //websocket配置
+    var websocketOptions = options;
+    searchWs = handleWebsocket(websocketOptions, function (msg) {
+        console.log('查询socket');
+        //判断是否是在首页或者车辆分布页面，只有在首页和车辆分布页面进行websocket数据传输
+        var pathUrl = window.location.href;
+        if(!(pathUrl.split('#')[1] == '/' || pathUrl.split('#')[1] == '/carManage/carDistribute')){
+            //在其他页面关闭已经连接的websocket
+            searchWs.close();
+            return;
+        }
+
+        var rData = $.parseJSON(msg.data).resData;
+        var status = rData.status;
+        if (!msg.data.result) {
+
+            drawMarker(map,rData);
+
+            /**********车辆活动状态************/
+            //车辆分布页面不需要画饼状图
+            if(pathUrl.split('#')[1] == '/'){
+                drawCarPie(status);
+            }
         }
     });
 }
@@ -643,8 +613,8 @@ function creatCarWs(carOptions) {
         data: '{"action":"carDetail","params":{"car_id":' + carOptions.carId + '}}'
     }
 
-    handleCarWebsocket(websocketOptions, function (msg) {
-
+    carWs = handleWebsocket(websocketOptions, function (msg) {
+console.log('单车socket');
         //将接受到的json转化为对象
         var rData = $.parseJSON(msg.data).resData;
 
@@ -821,11 +791,6 @@ function creatCarWs(carOptions) {
 //关闭单车信息框，打开首页sebsocket，关闭单车websocket
 function closeCarOpenHomeWs() {
 
-    //打开首页sebsocket
-    var dataOption = {
-        data: '{"action":"home","params":{}}'
-    };
-    creatHomeWs(homeMap,dataOption);
     //关闭单车websocket
     carWs.close();
 
@@ -835,6 +800,67 @@ function closeCarOpenHomeWs() {
         color:'#000'
     });
 }
+
+/**
+ * 地图画点
+ * @param map   地图
+ * @param rData     点数据
+ */
+function drawMarker(map,rData){
+    var pointData = rData.data;
+    var carIdArr = [],
+        carPositionArr = [],
+        typeArr = [];//1：窝必达 2：扫地车
+    //点的图标
+    var carIcon = {
+        "1":"img/carMap.png",   //窝必达
+        "2":"img/WXB_map.png"    //扫地车
+    }
+    $.each(pointData, function (index, value) {
+        carIdArr.push(value.car_id);
+        typeArr.push(value.type);
+        var str = "" + value.gps_lon + "," + value.gps_lat + "";
+        carPositionArr.push(str);
+    });
+    //定义空数组，保存要添加的点
+    var marks = [];
+
+    //清空地图上的覆盖物
+    map.clearMap();
+
+    //遍历点数据，进行画点
+    for (let i = 0; i < carPositionArr.length; i++) {
+
+        //获取对应车辆的id，作为点的title
+        let title = '' + carIdArr[i];
+
+        //获取对应车辆的类型，后续做类型判断和显示
+        let carType = typeArr[i];
+
+        //先将gps点转换为高德地图坐标点，然后地图画点
+        AMap.convertFrom(carPositionArr[i], "gps", function (status, result) {
+            var marker = new AMap.Marker({
+                position: [result.locations[0].lng, result.locations[0].lat],
+                extData:{       //给点设置自定义属性
+                    type:carType,
+                    carPoint:result.locations[0].lng+','+result.locations[0].lat
+                },
+                title: title,   //点的title
+                map: map,
+                icon:carIcon[carType],    //点的图标
+                offset: new AMap.Pixel(-15, -10),//图标以点为中心
+            });
+
+            //给每一个点添加双击事件
+            AMap.event.addListener(marker, 'click', renderDataShowModal);
+
+            //保存已经添加了的点，方便后续做只显示可视区域内的点
+            marks.push(marker);
+        });
+    }
+    map.setFitView();
+}
+
 
 /**
  * 地图车辆条件查询
@@ -848,7 +874,26 @@ function searchMapCar(){
 
     //是否故障
 
+    //关闭首页websocket
     homeWs.close();
+
+    //打开查询sebsocket
+    var dataOption = {
+        //data: '{"action":"home","params":{"car_id":'+carId+',"status":"","hitch":""}}'
+        data: '{"action":"home","params":{}}'
+    };
+
+    creatSearchWs(homeMap,dataOption);
+}
+
+/**
+ * 清空条件查询
+ */
+function closeSearchWs(){
+
+    //关闭搜索websocket
+    searchWs.close();
+
     //打开首页sebsocket
     var dataOption = {
         data: '{"action":"home","params":{}}'
@@ -859,7 +904,15 @@ function searchMapCar(){
 /**
  * 主页初始化图表
  */
-function drawCarPie(rData) {
+function drawCarPie(status) {
+
+    //首页车辆活动统计
+    var carData = [
+        {value: status.trans_car, name: '运输中'},
+        {value: status.hitch_car, name: '故障车辆'},
+        {value: status.idle_car, name: '空闲车辆'},
+        {value: status.waiting_car, name: '等待车辆'}
+    ];
 
     $('.carStatistic').height($('.carStatistic').width());
     var myChart = echarts.init($('#carStaChart')[0]);//此处传dom元素
@@ -886,7 +939,7 @@ function drawCarPie(rData) {
                 type: 'pie',
                 radius: '55%',
                 center: ['50%', '60%'],
-                data: rData,
+                data: carData,
                 itemStyle: {
                     emphasis: {
                         shadowBlur: 10,
@@ -2324,71 +2377,32 @@ function deleteManagerInfo() {
 }
 
 /**
- * 创建homewebsocket连接
+ * 创建websocket连接
  * @param options 自定义连接
  * @param callback 自定义接收数据胡函数
  */
 
-function handleHomeWebsocket(options, callback) {
-    try {
-        var defaultOption = {
-            data: ''//请求数据
-        }
-        //var url = 'ws://111.204.101.170:8188';
-        var url = 'ws://111.204.101.170:8188';
-        homeWs = new WebSocket(url)
-        var relOptions = $.extend({}, defaultOption, options);
-        //建立连接
-        homeWs.onopen = function () {
-            //发送数据
-            homeWs.send(relOptions.data);
-        }
-        //接收数据
-        homeWs.onmessage = callback;
-
-        homeWs.onerror = function (e) {
-            console.log(e);
-        }
-
-        homeWs.onclose = function () {
-            homeWs.close();
-        }
-
-    } catch (ex) {
-        catchTheException('handleHomeWebsocket', ex);
+function handleWebsocket(options, callback) {
+    var defaultOption = {
+        data: ''//请求数据
     }
-}
-
-/**
- * 创建单车websocket连接
- * @param options 自定义连接
- * @param callback 自定义接收数据胡函数
- */
-function handleCarWebsocket(options, callback) {
-    try {
-        var defaultOption = {
-            url: 'ws://111.204.101.170:8188',//请求地址
-            data: ''//请求数据
-        }
-        var relOptions = $.extend({}, defaultOption, options);
-        carWs = new WebSocket(relOptions.url)
-        //建立连接
-        carWs.onopen = function () {
-            //发送数据
-            carWs.send(relOptions.data);
-        }
-        //接收数据
-        carWs.onmessage = callback;
-
-        carWs.onerror = function (e) {
-            console.log(e);
-        }
-
-        carWs.onclose = function () {
-            carWs.close();
-        }
-
-    } catch (ex) {
-        catchTheException('handleHomeWebsocket', ex);
+    var url = 'ws://111.204.101.170:8188';
+    var ws = new WebSocket(url);
+    var relOptions = $.extend({}, defaultOption, options);
+    //建立连接
+    ws.onopen = function () {
+        //发送数据
+        ws.send(relOptions.data);
     }
+    //接收数据
+    ws.onmessage = callback;
+
+    ws.onerror = function (e) {
+        console.log(e);
+    }
+
+    ws.onclose = function () {
+        ws.close();
+    }
+    return ws;
 }
