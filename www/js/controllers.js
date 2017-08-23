@@ -867,19 +867,28 @@ function drawMarker(map,rData){
  */
 /*body={"action":"home","params":{"car_id":"13439163725","status":"13439163725","hitch":"1"}}*/
 function searchMapCar(){
+
+    var status = '5',
+        hitch = '6',
+        carId;
     //车辆编号
-    var carId = $('#searchCarId').val();
+    carId = $('#searchCarId').val();
 
     //状态
-
+    if($('.isTransDiv>div.active').length>0){
+        status = $('.isTransDiv>div.active').attr('valuetype');
+    }
     //是否故障
+    if($('.isHitchDiv>div.active').length>0){
+        hitch = $('.isHitchDiv>div.active').attr('valuetype');
+    }
 
     //关闭首页websocket
     homeWs.close();
 
     //打开查询sebsocket
     var dataOption = {
-        //data: '{"action":"home","params":{"car_id":'+carId+',"status":"","hitch":""}}'
+        //data: '{"action":"home","params":{"car_id":'+carId+',"status":'+status+',"hitch":'+hitch+'}}'
         data: '{"action":"home","params":{}}'
     };
 
