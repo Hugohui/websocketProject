@@ -35,7 +35,7 @@ $(function () {
 
     //点击logo页面跳转到首页，左侧导航变为首页
     $('.logoA').click(function () {
-        $('.sidebar-menu>li').eq(1).find('a').click();
+        $('.sidebar-menu>li').eq(0).find('a').click();
     });
 
     //点击故障，跳转到故障列表,左侧导航变为故障列表
