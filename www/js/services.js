@@ -7,7 +7,7 @@ mainStart
     .directive('pwCheck', [function () {
     return {
         require: 'ngModel',
-        link: function (scope, elem, attrs, ctrl) {
+        link: function (scope, elem, attrs, ctrl) {//link操作DOM，绑定事件监听器
             var firstPassword = '#' + attrs.pwCheck;
             var confirmPassword = attrs.name
             $('input[name="'+confirmPassword+'"]').on('keyup', function () {

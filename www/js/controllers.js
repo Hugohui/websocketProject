@@ -837,26 +837,28 @@ function drawMarker(map,rData){
         //获取对应车辆的类型，后续做类型判断和显示
         let carType = typeArr[i];
 
-        //先将gps点转换为高德地图坐标点，然后地图画点
-        AMap.convertFrom(carPositionArr[i], "gps", function (status, result) {
-            var marker = new AMap.Marker({
-                position: [result.locations[0].lng, result.locations[0].lat],
-                extData:{       //给点设置自定义属性
-                    type:carType,
-                    carPoint:result.locations[0].lng+','+result.locations[0].lat
-                },
-                title: title,   //点的title
-                map: map,
-                icon:carIcon[carType],    //点的图标
-                offset: new AMap.Pixel(-15, -10),//图标以点为中心
+        if(carType != 3){//不显示其他类型车辆
+            //先将gps点转换为高德地图坐标点，然后地图画点
+            AMap.convertFrom(carPositionArr[i], "gps", function (status, result) {
+                var marker = new AMap.Marker({
+                    position: [result.locations[0].lng, result.locations[0].lat],
+                    extData:{       //给点设置自定义属性
+                        type:carType,
+                        carPoint:result.locations[0].lng+','+result.locations[0].lat
+                    },
+                    title: title,   //点的title
+                    map: map,
+                    icon:carIcon[carType],    //点的图标
+                    offset: new AMap.Pixel(-15, -10),//图标以点为中心
+                });
+
+                //给每一个点添加双击事件
+                AMap.event.addListener(marker, 'click', renderDataShowModal);
+
+                //保存已经添加了的点，方便后续做只显示可视区域内的点
+                marks.push(marker);
             });
-
-            //给每一个点添加双击事件
-            AMap.event.addListener(marker, 'click', renderDataShowModal);
-
-            //保存已经添加了的点，方便后续做只显示可视区域内的点
-            marks.push(marker);
-        });
+        }
     }
     map.setFitView();
 }
