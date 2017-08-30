@@ -105,8 +105,9 @@ header .headerRight .headerMsg{
     width: 200px;
     z-index: 810;
     background-color: #222d32;
-    padding-top: 90px;
+    padding-top: 90px !important;
     transition: all 1s;
+    box-sizing: border-box;
 }
 .mainView{
     position: absolute;

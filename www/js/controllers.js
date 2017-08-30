@@ -428,46 +428,23 @@ function renderDataShowModal(e) {
         carLineMap.addControl(new AMap.ToolBar());
     });
 
-    /*
-    |--------------------------------------
-    |请求车辆的路径规划信息，并在地图上显示
-    |--------------------------------------
-     */
-    var uploadUrl = 'http://111.204.101.170:8184';
-    var uploadDate = {
-        action:"uploadMap",
-        params:""
-    };
-    $.ajax({
-        type:'POST',
-        url:uploadUrl,
-        data:uploadDate,
-        dataType: 'jsonp',
-        jsonp : "callback",
-        jsonpCallback:"success_jsonpCallback",
-        success:function(data){
-            var pointStrArr = data.split('\n');
-            var lineArr = [];
-            $.each(pointStrArr,function(index,value){
-                if(value != ''){//排除最后一个空数据
-                    //先将gps点转换为高德地图坐标点,然后保存在线路数组中
-                    var lineObj = GPS.gcj_encrypt(value.split(',')[1], value.split(',')[0]);
-                    lineArr.push([lineObj.lon,lineObj.lat]);
-                }
-            });
 
-            //绘制折线
-            var polyline = new AMap.Polyline({
-                path: lineArr,          //设置线覆盖物路径
-                strokeColor: "#3366FF", //线颜色
-                strokeOpacity: 0.8,       //线透明度
-                strokeWeight: 2,        //线宽
-                strokeStyle: "solid",   //线样式
-                strokeDasharray: [10, 5] //补充线样式
-            });
-            polyline.setMap(carLineMap);
-        }
-    });
+    if(carId == '1234567893'){
+        /*
+         |--------------------------------------
+         |请求车辆的路径规划信息，并在地图上显示
+         |--------------------------------------
+         */
+        var uploadDate = {
+            action:"uploadMap",
+            params:{
+                content:"aosen",
+                map_name:"aolinpark.txt"
+            }
+        };
+        ajaxQueryLine(uploadDate);
+    }
+
 
     //建立单车websocket
     creatCarWs({
@@ -530,6 +507,43 @@ function renderDataShowModal(e) {
     //调整地图为最佳视野
     carLineMap.setZoomAndCenter(18, [carPoint.split(',')[0],carPoint.split(',')[1]]);
 }
+
+function ajaxQueryLine(option){
+    var uploadUrl = 'http://111.204.101.170:8184';
+    $.ajax({
+        type:'POST',
+        url:uploadUrl,
+        data:option,
+        dataType: 'jsonp',
+        jsonp : "callback",
+        jsonpCallback:"success_jsonpCallback",
+        success:function(data){
+            console.log(data);
+            var pointStrArr = data.split('\n');
+            var lineArr = [];
+            $.each(pointStrArr,function(index,value){
+                if(value != ''){//排除最后一个空数据
+                    //先将gps点转换为高德地图坐标点,然后保存在线路数组中
+                    var lineObj = GPS.gcj_encrypt(value.split(',')[1], value.split(',')[0]);
+                    lineArr.push([lineObj.lon,lineObj.lat]);
+                }
+            });
+
+            //绘制折线
+            var polyline = new AMap.Polyline({
+                path: lineArr,          //设置线覆盖物路径
+                strokeColor: "#3366FF", //线颜色
+                strokeOpacity: 0.8,       //线透明度
+                strokeWeight: 2,        //线宽
+                strokeStyle: "solid",   //线样式
+                strokeDasharray: [10, 5] //补充线样式
+            });
+            polyline.setMap(carLineMap);
+        }
+    });
+}
+
+
 /**
  * 建立首页websocket
  */
@@ -607,6 +621,9 @@ function creatCarWs(carOptions) {
     //保存车辆行驶的线路信息点，即每次位置更新的点
     var markers= [],
         markersLine = [];
+
+    //保存车辆的路径编号
+    var lineArrStr = '';
 
     //websocket配置
     var websocketOptions = {
@@ -739,14 +756,34 @@ console.log('单车socket');
             });
             $('.carTroubleInfo').html(strInfo);*/
 
-            /***********车辆地图路径***************/
+            /***********车辆路径规划***************/
+            var path_id = rData.data.position.path_id,//路径编号
+                content = rData.data.position.content;//地图目录
+
+            if(path_id&&carOptions.carId != '1234567893'&&path_id!=lineArrStr){
+                lineArrStr= path_id;
+                var pathIdArr = path_id.split(',');
+                $.each(pathIdArr,function(index,value){
+                    var uploadDate = {
+                        action:"uploadMap",
+                        params:{
+                            content:content,
+                            map_name:value+'-seg'
+                        }
+                    };
+                    ajaxQueryLine(uploadDate);
+                });
+            }
+
+            /***********车辆实时路径***************/
             //点的图标
             var carIcon = {
                 "1":"img/carMap.png",   //窝必达
                 "2":"img/WXB_map.png"    //窝小白
             }
 
-            var position = rData.data.position;
+            //车辆实时位置点
+            var position = rData.data.position.cur;
 
             //console.log(position);
             //绘制实时走过的线路
