@@ -442,7 +442,7 @@ function renderDataShowModal(e) {
                 map_name:"aolinpark.txt"
             }
         };
-        ajaxQueryLine(uploadDate);
+        ajaxQueryLine(uploadDate,true);
     }
 
 
@@ -508,7 +508,12 @@ function renderDataShowModal(e) {
     carLineMap.setZoomAndCenter(18, [carPoint.split(',')[0],carPoint.split(',')[1]]);
 }
 
-function ajaxQueryLine(option){
+/**
+ * 根据地图文件画路劲
+ * @param option 请求参数
+ * @param isTrans   是否进行位置转换
+ */
+function ajaxQueryLine(option,isTrans){
     var uploadUrl = 'http://111.204.101.170:8184';
     $.ajax({
         type:'POST',
@@ -524,11 +529,16 @@ function ajaxQueryLine(option){
             $.each(pointStrArr,function(index,value){
                 if(value != ''){//排除最后一个空数据
                     //先将gps点转换为高德地图坐标点,然后保存在线路数组中
-                    var lineObj = GPS.gcj_encrypt(value.split(',')[1], value.split(',')[0]);
-                    lineArr.push([lineObj.lon,lineObj.lat]);
+                    if(isTrans){
+                        var lineObj = GPS.gcj_encrypt(value.split(',')[1], value.split(',')[0]);
+                        lineArr.push([lineObj.lon,lineObj.lat]);
+                    }else{
+                        lineArr.push([Number(value.split(',')[0]),Number(value.split(',')[1])]);
+                    }
+
                 }
             });
-
+console.log(lineArr);
             //绘制折线
             var polyline = new AMap.Polyline({
                 path: lineArr,          //设置线覆盖物路径
@@ -772,7 +782,7 @@ console.log('单车socket');
                             map_name:value+'-seg'
                         }
                     };
-                    ajaxQueryLine(uploadDate);
+                    ajaxQueryLine(uploadDate,false);
                 });
             }
 
