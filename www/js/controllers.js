@@ -523,14 +523,17 @@ function ajaxQueryLine(option,isTrans){
         jsonp : "callback",
         jsonpCallback:"success_jsonpCallback",
         success:function(data){
-            console.log(data);
-            var pointStrArr = data.split('\n');
-            var lineArr = [];
+            if(option.params.map_name == '1-seg'){
+                console.log(data);
+            }
+
+            let pointStrArr = data.split('\n');
+            let lineArr = [];
             $.each(pointStrArr,function(index,value){
                 if(value != ''){//排除最后一个空数据
                     //先将gps点转换为高德地图坐标点,然后保存在线路数组中
                     if(isTrans){
-                        var lineObj = GPS.gcj_encrypt(value.split(',')[1], value.split(',')[0]);
+                        let lineObj = GPS.gcj_encrypt(value.split(',')[1], value.split(',')[0]);
                         lineArr.push([lineObj.lon,lineObj.lat]);
                     }else{
                         lineArr.push([Number(value.split(',')[0]),Number(value.split(',')[1])]);
@@ -538,9 +541,9 @@ function ajaxQueryLine(option,isTrans){
 
                 }
             });
-console.log(lineArr);
+//console.log(lineArr);
             //绘制折线
-            var polyline = new AMap.Polyline({
+            let polyline = new AMap.Polyline({
                 path: lineArr,          //设置线覆盖物路径
                 strokeColor: "#3366FF", //线颜色
                 strokeOpacity: 0.8,       //线透明度
@@ -775,7 +778,7 @@ console.log('单车socket');
                 lineArrStr= path_id;
                 var pathIdArr = path_id.split(',');
                 $.each(pathIdArr,function(index,value){
-                    var uploadDate = {
+                    let uploadDate = {
                         action:"uploadMap",
                         params:{
                             content:content,
