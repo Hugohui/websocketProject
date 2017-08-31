@@ -761,6 +761,7 @@ console.log('单车socket');
                 content = rData.data.position.content;//地图目录
 
             if(path_id&&carOptions.carId != '1234567893'&&path_id!=lineArrStr){
+                carLineMap.clearMap();
                 lineArrStr= path_id;
                 var pathIdArr = path_id.split(',');
                 $.each(pathIdArr,function(index,value){
