@@ -523,7 +523,7 @@ function ajaxQueryLine(option,isTrans){
                 data:option,
                 dataType: 'jsonp',
                 jsonp : "callback",
-                jsonpCallback:"success_jsonpCallback"+option.map_name,
+                jsonpCallback:"success_jsonpCallback"+(option.params.map_name).split('-')[0],
                 success:function(data){
                     let pointStrArr = data.split('\n');
                     let lineArr = [];
