@@ -442,7 +442,8 @@ function renderDataShowModal(e) {
                 map_name:"aolinpark.txt"
             }
         };
-        ajaxQueryLine(uploadDate,true);
+        var jsonpCallbackName = "success_jsonpCallback";
+        ajaxQueryLine(uploadDate,jsonpCallbackName,true);
     }
 
 
@@ -460,18 +461,18 @@ function renderDataShowModal(e) {
      */
     if(carType == 2){//窝小白
 
-        /*//隐藏窝必达位置信息
+        //隐藏窝必达位置信息
         $('.carLineDiv').hide();
 
         //设置地图显示大小
         $('.carMapDiv').css({
             minHeight:516,
-            borderRadius:"8px"
+            borderRadius:"8px",
+            overflow:"hidden"
         });
 
-        $('.carMapDiv canvas').css({
-            borderRadius:"8px"
-        });*/
+        //关闭车辆控制选择
+        $('#hanbleCheckbox').prop('disabled',true);
 
         //窝必达货柜信息隐藏
         $('.WBDCounter').hide();
@@ -489,6 +490,9 @@ function renderDataShowModal(e) {
             minHeight:400,
             borderRadius:"8px 8px 0 0"
         });
+
+        //开启车辆控制选择
+        $('#hanbleCheckbox').prop('disabled',false);
 
         $('.carMapDiv canvas').css({
             borderRadius:"8px 8px 0 0"
@@ -509,49 +513,48 @@ function renderDataShowModal(e) {
 }
 
 /**
- * 根据地图文件画路劲
+ * 根据地图文件画路径
  * @param option 请求参数
+ * @param option 跨域请求callback名称，防止返回的数据冲突
  * @param isTrans   是否进行位置转换
  */
-var time = 0;
-function ajaxQueryLine(option,isTrans){
+function ajaxQueryLine(option,jsonpCallbackName,isTrans){
     var uploadUrl = 'http://111.204.101.170:8184';
-    //setTimeout(function(){
-            $.ajax({
-                type:'POST',
-                url:uploadUrl,
-                data:option,
-                dataType: 'jsonp',
-                jsonp : "callback",
-                jsonpCallback:"success_jsonpCallback"+(option.params.map_name).split('-')[0],
-                success:function(data){
-                    let pointStrArr = data.split('\n');
-                    let lineArr = [];
-                    $.each(pointStrArr,function(index,value){
-                        if(value != ''){//排除最后一个空数据
-                            //先将gps点转换为高德地图坐标点,然后保存在线路数组中
-                            if(isTrans){
-                                let lineObj = GPS.gcj_encrypt(value.split(',')[1], value.split(',')[0]);
-                                lineArr.push([lineObj.lon,lineObj.lat]);
-                            }else{
-                                lineArr.push([Number(value.split(',')[0]),Number(value.split(',')[1])]);
-                            }
 
-                        }
-                    });
-                    //绘制折线
-                    new AMap.Polyline({
-                        path: lineArr,          //设置线覆盖物路径
-                        strokeColor: "#3366FF", //线颜色
-                        strokeOpacity: 0.8,       //线透明度
-                        strokeWeight: 2,        //线宽
-                        strokeStyle: "solid",   //线样式
-                        strokeDasharray: [10, 5] //补充线样式
-                    }).setMap(carLineMap);
+    //var callBackName = !isTrans  "success_jsonpCallback"+(option.params.map_name).split('-')[0]
+    $.ajax({
+        type:'POST',
+        url:uploadUrl,
+        data:option,
+        dataType: 'jsonp',
+        jsonp : "callback",
+        jsonpCallback:jsonpCallbackName,
+        success:function(data){
+            let pointStrArr = data.split('\n');
+            let lineArr = [];
+            $.each(pointStrArr,function(index,value){
+                if(value != ''){//排除最后一个空数据
+                    //先将gps点转换为高德地图坐标点,然后保存在线路数组中
+                    if(isTrans){
+                        let lineObj = GPS.gcj_encrypt(value.split(',')[1], value.split(',')[0]);
+                        lineArr.push([lineObj.lon,lineObj.lat]);
+                    }else{
+                        lineArr.push([Number(value.split(',')[0]),Number(value.split(',')[1])]);
+                    }
+
                 }
             });
-       /* },
-        time+=2000)*/
+            //绘制折线
+            new AMap.Polyline({
+                path: lineArr,          //设置线覆盖物路径
+                strokeColor: "#3366FF", //线颜色
+                strokeOpacity: 0.8,       //线透明度
+                strokeWeight: 2,        //线宽
+                strokeStyle: "solid",   //线样式
+                strokeDasharray: [10, 5] //补充线样式
+            }).setMap(carLineMap);
+        }
+    });
 }
 
 
@@ -650,10 +653,9 @@ console.log('单车socket');
         if (!rData.result) {
 
             /************车辆运行状态*************/
-            var carStatus = rData.data.status;
-            var carStatusStr = carStatus == 0?'运输中':'停止';//0 运输中  1停止
-            //显示运行状态文字
-            $('#carStatus').html(carStatusStr);
+            var carStatus = rData.data.status,
+                carStatusStr;
+
             //切换小车图标显示
             var WXB_imgPng = 'img/WXB_static.png',
                 WXB_imgGif = 'img/WXB_gif.gif',
@@ -664,11 +666,16 @@ console.log('单车socket');
             switch(carOptions.carType){
                 case '1'://窝必达
                     carStatus == 0?$('.carIconDiv>img').attr('src',WBD_imgGif):$('.carIconDiv>img').attr('src',WBD_imgPng);
+                    carStatusStr = carStatus == 0?'运输中':'停止';//0 运输中  1停止
                     break;
                 case '2'://窝小白
                     carStatus == 0?$('.carIconDiv>img').attr('src',WXB_imgGif):$('.carIconDiv>img').attr('src',WXB_imgPng);
+                    carStatusStr = carStatus == 0?'清扫中':'停止';//0 清扫中  1停止
                     break;
             }
+
+            //显示运行状态文字
+            $('#carStatus').html(carStatusStr);
 
             /*************显示货柜信息************/
             //货柜信息显示
@@ -783,7 +790,8 @@ console.log('单车socket');
                             map_name:value+'-seg'
                         }
                     };
-                    ajaxQueryLine(uploadDate,false);
+                    let jsonpCallbackName  = "success_jsonpCallback"+value;
+                    ajaxQueryLine(uploadDate,jsonpCallbackName,false);
                 });
             }
 
@@ -1080,8 +1088,10 @@ function initUsersTable() {
             //ajax请求数据
             $.ajax({
                 type: 'POST',
-                url:'http://111.204.101.170:8184',
-                data: '{action:"usersManage",params:' + param + '}',
+                url:'../data/users.txt',
+                //url:'http://111.204.101.170:8184',
+                //data: '{action:"usersManage",params:' + param + '}',
+                data: param,
                 dataType: 'jsonp',
                 jsonp : "callback",
                 jsonpCallback:"success_jsonpCallback",
