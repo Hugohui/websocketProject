@@ -513,47 +513,45 @@ function renderDataShowModal(e) {
  * @param option 请求参数
  * @param isTrans   是否进行位置转换
  */
+var time = 0;
 function ajaxQueryLine(option,isTrans){
     var uploadUrl = 'http://111.204.101.170:8184';
-    $.ajax({
-        type:'POST',
-        url:uploadUrl,
-        data:option,
-        dataType: 'jsonp',
-        jsonp : "callback",
-        jsonpCallback:"success_jsonpCallback",
-        success:function(data){
-            if(option.params.map_name == '1-seg'){
-                console.log(data);
-            }
+    //setTimeout(function(){
+            $.ajax({
+                type:'POST',
+                url:uploadUrl,
+                data:option,
+                dataType: 'jsonp',
+                jsonp : "callback",
+                jsonpCallback:"success_jsonpCallback"+option.map_name,
+                success:function(data){
+                    let pointStrArr = data.split('\n');
+                    let lineArr = [];
+                    $.each(pointStrArr,function(index,value){
+                        if(value != ''){//排除最后一个空数据
+                            //先将gps点转换为高德地图坐标点,然后保存在线路数组中
+                            if(isTrans){
+                                let lineObj = GPS.gcj_encrypt(value.split(',')[1], value.split(',')[0]);
+                                lineArr.push([lineObj.lon,lineObj.lat]);
+                            }else{
+                                lineArr.push([Number(value.split(',')[0]),Number(value.split(',')[1])]);
+                            }
 
-            let pointStrArr = data.split('\n');
-            let lineArr = [];
-            $.each(pointStrArr,function(index,value){
-                if(value != ''){//排除最后一个空数据
-                    //先将gps点转换为高德地图坐标点,然后保存在线路数组中
-                    if(isTrans){
-                        let lineObj = GPS.gcj_encrypt(value.split(',')[1], value.split(',')[0]);
-                        lineArr.push([lineObj.lon,lineObj.lat]);
-                    }else{
-                        lineArr.push([Number(value.split(',')[0]),Number(value.split(',')[1])]);
-                    }
-
+                        }
+                    });
+                    //绘制折线
+                    new AMap.Polyline({
+                        path: lineArr,          //设置线覆盖物路径
+                        strokeColor: "#3366FF", //线颜色
+                        strokeOpacity: 0.8,       //线透明度
+                        strokeWeight: 2,        //线宽
+                        strokeStyle: "solid",   //线样式
+                        strokeDasharray: [10, 5] //补充线样式
+                    }).setMap(carLineMap);
                 }
             });
-//console.log(lineArr);
-            //绘制折线
-            let polyline = new AMap.Polyline({
-                path: lineArr,          //设置线覆盖物路径
-                strokeColor: "#3366FF", //线颜色
-                strokeOpacity: 0.8,       //线透明度
-                strokeWeight: 2,        //线宽
-                strokeStyle: "solid",   //线样式
-                strokeDasharray: [10, 5] //补充线样式
-            });
-            polyline.setMap(carLineMap);
-        }
-    });
+       /* },
+        time+=2000)*/
 }
 
 
