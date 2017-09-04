@@ -147,6 +147,7 @@ header .headerRight .headerMsg{
 .mainViewPort .homeConHandle .queryCarDiv{
 }
 .queryCarDiv .queryInput ul li{
+    width: 150px;
     margin: 10px 0 0 10px;
 }
 .mainViewPort .homeConHandle .carStaChartDiv{

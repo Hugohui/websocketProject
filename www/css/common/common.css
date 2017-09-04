@@ -100,7 +100,7 @@ s{
     float: left;
 }
 .queryInput input{
-    width: 160px;
+    width: 150px;
     height: 32px;
     padding: 4px 5px;
     border: 1px solid #cccccc;
@@ -116,7 +116,7 @@ s{
     padding: 10px 20px;
 }
 .selectGroup{
-    width: 160px;
+    width: 150px;
     height: 32px;
     display: flex;
     border-radius: 3px;
