@@ -778,8 +778,11 @@ console.log('单车socket');
             var path_id = rData.data.position.path_id,//路径编号
                 content = rData.data.position.content;//地图目录
 
+            var lineArr  = [];//实时绘制路径的点数组
+
             if(path_id&&carOptions.carId != '1234567893'&&path_id!=lineArrStr){
                 carLineMap.clearMap();
+                lineArr  = [];//当路径规划变化时，清除小车的实时路径
                 lineArrStr= path_id;
                 var pathIdArr = path_id.split(',');
                 $.each(pathIdArr,function(index,value){
@@ -826,7 +829,7 @@ console.log('单车socket');
             //将点放到点数组中
             markers.push(marker);
 
-            var lineArr  = [];
+            //小车运动的点位置存储为数组
             $.each(markersLine,function(index,value){
                 lineArr.push([Number(value.split(',')[0]),Number(value.split(',')[1])]);
             });
