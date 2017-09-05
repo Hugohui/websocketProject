@@ -382,6 +382,9 @@ function initHomeMap() {
         homeMap.addControl(new AMap.ToolBar());
     });
 
+    //隐藏高德地图版本等信息
+    hideMapRight();
+
     //地图输入查询区域
     //输入提示
     var autoOptions = {
@@ -426,6 +429,10 @@ function renderDataShowModal(e) {
     carLineMap.plugin(["AMap.ToolBar"], function () {
         carLineMap.addControl(new AMap.ToolBar());
     });
+
+    //隐藏高德地图版本等信息
+    hideMapRight();
+
     if (carId == '1234567893') {
         /*
          |--------------------------------------

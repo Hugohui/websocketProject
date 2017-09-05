@@ -56,3 +56,11 @@ var GPS = {
         return ret;
     }
 };
+
+/**
+ * //隐藏高德地图版本等信息
+ */
+var hideMapRight = function(){
+    $('.amap-logo').hide();//字
+    $('.amap-copyright').remove();//版权
+}
