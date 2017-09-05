@@ -1316,7 +1316,7 @@ function initAllOrderTable() {
             if (data.username == '' || data.phone == '' || data.order_id == '' || data.car_id == '' || data.location_id == '') {
                 param.queryData = {};
             } else {
-                aram.queryData = {
+                param.queryData = {
                     queryUser: data.username,
                     queryPhone: data.phone,
                     order_id: data.order_id,
