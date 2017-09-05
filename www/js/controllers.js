@@ -1457,7 +1457,7 @@ function initUnusualOrderTable() {
             if (data.username == '' || data.phone == '' || data.order_id == '' || data.car_id == '' || data.location_id == '') {
                 param.queryData = {};
             } else {
-                aram.queryData = {
+                param.queryData = {
                     queryUser: data.username,
                     queryPhone: data.phone,
                     order_id: data.order_id,
@@ -1581,7 +1581,7 @@ function initTransOrderTable() {
             if (data.username == '' || data.phone == '' || data.order_id == '' || data.car_id == '' || data.location_id == '') {
                 param.queryData = {};
             } else {
-                aram.queryData = {
+                param.queryData = {
                     queryUser: data.username,
                     queryPhone: data.phone,
                     order_id: data.order_id,
@@ -1706,7 +1706,7 @@ function initCompleteOrderTable() {
             if (data.username == '' || data.phone == '' || data.order_id == '' || data.car_id == '' || data.location_id == '') {
                 param.queryData = {};
             } else {
-                aram.queryData = {
+                param.queryData = {
                     queryUser: data.username,
                     queryPhone: data.phone,
                     order_id: data.order_id,
@@ -1827,7 +1827,7 @@ function initCarsTable() {
             if (data.car_id == '' || data.area == '' || data.hitch == '') {
                 param.queryData = {};
             } else {
-                aram.queryData = {
+                param.queryData = {
                     car_id: data.car_id,
                     area: data.area,
                     hitch: data.hitch
