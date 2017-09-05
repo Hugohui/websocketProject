@@ -22,22 +22,22 @@ mainStart
             closeCarOpenHomeWs();
 
             //关闭窗口时如果视频窗口可见，则关闭视频推流
-            if($('.carMonitorVideo').is(':visible')){
+            if ($('.carMonitorVideo').is(':visible')) {
                 //发送操作请求
                 var data = {
-                    action:"webControl",
-                    params:{
-                        "car_id":$('#carId').html(),
-                        "opType":5,
-                        "opVal":0//关闭
+                    action: "webControl",
+                    params: {
+                        "car_id": $('#carId').html(),
+                        "opType": 5,
+                        "opVal": 0//关闭
                     }
                 }
                 //发送求情
                 videoController(data);
             }
             //车辆操控
-            if($('#hanbleCheckbox').is(':checked')){
-                $('#hanbleCheckbox').prop('checked',false);
+            if ($('#hanbleCheckbox').is(':checked')) {
+                $('#hanbleCheckbox').prop('checked', false);
                 //控制台
                 $('.carHandle').hide();
 
@@ -48,8 +48,8 @@ mainStart
                 $('.carStatus').show();
             }
             //视频监控
-            if($('#monitorCheckbox').is(':checked')){
-                $('#monitorCheckbox').prop('checked',false);
+            if ($('#monitorCheckbox').is(':checked')) {
+                $('#monitorCheckbox').prop('checked', false);
                 //隐藏视频
                 $('.carMonitorVideo').hide();
 
@@ -58,7 +58,6 @@ mainStart
 
             }
         }
-
 
         //条件查询车辆
         $scope.searchCar = searchMapCar;
@@ -74,20 +73,20 @@ mainStart
 
         //窝必达单车信息，全部线路
         $('#allPosition').on({
-            mouseover:function(){
+            mouseover: function () {
                 $('.showPositionAll').show();
             },
-            mouseout:function(){
+            mouseout: function () {
                 $('.showPositionAll').hide();
             }
         });
 
         //窝小白单车信息，全部线路
         $('#WXB_allPosition').on({
-            mouseover:function(){
+            mouseover: function () {
                 $('.WXB_showPositionAll').show();
             },
-            mouseout:function(){
+            mouseout: function () {
                 $('.WXB_showPositionAll').hide();
             }
         });
@@ -304,8 +303,8 @@ mainStart
         $scope.closeCarDetail = function () {
             closeCarOpenHomeWs();
             //车辆操控
-            if($('#hanbleCheckbox').is(':checked')){
-                $('#hanbleCheckbox').prop('checked',false);
+            if ($('#hanbleCheckbox').is(':checked')) {
+                $('#hanbleCheckbox').prop('checked', false);
                 //控制台
                 $('.carHandle').hide();
 
@@ -316,8 +315,8 @@ mainStart
                 $('.carStatus').show();
             }
             //视频监控
-            if($('#monitorCheckbox').is(':checked')){
-                $('#monitorCheckbox').prop('checked',false);
+            if ($('#monitorCheckbox').is(':checked')) {
+                $('#monitorCheckbox').prop('checked', false);
                 //隐藏视频
                 $('.carMonitorVideo').hide();
 
@@ -369,7 +368,7 @@ mainStart
 /**
  * 主页地图初始化
  */
-var homeWs, homeMap,searchWs;
+var homeWs, homeMap, searchWs;
 function initHomeMap() {
     //初始化
     homeMap = new AMap.Map('homeMap', {
@@ -402,13 +401,13 @@ function initHomeMap() {
     var dataOption = {
         data: '{"action":"home","params":{}}'
     };
-    creatHomeWs(homeMap,dataOption);
+    creatHomeWs(homeMap, dataOption);
 }
 
 /**
  * 渲染点击的车辆信息，显示车辆信息模态框
  */
-var carWs,carLineMap;
+var carWs, carLineMap;
 function renderDataShowModal(e) {
 
     //获取车辆id和车辆类型
@@ -427,31 +426,28 @@ function renderDataShowModal(e) {
     carLineMap.plugin(["AMap.ToolBar"], function () {
         carLineMap.addControl(new AMap.ToolBar());
     });
-
-
-    if(carId == '1234567893'){
+    if (carId == '1234567893') {
         /*
          |--------------------------------------
          |请求车辆的路径规划信息，并在地图上显示
          |--------------------------------------
          */
         var uploadDate = {
-            action:"uploadMap",
-            params:{
-                content:"aosen",
-                map_name:"aolinpark.txt"
+            action: "uploadMap",
+            params: {
+                content: "aosen",
+                map_name: "aolinpark.txt"
             }
         };
         var jsonpCallbackName = "success_jsonpCallback";
-        ajaxQueryLine(uploadDate,jsonpCallbackName,true);
+        ajaxQueryLine(uploadDate, jsonpCallbackName, true);
     }
-
 
     //建立单车websocket
     creatCarWs({
-        carId:carId,//车辆id
-        carType:carType,//车辆类型
-        carPoint:carPoint//车辆位置
+        carId: carId,//车辆id
+        carType: carType,//车辆类型
+        carPoint: carPoint//车辆位置
     });
 
     /*
@@ -459,20 +455,20 @@ function renderDataShowModal(e) {
      |  根据车辆类型，设置弹层显示不同的样式
      |-----------------------------------------
      */
-    if(carType == 2){//窝小白
+    if (carType == 2) {//窝小白
 
         //隐藏窝必达位置信息
         $('.carLineDiv').hide();
 
         //设置地图显示大小
         $('.carMapDiv').css({
-            minHeight:516,
-            borderRadius:"8px",
-            overflow:"hidden"
+            minHeight: 516,
+            borderRadius: "8px",
+            overflow: "hidden"
         });
 
         //关闭车辆控制选择
-        $('#hanbleCheckbox').prop('disabled',true);
+        $('#hanbleCheckbox').prop('disabled', true);
 
         //窝必达货柜信息隐藏
         $('.WBDCounter').hide();
@@ -480,22 +476,22 @@ function renderDataShowModal(e) {
         //窝小白扫地车位置信息显示
         //$('.WXBPosition').show();
 
-    }else if(carType == 1){
+    } else if (carType == 1) {
 
         //显示窝必达线路
         $('.carLineDiv').show();
 
         //修改地图显示大小
         $('.carMapDiv').css({
-            minHeight:400,
-            borderRadius:"8px 8px 0 0"
+            minHeight: 400,
+            borderRadius: "8px 8px 0 0"
         });
 
         //开启车辆控制选择
-        $('#hanbleCheckbox').prop('disabled',false);
+        $('#hanbleCheckbox').prop('disabled', false);
 
         $('.carMapDiv canvas').css({
-            borderRadius:"8px 8px 0 0"
+            borderRadius: "8px 8px 0 0"
         });
 
         //显示窝必达货柜信息
@@ -509,7 +505,7 @@ function renderDataShowModal(e) {
     $('#carDetailModal').modal('show');
 
     //调整地图为最佳视野
-    carLineMap.setZoomAndCenter(18, [carPoint.split(',')[0],carPoint.split(',')[1]]);
+    carLineMap.setZoomAndCenter(18, [carPoint.split(',')[0], carPoint.split(',')[1]]);
 }
 
 /**
@@ -518,30 +514,29 @@ function renderDataShowModal(e) {
  * @param option 跨域请求callback名称，防止返回的数据冲突
  * @param isTrans   是否进行位置转换
  */
-function ajaxQueryLine(option,jsonpCallbackName,isTrans){
-    var uploadUrl = 'http://111.204.101.170:8184';
+function ajaxQueryLine(option, jsonpCallbackName, isTrans) {
 
+    var uploadUrl = 'http://111.204.101.170:8184';
     //var callBackName = !isTrans  "success_jsonpCallback"+(option.params.map_name).split('-')[0]
     $.ajax({
-        type:'POST',
-        url:uploadUrl,
-        data:option,
+        type: 'POST',
+        url: uploadUrl,
+        data: option,
         dataType: 'jsonp',
-        jsonp : "callback",
-        jsonpCallback:jsonpCallbackName,
-        success:function(data){
+        jsonp: "callback",
+        jsonpCallback: jsonpCallbackName,
+        success: function (data) {
             let pointStrArr = data.split('\n');
             let lineArr = [];
-            $.each(pointStrArr,function(index,value){
-                if(value != ''){//排除最后一个空数据
+            $.each(pointStrArr, function (index, value) {
+                if (value != '') {//排除最后一个空数据
                     //先将gps点转换为高德地图坐标点,然后保存在线路数组中
-                    if(isTrans){
+                    if (isTrans) {
                         let lineObj = GPS.gcj_encrypt(value.split(',')[1], value.split(',')[0]);
-                        lineArr.push([lineObj.lon,lineObj.lat]);
-                    }else{
-                        lineArr.push([Number(value.split(',')[0]),Number(value.split(',')[1])]);
+                        lineArr.push([lineObj.lon, lineObj.lat]);
+                    } else {
+                        lineArr.push([Number(value.split(',')[0]), Number(value.split(',')[1])]);
                     }
-
                 }
             });
             //绘制折线
@@ -557,19 +552,18 @@ function ajaxQueryLine(option,jsonpCallbackName,isTrans){
     });
 }
 
-
 /**
  * 建立首页websocket
  */
-function creatHomeWs(map,options) {
+function creatHomeWs(map, options) {
 
     //websocket配置
     var websocketOptions = options;
     homeWs = handleWebsocket(websocketOptions, function (msg) {
-console.log('首页socket');
+        console.log('首页socket');
         //判断是否是在首页或者车辆分布页面，只有在首页和车辆分布页面进行websocket数据传输
         var pathUrl = window.location.href;
-        if(!(pathUrl.split('#')[1] == '/' || pathUrl.split('#')[1] == '/carManage/carDistribute')){
+        if (!(pathUrl.split('#')[1] == '/' || pathUrl.split('#')[1] == '/carManage/carDistribute')) {
             //在其他页面关闭已经连接的websocket
             homeWs.close();
             return;
@@ -579,11 +573,11 @@ console.log('首页socket');
         var status = rData.status;
         if (!msg.data.result) {
 
-            drawMarker(map,rData);
+            drawMarker(map, rData);
 
             /**********车辆活动状态************/
             //车辆分布页面不需要画饼状图
-            if(pathUrl.split('#')[1] == '/'){
+            if (pathUrl.split('#')[1] == '/') {
                 drawCarPie(status);
             }
 
@@ -596,14 +590,14 @@ console.log('首页socket');
  * @param map   地图
  * @param options   数据
  */
-function creatSearchWs(map,options){
+function creatSearchWs(map, options) {
     //websocket配置
     var websocketOptions = options;
     searchWs = handleWebsocket(websocketOptions, function (msg) {
         console.log('查询socket');
         //判断是否是在首页或者车辆分布页面，只有在首页和车辆分布页面进行websocket数据传输
         var pathUrl = window.location.href;
-        if(!(pathUrl.split('#')[1] == '/' || pathUrl.split('#')[1] == '/carManage/carDistribute')){
+        if (!(pathUrl.split('#')[1] == '/' || pathUrl.split('#')[1] == '/carManage/carDistribute')) {
             //在其他页面关闭已经连接的websocket
             searchWs.close();
             return;
@@ -613,11 +607,11 @@ function creatSearchWs(map,options){
         var status = rData.status;
         if (!msg.data.result) {
 
-            drawMarker(map,rData);
+            drawMarker(map, rData);
 
             /**********车辆活动状态************/
             //车辆分布页面不需要画饼状图
-            if(pathUrl.split('#')[1] == '/'){
+            if (pathUrl.split('#')[1] == '/') {
                 drawCarPie(status);
             }
         }
@@ -633,7 +627,7 @@ function creatCarWs(carOptions) {
     carOptions.carId && $('#carId').html(carOptions.carId);
 
     //保存车辆行驶的线路信息点，即每次位置更新的点
-    var markers= [],
+    var markers = [],
         markersLine = [];
 
     //保存车辆的路径编号
@@ -645,7 +639,7 @@ function creatCarWs(carOptions) {
     }
 
     carWs = handleWebsocket(websocketOptions, function (msg) {
-console.log('单车socket');
+        console.log('单车socket');
         //将接受到的json转化为对象
         var rData = $.parseJSON(msg.data).resData;
 
@@ -663,14 +657,14 @@ console.log('单车socket');
                 WBD_imgGif = 'img/WBD_gif.gif';
 
             //根据车辆类型设置车辆状态图标
-            switch(carOptions.carType){
+            switch (carOptions.carType) {
                 case '1'://窝必达
-                    carStatus == 0?$('.carIconDiv>img').attr('src',WBD_imgGif):$('.carIconDiv>img').attr('src',WBD_imgPng);
-                    carStatusStr = carStatus == 0?'运输中':'停止';//0 运输中  1停止
+                    carStatus == 0 ? $('.carIconDiv>img').attr('src', WBD_imgGif) : $('.carIconDiv>img').attr('src', WBD_imgPng);
+                    carStatusStr = carStatus == 0 ? '运输中' : '停止';//0 运输中  1停止
                     break;
                 case '2'://窝小白
-                    carStatus == 0?$('.carIconDiv>img').attr('src',WXB_imgGif):$('.carIconDiv>img').attr('src',WXB_imgPng);
-                    carStatusStr = carStatus == 0?'清扫中':'停止';//0 清扫中  1停止
+                    carStatus == 0 ? $('.carIconDiv>img').attr('src', WXB_imgGif) : $('.carIconDiv>img').attr('src', WXB_imgPng);
+                    carStatusStr = carStatus == 0 ? '清扫中' : '停止';//0 清扫中  1停止
                     break;
             }
 
@@ -697,13 +691,13 @@ console.log('单车socket');
                     $(val).html(boxesIdArr[index]);
                     //改变背景颜色
                     $(val).removeClass('bg-counterBlank').addClass('bg-counterFull').css({
-                        color:'#fff'
+                        color: '#fff'
                     });
                     //设置字体颜色
                 } else {//没有订单号的显示为空柜
                     $(val).html('空');
                     $(val).removeClass('bg-counterFull').addClass('bg-counterBlank').css({
-                        color:'#000'
+                        color: '#000'
                     });
                 }
 
@@ -715,94 +709,94 @@ console.log('单车socket');
             var mechelecinfo = rData.data.mechelecinfo[0];
 
             //获取数据中的各个机电信息
-            var batter_voltage = mechelecinfo.batter_voltage+'V',//电压
-                batter_templature = mechelecinfo.batter_templature+'℃',//电池温度
-                battery_totquantity = mechelecinfo.battery_totquantity+'C',//电池总电量
-                battery_quantity = mechelecinfo.battery_quantity+'C',//剩余电量
-                battery_current = mechelecinfo.battery_current+'A',//电流情况
-                ugv_memory = mechelecinfo.ugv_memory+'%',//内存使用率
-                ugv_cpu = mechelecinfo.ugv_cpu+'%',//cpu使用率
-                ugv_storage = mechelecinfo.ugv_storage+'%',//存储使用率
-                ugv_restdistance = mechelecinfo.ugv_restdistance+'km';//续航里程
+            var batter_voltage = mechelecinfo.batter_voltage + 'V',//电压
+                batter_templature = mechelecinfo.batter_templature + '℃',//电池温度
+                battery_totquantity = mechelecinfo.battery_totquantity + 'C',//电池总电量
+                battery_quantity = mechelecinfo.battery_quantity + 'C',//剩余电量
+                battery_current = mechelecinfo.battery_current + 'A',//电流情况
+                ugv_memory = mechelecinfo.ugv_memory + '%',//内存使用率
+                ugv_cpu = mechelecinfo.ugv_cpu + '%',//cpu使用率
+                ugv_storage = mechelecinfo.ugv_storage + '%',//存储使用率
+                ugv_restdistance = mechelecinfo.ugv_restdistance + 'km';//续航里程
 
             //给页面上的机电信息赋值
             $('#batter_voltage').html(batter_voltage),//电压
-            $('#batter_templature').html(batter_templature),//电池温度
-            $('#battery_totquantity').html(battery_totquantity),//电池总电量
-            $('#battery_quantity').html(battery_quantity),//剩余电量
-            $('#battery_current').html(battery_current),//电流情况
-            $('#ugv_memory').html(ugv_memory),//内存使用率
-            $('#ugv_cpu').html(ugv_cpu),//cpu使用率
-            $('#ugv_storge').html(ugv_storage),//存储使用率
-            $('#ugv_restdistance').html(ugv_restdistance);//续航里程
+                $('#batter_templature').html(batter_templature),//电池温度
+                $('#battery_totquantity').html(battery_totquantity),//电池总电量
+                $('#battery_quantity').html(battery_quantity),//剩余电量
+                $('#battery_current').html(battery_current),//电流情况
+                $('#ugv_memory').html(ugv_memory),//内存使用率
+                $('#ugv_cpu').html(ugv_cpu),//cpu使用率
+                $('#ugv_storge').html(ugv_storage),//存储使用率
+                $('#ugv_restdistance').html(ugv_restdistance);//续航里程
 
             //电池电量示意图显示batteryBody battery battery60
-            var batteryParent = mechelecinfo.battery_quantity/mechelecinfo.battery_totquantity*100;
-            if(batteryParent==0){
-                $('.batteryBody').attr('class','batteryBody battery battery0');
-            }else if(batteryParent<20){
-                $('.batteryBody').attr('class','batteryBody battery battery0_20');
-            }else if(batteryParent<45){
-                $('.batteryBody').attr('class','batteryBody battery battery20_45');
-            }else if(batteryParent<75){
-                $('.batteryBody').attr('class','batteryBody battery battery45_75');
-            }else if(batteryParent<100){
-                $('.batteryBody').attr('class','batteryBody battery battery75_100');
-            }else if(batteryParent == 100){
-                $('.batteryBody').attr('class','batteryBody battery battery100');
+            var batteryParent = mechelecinfo.battery_quantity / mechelecinfo.battery_totquantity * 100;
+            if (batteryParent == 0) {
+                $('.batteryBody').attr('class', 'batteryBody battery battery0');
+            } else if (batteryParent < 20) {
+                $('.batteryBody').attr('class', 'batteryBody battery battery0_20');
+            } else if (batteryParent < 45) {
+                $('.batteryBody').attr('class', 'batteryBody battery battery20_45');
+            } else if (batteryParent < 75) {
+                $('.batteryBody').attr('class', 'batteryBody battery battery45_75');
+            } else if (batteryParent < 100) {
+                $('.batteryBody').attr('class', 'batteryBody battery battery75_100');
+            } else if (batteryParent == 100) {
+                $('.batteryBody').attr('class', 'batteryBody battery battery100');
             }
 
-/*            /!***********显示位置信息*************!/
-            var position = rData.data.position;
+            /*            /!***********显示位置信息*************!/
+             var position = rData.data.position;
 
-            var currentPositon = position.cur,//当前位置
-                nextPosition = position.next,//下一投递位置
-                allPosition = position.all;//总投递线路
+             var currentPositon = position.cur,//当前位置
+             nextPosition = position.next,//下一投递位置
+             allPosition = position.all;//总投递线路
 
-            //给页面上赋值
-            $('#currentPositon').html(currentPositon);
-            $('#nextPosition').html(nextPosition);
-            $('#allPosition').html(allPosition);
+             //给页面上赋值
+             $('#currentPositon').html(currentPositon);
+             $('#nextPosition').html(nextPosition);
+             $('#allPosition').html(allPosition);
 
 
-            /!***********故障信息***************!/
-            var hitchinfo = rData.data.hitchinfo;
-            var strInfo = '';
-            //遍历故障信息添加到页面上
-            $.each(hitchinfo,function(index,vlaue){
-                strInfo +='<p class="pr"><span class="pa carTroubleTime">'+vlaue.timestamp+'</span>'+value.timestamp+'</p>';
-            });
-            $('.carTroubleInfo').html(strInfo);*/
+             /!***********故障信息***************!/
+             var hitchinfo = rData.data.hitchinfo;
+             var strInfo = '';
+             //遍历故障信息添加到页面上
+             $.each(hitchinfo,function(index,vlaue){
+             strInfo +='<p class="pr"><span class="pa carTroubleTime">'+vlaue.timestamp+'</span>'+value.timestamp+'</p>';
+             });
+             $('.carTroubleInfo').html(strInfo);*/
 
             /***********车辆路径规划***************/
             var path_id = rData.data.position.path_id,//路径编号
                 content = rData.data.position.content;//地图目录
 
-            var lineArr  = [];//实时绘制路径的点数组
+            var lineArr = [];//实时绘制路径的点数组
 
-            if(path_id&&carOptions.carId != '1234567893'&&path_id!=lineArrStr){
+            if (path_id && carOptions.carId != '1234567893' && path_id != lineArrStr) {
                 carLineMap.clearMap();
-                lineArr  = [];//当路径规划变化时，清除小车的实时路径
-                lineArrStr= path_id;
+                lineArr = [];//当路径规划变化时，清除小车的实时路径
+                lineArrStr = path_id;
                 var pathIdArr = path_id.split(',');
-                $.each(pathIdArr,function(index,value){
+                $.each(pathIdArr, function (index, value) {
                     let uploadDate = {
-                        action:"uploadMap",
-                        params:{
-                            content:content,
-                            map_name:value+'-seg'
+                        action: "uploadMap",
+                        params: {
+                            content: content,
+                            map_name: value + '-seg'
                         }
                     };
-                    let jsonpCallbackName  = "success_jsonpCallback"+value;
-                    ajaxQueryLine(uploadDate,jsonpCallbackName,false);
+                    let jsonpCallbackName = "success_jsonpCallback" + value;
+                    ajaxQueryLine(uploadDate, jsonpCallbackName, false);
                 });
             }
 
             /***********车辆实时路径***************/
             //点的图标
             var carIcon = {
-                "1":"img/carMap.png",   //窝必达
-                "2":"img/WXB_map.png"    //窝小白
+                "1": "img/carMap.png",   //窝必达
+                "2": "img/WXB_map.png"    //窝小白
             }
 
             //车辆实时位置点
@@ -811,18 +805,18 @@ console.log('单车socket');
             //console.log(position);
             //绘制实时走过的线路
             //先进行坐标转换
-            var currentPosition = GPS.gcj_encrypt(position.lat,position.lon);
-            if($.inArray(currentPosition.lon+','+currentPosition.lat,markersLine) == -1){//点不重复
-                markersLine.push(currentPosition.lon+','+currentPosition.lat);
+            var currentPosition = GPS.gcj_encrypt(position.lat, position.lon);
+            if ($.inArray(currentPosition.lon + ',' + currentPosition.lat, markersLine) == -1) {//点不重复
+                markersLine.push(currentPosition.lon + ',' + currentPosition.lat);
             }
 
             carLineMap.remove(markers);
 
             //在地图上画点
             var marker = new AMap.Marker({
-                position: [Number(currentPosition.lon),Number(currentPosition.lat)],
+                position: [Number(currentPosition.lon), Number(currentPosition.lat)],
                 map: carLineMap,
-                icon:carIcon[carOptions.carType],//根据车辆的类型设置图标
+                icon: carIcon[carOptions.carType],//根据车辆的类型设置图标
                 offset: new AMap.Pixel(-15, -10),//图标以点为中心
             });
 
@@ -830,8 +824,8 @@ console.log('单车socket');
             markers.push(marker);
 
             //小车运动的点位置存储为数组
-            $.each(markersLine,function(index,value){
-                lineArr.push([Number(value.split(',')[0]),Number(value.split(',')[1])]);
+            $.each(markersLine, function (index, value) {
+                lineArr.push([Number(value.split(',')[0]), Number(value.split(',')[1])]);
             });
 
             //绘制折线
@@ -856,8 +850,8 @@ function closeCarOpenHomeWs() {
 
     //恢复页面的默认值
     $('#carId').val('--');//车辆编号
-    $('.counterDiv>div>div').attr('class','bg-counterBlank').html('--').css({
-        color:'#000'
+    $('.counterDiv>div>div').attr('class', 'bg-counterBlank').html('--').css({
+        color: '#000'
     });
 }
 
@@ -866,15 +860,15 @@ function closeCarOpenHomeWs() {
  * @param map   地图
  * @param rData     点数据
  */
-function drawMarker(map,rData){
+function drawMarker(map, rData) {
     var pointData = rData.data;
     var carIdArr = [],
         carPositionArr = [],
         typeArr = [];//1：窝必达 2：扫地车
     //点的图标
     var carIcon = {
-        "1":"img/carMap.png",   //窝必达
-        "2":"img/WXB_map.png"    //扫地车
+        "1": "img/carMap.png",   //窝必达
+        "2": "img/WXB_map.png"    //扫地车
     }
     $.each(pointData, function (index, value) {
         carIdArr.push(value.car_id);
@@ -897,18 +891,18 @@ function drawMarker(map,rData){
         //获取对应车辆的类型，后续做类型判断和显示
         let carType = typeArr[i];
 
-        if(carType != 3){//不显示其他类型车辆
+        if (carType != 3) {//不显示其他类型车辆
             //先将gps点转换为高德地图坐标点，然后地图画点
             AMap.convertFrom(carPositionArr[i], "gps", function (status, result) {
                 var marker = new AMap.Marker({
                     position: [result.locations[0].lng, result.locations[0].lat],
-                    extData:{       //给点设置自定义属性
-                        type:carType,
-                        carPoint:result.locations[0].lng+','+result.locations[0].lat
+                    extData: {       //给点设置自定义属性
+                        type: carType,
+                        carPoint: result.locations[0].lng + ',' + result.locations[0].lat
                     },
                     title: title,   //点的title
                     map: map,
-                    icon:carIcon[carType],    //点的图标
+                    icon: carIcon[carType],    //点的图标
                     offset: new AMap.Pixel(-15, -10),//图标以点为中心
                 });
 
@@ -927,8 +921,7 @@ function drawMarker(map,rData){
 /**
  * 地图车辆条件查询
  */
-/*body={"action":"home","params":{"car_id":"13439163725","status":"13439163725","hitch":"1"}}*/
-function searchMapCar(){
+function searchMapCar() {
 
     var status = '5',
         hitch = '6',
@@ -937,11 +930,11 @@ function searchMapCar(){
     carId = $('#searchCarId').val();
 
     //状态
-    if($('.isTransDiv>div.active').length>0){
+    if ($('.isTransDiv>div.active').length > 0) {
         status = $('.isTransDiv>div.active').attr('valuetype');
     }
     //是否故障
-    if($('.isHitchDiv>div.active').length>0){
+    if ($('.isHitchDiv>div.active').length > 0) {
         hitch = $('.isHitchDiv>div.active').attr('valuetype');
     }
 
@@ -954,13 +947,13 @@ function searchMapCar(){
         data: '{"action":"home","params":{}}'
     };
 
-    creatSearchWs(homeMap,dataOption);
+    creatSearchWs(homeMap, dataOption);
 }
 
 /**
  * 清空条件查询
  */
-function closeSearchWs(){
+function closeSearchWs() {
 
     //关闭搜索websocket
     searchWs.close();
@@ -969,7 +962,7 @@ function closeSearchWs(){
     var dataOption = {
         data: '{"action":"home","params":{}}'
     };
-    creatHomeWs(homeMap,dataOption);
+    creatHomeWs(homeMap, dataOption);
 }
 
 /**
@@ -1022,7 +1015,6 @@ function drawCarPie(status) {
         ]
     };
     myChart.setOption(option);
-
 }
 
 /**
@@ -1091,13 +1083,13 @@ function initUsersTable() {
             //ajax请求数据
             $.ajax({
                 type: 'POST',
-                url:'../data/users.txt',
+                url: '../data/users.txt',
                 //url:'http://111.204.101.170:8184',
                 //data: '{action:"usersManage",params:' + param + '}',
                 data: param,
                 dataType: 'jsonp',
-                jsonp : "callback",
-                jsonpCallback:"success_jsonpCallback",
+                jsonp: "callback",
+                jsonpCallback: "success_jsonpCallback",
                 success: function (result) {
                     //封装返回数据
                     var returnData = {};
@@ -1137,111 +1129,107 @@ function initUsersTable() {
  */
 var managersTable;
 function initManagersTable() {
-    try {
-        var scrollY = $('.managersTableDiv').height() - $('.queryDiv').height() - 85;
-        //提示信息
-        var lang = {
-            "sProcessing": "处理中...",
-            "sLengthMenu": "每页 _MENU_ 项",
-            "sZeroRecords": "没有匹配结果",
-            "sInfo": "当前显示第 _START_ 至 _END_ 项，共 _TOTAL_ 项。",
-            "sInfoEmpty": "当前显示第 0 至 0 项，共 0 项",
-            "sInfoFiltered": "(由 _MAX_ 项结果过滤)",
-            "sInfoPostFix": "",
-            "sSearch": "搜索:",
-            "sUrl": "",
-            "sEmptyTable": "表中数据为空",
-            "sLoadingRecords": "载入中...",
-            "sInfoThousands": ",",
-            "oPaginate": {
-                "sFirst": "首页",
-                "sPrevious": "上页",
-                "sNext": "下页",
-                "sLast": "末页",
-                "sJump": "跳转"
-            },
-            "oAria": {
-                "sSortAscending": ": 以升序排列此列",
-                "sSortDescending": ": 以降序排列此列"
+
+    var scrollY = $('.managersTableDiv').height() - $('.queryDiv').height() - 85;
+    //提示信息
+    var lang = {
+        "sProcessing": "处理中...",
+        "sLengthMenu": "每页 _MENU_ 项",
+        "sZeroRecords": "没有匹配结果",
+        "sInfo": "当前显示第 _START_ 至 _END_ 项，共 _TOTAL_ 项。",
+        "sInfoEmpty": "当前显示第 0 至 0 项，共 0 项",
+        "sInfoFiltered": "(由 _MAX_ 项结果过滤)",
+        "sInfoPostFix": "",
+        "sSearch": "搜索:",
+        "sUrl": "",
+        "sEmptyTable": "表中数据为空",
+        "sLoadingRecords": "载入中...",
+        "sInfoThousands": ",",
+        "oPaginate": {
+            "sFirst": "首页",
+            "sPrevious": "上页",
+            "sNext": "下页",
+            "sLast": "末页",
+            "sJump": "跳转"
+        },
+        "oAria": {
+            "sSortAscending": ": 以升序排列此列",
+            "sSortDescending": ": 以降序排列此列"
+        }
+    };
+
+    //初始化表格
+    managersTable = $("#managersTable").dataTable({
+        language: lang,  //提示信息
+        autoWidth: false,  //禁用自动调整列宽
+        scrollY: scrollY,
+        stripeClasses: ["odd", "even"],  //为奇偶行加上样式，兼容不支持CSS伪类的场合
+        processing: true,  //隐藏加载提示,自行处理
+        serverSide: true,  //启用服务器端分页
+        searching: false,  //禁用原生搜索
+        orderMulti: false,  //启用多列排序
+        ordering: false,
+        order: [],  //取消默认排序查询,否则复选框一列会出现小箭头
+        renderer: "Bootstrap",  //渲染样式：Bootstrap和jquery-ui
+        pagingType: "full_numbers",  //分页样式：simple,simple_numbers,full,full_numbers
+        /*columnDefs: [
+         {
+         "targets":[0,1,2,4],
+         "orderable":false
+         }
+         ],*/
+        ajax: function (data, callback, settings) {
+            //封装请求参数
+            var param = {};
+            param.limit = data.length;//页面显示记录条数，在页面显示每页显示多少项的时候
+            param.start = data.start;//开始的记录序号
+            param.page = (data.start / data.length) + 1;//当前页码
+            //请求数据
+            $('#queryUserInp').val() == '' ? param.queryData = {} : param.queryData = {
+                queryUser: $('#queryUserInp').val()
             }
-        };
-
-        //初始化表格
-        managersTable = $("#managersTable").dataTable({
-            language: lang,  //提示信息
-            autoWidth: false,  //禁用自动调整列宽
-            scrollY: scrollY,
-            stripeClasses: ["odd", "even"],  //为奇偶行加上样式，兼容不支持CSS伪类的场合
-            processing: true,  //隐藏加载提示,自行处理
-            serverSide: true,  //启用服务器端分页
-            searching: false,  //禁用原生搜索
-            orderMulti: false,  //启用多列排序
-            ordering: false,
-            order: [],  //取消默认排序查询,否则复选框一列会出现小箭头
-            renderer: "Bootstrap",  //渲染样式：Bootstrap和jquery-ui
-            pagingType: "full_numbers",  //分页样式：simple,simple_numbers,full,full_numbers
-            /*columnDefs: [
-             {
-             "targets":[0,1,2,4],
-             "orderable":false
-             }
-             ],*/
-            ajax: function (data, callback, settings) {
-                //封装请求参数
-                var param = {};
-                param.limit = data.length;//页面显示记录条数，在页面显示每页显示多少项的时候
-                param.start = data.start;//开始的记录序号
-                param.page = (data.start / data.length) + 1;//当前页码
-                //请求数据
-                $('#queryUserInp').val() == '' ? param.queryData = {} : param.queryData = {
-                    queryUser: $('#queryUserInp').val()
+            //ajax请求数据
+            $.ajax({
+                type: 'POST',
+                url: 'http://111.204.101.170:8184',
+                data: '{action:"managersManage",params:' + param + '}',
+                dataType: 'jsonp',
+                jsonp: "callback",
+                jsonpCallback: "success_jsonpCallback",
+                success: function (result) {
+                    //setTimeout仅为测试延迟效果
+                    setTimeout(function () {
+                        //封装返回数据
+                        var returnData = {};
+                        returnData.draw = data.draw;//这里直接自行返回了draw计数器,应该由后台返回
+                        returnData.recordsTotal = result.total;//返回数据全部记录
+                        returnData.recordsFiltered = result.total;//后台不实现过滤功能，每次查询均视作全部结果
+                        returnData.data = result.data;//返回的数据列表
+                        //调用DataTables提供的callback方法，代表数据已封装完成并传回DataTables进行渲染
+                        //此时的数据需确保正确无误，异常判断应在执行此回调前自行处理完毕
+                        callback(returnData);
+                    }, 500);
                 }
-                //ajax请求数据
-                $.ajax({
-                    type: 'POST',
-                    url:'http://111.204.101.170:8184',
-                    data: '{action:"managersManage",params:' + param + '}',
-                    dataType: 'jsonp',
-                    jsonp : "callback",
-                    jsonpCallback:"success_jsonpCallback",
-                    success: function (result) {
-                        //setTimeout仅为测试延迟效果
-                        setTimeout(function () {
-                            //封装返回数据
-                            var returnData = {};
-                            returnData.draw = data.draw;//这里直接自行返回了draw计数器,应该由后台返回
-                            returnData.recordsTotal = result.total;//返回数据全部记录
-                            returnData.recordsFiltered = result.total;//后台不实现过滤功能，每次查询均视作全部结果
-                            returnData.data = result.data;//返回的数据列表
-                            //调用DataTables提供的callback方法，代表数据已封装完成并传回DataTables进行渲染
-                            //此时的数据需确保正确无误，异常判断应在执行此回调前自行处理完毕
-                            callback(returnData);
-                        }, 500);
-                    }
-                });
-            },
-            //列表表头字段
-            columns: [
-                {"data": "managerName"},
-                {"data": "managerPwd"},
-                {"data": "managerPhone"},
-                {
-                    "sClass": "text-center",
-                    "targets": 4,//操作按钮目标列
-                    "data": null,
-                    "render": function (data, type, row) {
-                        var html = "<a href='javascript:void(0);'  class='updateManagerInfo btn btn-default btn-xs' title='修改' value='" + data.managerPhone + "'><i class='fa fa-edit'></i></a>" +
-                            " <a href='javascript:void(0);'  class='delete btn btn-default btn-xs deleteManagerInfo' title='删除' value='" + data.managerPhone + "'><i class='fa fa-remove'></i></a>";
-                        return html;
-                    }
+            });
+        },
+        //列表表头字段
+        columns: [
+            {"data": "managerName"},
+            {"data": "managerPwd"},
+            {"data": "managerPhone"},
+            {
+                "sClass": "text-center",
+                "targets": 4,//操作按钮目标列
+                "data": null,
+                "render": function (data, type, row) {
+                    var html = "<a href='javascript:void(0);'  class='updateManagerInfo btn btn-default btn-xs' title='修改' value='" + data.managerPhone + "'><i class='fa fa-edit'></i></a>" +
+                        " <a href='javascript:void(0);'  class='delete btn btn-default btn-xs deleteManagerInfo' title='删除' value='" + data.managerPhone + "'><i class='fa fa-remove'></i></a>";
+                    return html;
                 }
-            ]
-        }).api();
-        //此处需调用api()方法,否则返回的是JQuery对象而不是DataTables的API对象
-    } catch (ex) {
-        catchTheException('initManagersTable', ex);
-    }
-
+            }
+        ]
+    }).api();
+    //此处需调用api()方法,否则返回的是JQuery对象而不是DataTables的API对象
 }
 
 /**
@@ -1249,144 +1237,140 @@ function initManagersTable() {
  */
 var allOrderTable;
 function initAllOrderTable() {
-    try {
-        var scrollY = $('.allOrderTableDiv').height() - $('.queryDiv').height() - 85;
-        //提示信息
-        var lang = {
-            "sProcessing": "处理中...",
-            "sLengthMenu": "每页 _MENU_ 项",
-            "sZeroRecords": "没有匹配结果",
-            "sInfo": "当前显示第 _START_ 至 _END_ 项，共 _TOTAL_ 项。",
-            "sInfoEmpty": "当前显示第 0 至 0 项，共 0 项",
-            "sInfoFiltered": "(由 _MAX_ 项结果过滤)",
-            "sInfoPostFix": "",
-            "sSearch": "搜索:",
-            "sUrl": "",
-            "sEmptyTable": "表中数据为空",
-            "sLoadingRecords": "载入中...",
-            "sInfoThousands": ",",
-            "oPaginate": {
-                "sFirst": "首页",
-                "sPrevious": "上页",
-                "sNext": "下页",
-                "sLast": "末页",
-                "sJump": "跳转"
-            },
-            "oAria": {
-                "sSortAscending": ": 以升序排列此列",
-                "sSortDescending": ": 以降序排列此列"
+
+    var scrollY = $('.allOrderTableDiv').height() - $('.queryDiv').height() - 85;
+    //提示信息
+    var lang = {
+        "sProcessing": "处理中...",
+        "sLengthMenu": "每页 _MENU_ 项",
+        "sZeroRecords": "没有匹配结果",
+        "sInfo": "当前显示第 _START_ 至 _END_ 项，共 _TOTAL_ 项。",
+        "sInfoEmpty": "当前显示第 0 至 0 项，共 0 项",
+        "sInfoFiltered": "(由 _MAX_ 项结果过滤)",
+        "sInfoPostFix": "",
+        "sSearch": "搜索:",
+        "sUrl": "",
+        "sEmptyTable": "表中数据为空",
+        "sLoadingRecords": "载入中...",
+        "sInfoThousands": ",",
+        "oPaginate": {
+            "sFirst": "首页",
+            "sPrevious": "上页",
+            "sNext": "下页",
+            "sLast": "末页",
+            "sJump": "跳转"
+        },
+        "oAria": {
+            "sSortAscending": ": 以升序排列此列",
+            "sSortDescending": ": 以降序排列此列"
+        }
+    };
+
+    //初始化表格
+    allOrderTable = $("#allOrderTable").dataTable({
+        language: lang,  //提示信息
+        autoWidth: false,  //禁用自动调整列宽
+        scrollY: scrollY,
+        stripeClasses: ["odd", "even"],  //为奇偶行加上样式，兼容不支持CSS伪类的场合
+        processing: true,  //隐藏加载提示,自行处理
+        serverSide: true,  //启用服务器端分页
+        searching: false,  //禁用原生搜索
+        orderMulti: false,  //启用多列排序
+        ordering: false,
+        order: [],  //取消默认排序查询,否则复选框一列会出现小箭头
+        renderer: "Bootstrap",  //渲染样式：Bootstrap和jquery-ui
+        pagingType: "full_numbers",  //分页样式：simple,simple_numbers,full,full_numbers
+        /*columnDefs: [
+         {
+         "targets":[0,1,2,4],
+         "orderable":false
+         }
+         ],*/
+        ajax: function (data, callback, settings) {
+            //封装请求参数
+            var param = {};
+            param.limit = data.length;//页面显示记录条数，在页面显示每页显示多少项的时候
+            param.start = data.start;//开始的记录序号
+            param.page = (data.start / data.length) + 1;//当前页码
+            //请求数据
+            param.queryData = {
+                username: data.username,
+                phone: data.phone,
+                order_id: data.order_id,
+                car_id: data.car_id,
+                location_id: data.location_id
+            };
+            //$('.queryInput>ul input').val() == '' ? param.queryData = {} : param.queryData = {
+            //    queryUser: $('.queryInput>ul input').val()
+            //}
+            if (data.username == '' || data.phone == '' || data.order_id == '' || data.car_id == '' || data.location_id == '') {
+                param.queryData = {};
+            } else {
+                aram.queryData = {
+                    queryUser: data.username,
+                    queryPhone: data.phone,
+                    order_id: data.order_id,
+                    car_id: data.car_id,
+                    location_id: data.location_id
+                }
             }
-        };
-
-        //初始化表格
-        allOrderTable = $("#allOrderTable").dataTable({
-            language: lang,  //提示信息
-            autoWidth: false,  //禁用自动调整列宽
-            scrollY: scrollY,
-            stripeClasses: ["odd", "even"],  //为奇偶行加上样式，兼容不支持CSS伪类的场合
-            processing: true,  //隐藏加载提示,自行处理
-            serverSide: true,  //启用服务器端分页
-            searching: false,  //禁用原生搜索
-            orderMulti: false,  //启用多列排序
-            ordering: false,
-            order: [],  //取消默认排序查询,否则复选框一列会出现小箭头
-            renderer: "Bootstrap",  //渲染样式：Bootstrap和jquery-ui
-            pagingType: "full_numbers",  //分页样式：simple,simple_numbers,full,full_numbers
-            /*columnDefs: [
-             {
-             "targets":[0,1,2,4],
-             "orderable":false
-             }
-             ],*/
-            ajax: function (data, callback, settings) {
-                //封装请求参数
-                var param = {};
-                param.limit = data.length;//页面显示记录条数，在页面显示每页显示多少项的时候
-                param.start = data.start;//开始的记录序号
-                param.page = (data.start / data.length) + 1;//当前页码
-                //请求数据
-                param.queryData = {
-                    username:data.username,
-                    phone:data.phone,
-                    order_id:data.order_id,
-                    car_id:data.car_id,
-                    location_id:data.location_id
-                 };
-                //$('.queryInput>ul input').val() == '' ? param.queryData = {} : param.queryData = {
-                //    queryUser: $('.queryInput>ul input').val()
-                //}
-                if(data.username==''|| data.phone==''||data.order_id==''||data.car_id==''||data.location_id==''){
-                    param.queryData = {};
-                }else{
-                    aram.queryData = {
-                        queryUser:data.username,
-                        queryPhone:data.phone,
-                        order_id: data.order_id,
-                        car_id: data.car_id,
-                        location_id: data.location_id
-                    }
+            //ajax请求数据
+            $.ajax({
+                type: 'POST',
+                url: 'http://111.204.101.170:8184',
+                data: '{action:"allOrder",params:' + param + '}',
+                dataType: 'jsonp',
+                jsonp: "callback",
+                jsonpCallback: "success_jsonpCallback",
+                success: function (result) {
+                    //setTimeout仅为测试延迟效果
+                    setTimeout(function () {
+                        //封装返回数据
+                        var returnData = {};
+                        returnData.draw = data.draw;//这里直接自行返回了draw计数器,应该由后台返回
+                        returnData.recordsTotal = result.total;//返回数据全部记录
+                        returnData.recordsFiltered = result.total;//后台不实现过滤功能，每次查询均视作全部结果
+                        returnData.data = result.data;//返回的数据列表
+                        //调用DataTables提供的callback方法，代表数据已封装完成并传回DataTables进行渲染
+                        //此时的数据需确保正确无误，异常判断应在执行此回调前自行处理完毕
+                        callback(returnData);
+                    }, 500);
                 }
-                //ajax请求数据
-                $.ajax({
-                    type: 'POST',
-                    url:'http://111.204.101.170:8184',
-                    data: '{action:"allOrder",params:' + param + '}',
-                    dataType: 'jsonp',
-                    jsonp : "callback",
-                    jsonpCallback:"success_jsonpCallback",
-                    success: function (result) {
-                        //setTimeout仅为测试延迟效果
-                        setTimeout(function () {
-                            //封装返回数据
-                            var returnData = {};
-                            returnData.draw = data.draw;//这里直接自行返回了draw计数器,应该由后台返回
-                            returnData.recordsTotal = result.total;//返回数据全部记录
-                            returnData.recordsFiltered = result.total;//后台不实现过滤功能，每次查询均视作全部结果
-                            returnData.data = result.data;//返回的数据列表
-                            //调用DataTables提供的callback方法，代表数据已封装完成并传回DataTables进行渲染
-                            //此时的数据需确保正确无误，异常判断应在执行此回调前自行处理完毕
-                            callback(returnData);
-                        }, 500);
-                    }
-                });
-            },
-            //列表表头字段
-            columns: [
-                {"data": "orderNum"},//订单号
-                {"data": "recPerson"},//收货人
-                {"data": "recPhone"},//联系电话
-                {"data": "car_id"},//车辆编号
-                {"data": "box_id"},//车辆箱号
-                {"data": "result"},//订单状态
-                {
-                    "sClass": "text-center",
-                    "targets": 5,//操作按钮目标列
-                    "data": null,
-                    "render": function (data, type, row) {
+            });
+        },
+        //列表表头字段
+        columns: [
+            {"data": "orderNum"},//订单号
+            {"data": "recPerson"},//收货人
+            {"data": "recPhone"},//联系电话
+            {"data": "car_id"},//车辆编号
+            {"data": "box_id"},//车辆箱号
+            {"data": "result"},//订单状态
+            {
+                "sClass": "text-center",
+                "targets": 5,//操作按钮目标列
+                "data": null,
+                "render": function (data, type, row) {
 
-                        //订单状态
-                        var resultType = {
-                            0:"运输成功",
-                            1:"运输中",
-                        }
-                        //订单状态class
-                        var resultClass = {
-                            0:"status-success",
-                            1:"status-trans",
-                        }
-                        var orderStatusStr = data.result == -1?"订单异常":resultType[data.result];//状态
-                        var orderStatusClass = data.result == -1?"status-unusual":resultClass[data.result];//状态类
-                        var html = "<span class='status "+orderStatusClass+"'>"+orderStatusStr+"</span>";
-                        return html;
+                    //订单状态
+                    var resultType = {
+                        0: "运输成功",
+                        1: "运输中",
                     }
+                    //订单状态class
+                    var resultClass = {
+                        0: "status-success",
+                        1: "status-trans",
+                    }
+                    var orderStatusStr = data.result == -1 ? "订单异常" : resultType[data.result];//状态
+                    var orderStatusClass = data.result == -1 ? "status-unusual" : resultClass[data.result];//状态类
+                    var html = "<span class='status " + orderStatusClass + "'>" + orderStatusStr + "</span>";
+                    return html;
                 }
-            ]
-        }).api();
-        //此处需调用api()方法,否则返回的是JQuery对象而不是DataTables的API对象
-    } catch (ex) {
-        catchTheException('initAllOrderTable', ex);
-    }
-
+            }
+        ]
+    }).api();
+    //此处需调用api()方法,否则返回的是JQuery对象而不是DataTables的API对象
 }
 
 /**
@@ -1394,235 +1378,106 @@ function initAllOrderTable() {
  */
 var unusualOrderTable;
 function initUnusualOrderTable() {
-    try {
-        var scrollY = $('.orderTableDiv').height() - $('.queryDiv').height() - 85;
-        //提示信息
-        var lang = {
-            "sProcessing": "处理中...",
-            "sLengthMenu": "每页 _MENU_ 项",
-            "sZeroRecords": "没有匹配结果",
-            "sInfo": "当前显示第 _START_ 至 _END_ 项，共 _TOTAL_ 项。",
-            "sInfoEmpty": "当前显示第 0 至 0 项，共 0 项",
-            "sInfoFiltered": "(由 _MAX_ 项结果过滤)",
-            "sInfoPostFix": "",
-            "sSearch": "搜索:",
-            "sUrl": "",
-            "sEmptyTable": "表中数据为空",
-            "sLoadingRecords": "载入中...",
-            "sInfoThousands": ",",
-            "oPaginate": {
-                "sFirst": "首页",
-                "sPrevious": "上页",
-                "sNext": "下页",
-                "sLast": "末页",
-                "sJump": "跳转"
-            },
-            "oAria": {
-                "sSortAscending": ": 以升序排列此列",
-                "sSortDescending": ": 以降序排列此列"
-            }
-        };
 
-        //初始化表格
-        unusualOrderTable = $("#unusualOrderTable").dataTable({
-            language: lang,  //提示信息
-            autoWidth: false,  //禁用自动调整列宽
-            scrollY: scrollY,
-            stripeClasses: ["odd", "even"],  //为奇偶行加上样式，兼容不支持CSS伪类的场合
-            processing: true,  //隐藏加载提示,自行处理
-            serverSide: true,  //启用服务器端分页
-            searching: false,  //禁用原生搜索
-            orderMulti: false,  //启用多列排序
-            ordering: false,
-            order: [],  //取消默认排序查询,否则复选框一列会出现小箭头
-            renderer: "Bootstrap",  //渲染样式：Bootstrap和jquery-ui
-            pagingType: "full_numbers",  //分页样式：simple,simple_numbers,full,full_numbers
-            /*columnDefs: [
-             {
-             "targets":[0,1,2,4],
-             "orderable":false
-             }
-             ],*/
-            ajax: function (data, callback, settings) {
-                //封装请求参数
-                var param = {};
-                param.limit = data.length;//页面显示记录条数，在页面显示每页显示多少项的时候
-                param.start = data.start;//开始的记录序号
-                param.page = (data.start / data.length) + 1;//当前页码
-                //请求数据
-                param.queryData = {
-                    username: data.username,
-                    phone: data.phone,
+    var scrollY = $('.orderTableDiv').height() - $('.queryDiv').height() - 85;
+    //提示信息
+    var lang = {
+        "sProcessing": "处理中...",
+        "sLengthMenu": "每页 _MENU_ 项",
+        "sZeroRecords": "没有匹配结果",
+        "sInfo": "当前显示第 _START_ 至 _END_ 项，共 _TOTAL_ 项。",
+        "sInfoEmpty": "当前显示第 0 至 0 项，共 0 项",
+        "sInfoFiltered": "(由 _MAX_ 项结果过滤)",
+        "sInfoPostFix": "",
+        "sSearch": "搜索:",
+        "sUrl": "",
+        "sEmptyTable": "表中数据为空",
+        "sLoadingRecords": "载入中...",
+        "sInfoThousands": ",",
+        "oPaginate": {
+            "sFirst": "首页",
+            "sPrevious": "上页",
+            "sNext": "下页",
+            "sLast": "末页",
+            "sJump": "跳转"
+        },
+        "oAria": {
+            "sSortAscending": ": 以升序排列此列",
+            "sSortDescending": ": 以降序排列此列"
+        }
+    };
+
+    //初始化表格
+    unusualOrderTable = $("#unusualOrderTable").dataTable({
+        language: lang,  //提示信息
+        autoWidth: false,  //禁用自动调整列宽
+        scrollY: scrollY,
+        stripeClasses: ["odd", "even"],  //为奇偶行加上样式，兼容不支持CSS伪类的场合
+        processing: true,  //隐藏加载提示,自行处理
+        serverSide: true,  //启用服务器端分页
+        searching: false,  //禁用原生搜索
+        orderMulti: false,  //启用多列排序
+        ordering: false,
+        order: [],  //取消默认排序查询,否则复选框一列会出现小箭头
+        renderer: "Bootstrap",  //渲染样式：Bootstrap和jquery-ui
+        pagingType: "full_numbers",  //分页样式：simple,simple_numbers,full,full_numbers
+        /*columnDefs: [
+         {
+         "targets":[0,1,2,4],
+         "orderable":false
+         }
+         ],*/
+        ajax: function (data, callback, settings) {
+            //封装请求参数
+            var param = {};
+            param.limit = data.length;//页面显示记录条数，在页面显示每页显示多少项的时候
+            param.start = data.start;//开始的记录序号
+            param.page = (data.start / data.length) + 1;//当前页码
+            //请求数据
+            param.queryData = {
+                username: data.username,
+                phone: data.phone,
+                order_id: data.order_id,
+                car_id: data.car_id,
+                location_id: data.location_id
+            };
+            //$(".queryInput>ul>input").val() == '' ? param.queryData = {} : param.queryData = {
+            //    queryUser: $(".queryInput>ul>input").val()
+            //}
+            if (data.username == '' || data.phone == '' || data.order_id == '' || data.car_id == '' || data.location_id == '') {
+                param.queryData = {};
+            } else {
+                aram.queryData = {
+                    queryUser: data.username,
+                    queryPhone: data.phone,
                     order_id: data.order_id,
                     car_id: data.car_id,
                     location_id: data.location_id
-                };
-                //$(".queryInput>ul>input").val() == '' ? param.queryData = {} : param.queryData = {
-                //    queryUser: $(".queryInput>ul>input").val()
-                //}
-                if(data.username==''|| data.phone==''||data.order_id==''||data.car_id==''||data.location_id==''){
-                    param.queryData = {};
-                }else{
-                    aram.queryData = {
-                        queryUser:data.username,
-                        queryPhone:data.phone,
-                        order_id: data.order_id,
-                        car_id: data.car_id,
-                        location_id: data.location_id
-                    }
                 }
-                    //ajax请求数据
-                    $.ajax({
-                        type: 'POST',
-                        url: 'http://111.204.101.170:8184',
-                        data: '{"action":"unusualOrder","params":' + param + '}',
-                        dataType: 'jsonp',
-                        jsonp: "callback",
-                        jsonpCallback: "success_jsonpCallback",
-                        success: function (result) {
-                            //setTimeout仅为测试延迟效果
-                            setTimeout(function () {
-                                //封装返回数据
-                                var returnData = {};
-                                returnData.draw = data.draw;//这里直接自行返回了draw计数器,应该由后台返回
-                                returnData.recordsTotal = result.total;//返回数据全部记录
-                                returnData.recordsFiltered = result.total;//后台不实现过滤功能，每次查询均视作全部结果
-                                returnData.data = result.data;//返回的数据列表
-                                //调用DataTables提供的callback方法，代表数据已封装完成并传回DataTables进行渲染
-                                //此时的数据需确保正确无误，异常判断应在执行此回调前自行处理完毕
-                                callback(returnData);
-                            }, 500);
-                        }
-                    });
-                //列表表头字段
-                columns: [
-                    {"data": "orderNum"},
-                    {"data": "recPerson"},
-                    {"data": "recPosition"},
-                    {"data": "recPhone"},
-                    {"data": "demand"},
-                    {
-                        "sClass": "text-center",
-                        "targets": 5,//操作按钮目标列
-                        "data": null,
-                        "render": function (data, type, row) {
-                            var html = "<a class='btn btn-default btn-xs'>忽略</a>" +
-                                " <a class='btn btn-primary btn-xs'>处理</a>";
-                            return html;
-                        }
-                    }
-                ]
             }
-        }).api();
-        //此处需调用api()方法,否则返回的是JQuery对象而不是DataTables的API对象
-    } catch (ex) {
-        catchTheException('initUnusualOrderTable', ex);
-    }
-
-}
- /**
- * 初始化运输中订单列表
- */
-var transOrderTable;
-function initTransOrderTable() {
-    try {
-        var scrollY = $('.orderTableDiv').height() - $('.queryDiv').height() - 85;
-        //提示信息
-        var lang = {
-            "sProcessing": "处理中...",
-            "sLengthMenu": "每页 _MENU_ 项",
-            "sZeroRecords": "没有匹配结果",
-            "sInfo": "当前显示第 _START_ 至 _END_ 项，共 _TOTAL_ 项。",
-            "sInfoEmpty": "当前显示第 0 至 0 项，共 0 项",
-            "sInfoFiltered": "(由 _MAX_ 项结果过滤)",
-            "sInfoPostFix": "",
-            "sSearch": "搜索:",
-            "sUrl": "",
-            "sEmptyTable": "表中数据为空",
-            "sLoadingRecords": "载入中...",
-            "sInfoThousands": ",",
-            "oPaginate": {
-                "sFirst": "首页",
-                "sPrevious": "上页",
-                "sNext": "下页",
-                "sLast": "末页",
-                "sJump": "跳转"
-            },
-            "oAria": {
-                "sSortAscending": ": 以升序排列此列",
-                "sSortDescending": ": 以降序排列此列"
-            }
-        };
-
-        //初始化表格
-        transOrderTable = $("#transOrderTable").dataTable({
-            language: lang,  //提示信息
-            autoWidth: false,  //禁用自动调整列宽
-            scrollY: scrollY,
-            stripeClasses: ["odd", "even"],  //为奇偶行加上样式，兼容不支持CSS伪类的场合
-            processing: true,  //隐藏加载提示,自行处理
-            serverSide: true,  //启用服务器端分页
-            searching: false,  //禁用原生搜索
-            orderMulti: false,  //启用多列排序
-            ordering: false,
-            order: [],  //取消默认排序查询,否则复选框一列会出现小箭头
-            renderer: "Bootstrap",  //渲染样式：Bootstrap和jquery-ui
-            pagingType: "full_numbers",  //分页样式：simple,simple_numbers,full,full_numbers
-            /*columnDefs: [
-             {
-             "targets":[0,1,2,4],
-             "orderable":false
-             }
-             ],*/
-            ajax: function (data, callback, settings) {
-                //封装请求参数
-                var param = {};
-                param.limit = data.length;//页面显示记录条数，在页面显示每页显示多少项的时候
-                param.start = data.start;//开始的记录序号
-                param.page = (data.start / data.length) + 1;//当前页码
-                //请求数据
-                param.queryData = {
-                    username: data.username,
-                    phone: data.phone,
-                    order_id: data.order_id,
-                    car_id: data.car_id,
-                    location_id: data.location_id
-                };
-                if(data.username==''|| data.phone==''||data.order_id==''||data.car_id==''||data.location_id==''){
-                    param.queryData = {};
-                }else{
-                    aram.queryData = {
-                        queryUser:data.username,
-                        queryPhone:data.phone,
-                        order_id: data.order_id,
-                        car_id: data.car_id,
-                        location_id: data.location_id
-                    }
-                };
-                //ajax请求数据
-                $.ajax({
-                    type: 'POST',
-                    url:'http://111.204.101.170:8184',
-                    data: '{"action":"transOrder","params":' + param + '}',
-                    dataType: 'jsonp',
-                    jsonp : "callback",
-                    jsonpCallback:"success_jsonpCallback",
-                    success: function (result) {
-                        //setTimeout仅为测试延迟效果
-                        setTimeout(function () {
-                            //封装返回数据
-                            var returnData = {};
-                            returnData.draw = data.draw;//这里直接自行返回了draw计数器,应该由后台返回
-                            returnData.recordsTotal = result.total;//返回数据全部记录
-                            returnData.recordsFiltered = result.total;//后台不实现过滤功能，每次查询均视作全部结果
-                            returnData.data = result.data;//返回的数据列表
-                            //调用DataTables提供的callback方法，代表数据已封装完成并传回DataTables进行渲染
-                            //此时的数据需确保正确无误，异常判断应在执行此回调前自行处理完毕
-                            callback(returnData);
-                        }, 500);
-                    }
-                });
-            },
+            //ajax请求数据
+            $.ajax({
+                type: 'POST',
+                url: 'http://111.204.101.170:8184',
+                data: '{"action":"unusualOrder","params":' + param + '}',
+                dataType: 'jsonp',
+                jsonp: "callback",
+                jsonpCallback: "success_jsonpCallback",
+                success: function (result) {
+                    //setTimeout仅为测试延迟效果
+                    setTimeout(function () {
+                        //封装返回数据
+                        var returnData = {};
+                        returnData.draw = data.draw;//这里直接自行返回了draw计数器,应该由后台返回
+                        returnData.recordsTotal = result.total;//返回数据全部记录
+                        returnData.recordsFiltered = result.total;//后台不实现过滤功能，每次查询均视作全部结果
+                        returnData.data = result.data;//返回的数据列表
+                        //调用DataTables提供的callback方法，代表数据已封装完成并传回DataTables进行渲染
+                        //此时的数据需确保正确无误，异常判断应在执行此回调前自行处理完毕
+                        callback(returnData);
+                    }, 500);
+                }
+            });
             //列表表头字段
             columns: [
                 {"data": "orderNum"},
@@ -1635,17 +1490,139 @@ function initTransOrderTable() {
                     "targets": 5,//操作按钮目标列
                     "data": null,
                     "render": function (data, type, row) {
-                        var html = "<span class='status status-trans'>运输中</span>";
+                        var html = "<a class='btn btn-default btn-xs'>忽略</a>" +
+                            " <a class='btn btn-primary btn-xs'>处理</a>";
                         return html;
                     }
                 }
             ]
-        }).api();
-        //此处需调用api()方法,否则返回的是JQuery对象而不是DataTables的API对象
-    } catch (ex) {
-        catchTheException('initTransOrderTable', ex);
-    }
+        }
+    }).api();
+    //此处需调用api()方法,否则返回的是JQuery对象而不是DataTables的API对象
+}
+/**
+ * 初始化运输中订单列表
+ */
+var transOrderTable;
+function initTransOrderTable() {
 
+    var scrollY = $('.orderTableDiv').height() - $('.queryDiv').height() - 85;
+    //提示信息
+    var lang = {
+        "sProcessing": "处理中...",
+        "sLengthMenu": "每页 _MENU_ 项",
+        "sZeroRecords": "没有匹配结果",
+        "sInfo": "当前显示第 _START_ 至 _END_ 项，共 _TOTAL_ 项。",
+        "sInfoEmpty": "当前显示第 0 至 0 项，共 0 项",
+        "sInfoFiltered": "(由 _MAX_ 项结果过滤)",
+        "sInfoPostFix": "",
+        "sSearch": "搜索:",
+        "sUrl": "",
+        "sEmptyTable": "表中数据为空",
+        "sLoadingRecords": "载入中...",
+        "sInfoThousands": ",",
+        "oPaginate": {
+            "sFirst": "首页",
+            "sPrevious": "上页",
+            "sNext": "下页",
+            "sLast": "末页",
+            "sJump": "跳转"
+        },
+        "oAria": {
+            "sSortAscending": ": 以升序排列此列",
+            "sSortDescending": ": 以降序排列此列"
+        }
+    };
+
+    //初始化表格
+    transOrderTable = $("#transOrderTable").dataTable({
+        language: lang,  //提示信息
+        autoWidth: false,  //禁用自动调整列宽
+        scrollY: scrollY,
+        stripeClasses: ["odd", "even"],  //为奇偶行加上样式，兼容不支持CSS伪类的场合
+        processing: true,  //隐藏加载提示,自行处理
+        serverSide: true,  //启用服务器端分页
+        searching: false,  //禁用原生搜索
+        orderMulti: false,  //启用多列排序
+        ordering: false,
+        order: [],  //取消默认排序查询,否则复选框一列会出现小箭头
+        renderer: "Bootstrap",  //渲染样式：Bootstrap和jquery-ui
+        pagingType: "full_numbers",  //分页样式：simple,simple_numbers,full,full_numbers
+        /*columnDefs: [
+         {
+         "targets":[0,1,2,4],
+         "orderable":false
+         }
+         ],*/
+        ajax: function (data, callback, settings) {
+            //封装请求参数
+            var param = {};
+            param.limit = data.length;//页面显示记录条数，在页面显示每页显示多少项的时候
+            param.start = data.start;//开始的记录序号
+            param.page = (data.start / data.length) + 1;//当前页码
+            //请求数据
+            param.queryData = {
+                username: data.username,
+                phone: data.phone,
+                order_id: data.order_id,
+                car_id: data.car_id,
+                location_id: data.location_id
+            };
+            if (data.username == '' || data.phone == '' || data.order_id == '' || data.car_id == '' || data.location_id == '') {
+                param.queryData = {};
+            } else {
+                aram.queryData = {
+                    queryUser: data.username,
+                    queryPhone: data.phone,
+                    order_id: data.order_id,
+                    car_id: data.car_id,
+                    location_id: data.location_id
+                }
+            }
+            ;
+            //ajax请求数据
+            $.ajax({
+                type: 'POST',
+                url: 'http://111.204.101.170:8184',
+                data: '{"action":"transOrder","params":' + param + '}',
+                dataType: 'jsonp',
+                jsonp: "callback",
+                jsonpCallback: "success_jsonpCallback",
+                success: function (result) {
+                    //setTimeout仅为测试延迟效果
+                    setTimeout(function () {
+                        //封装返回数据
+                        var returnData = {};
+                        returnData.draw = data.draw;//这里直接自行返回了draw计数器,应该由后台返回
+                        returnData.recordsTotal = result.total;//返回数据全部记录
+                        returnData.recordsFiltered = result.total;//后台不实现过滤功能，每次查询均视作全部结果
+                        returnData.data = result.data;//返回的数据列表
+                        //调用DataTables提供的callback方法，代表数据已封装完成并传回DataTables进行渲染
+                        //此时的数据需确保正确无误，异常判断应在执行此回调前自行处理完毕
+                        callback(returnData);
+                    }, 500);
+                }
+            });
+        },
+        //列表表头字段
+        columns: [
+            {"data": "orderNum"},
+            {"data": "recPerson"},
+            {"data": "recPosition"},
+            {"data": "recPhone"},
+            {"data": "demand"},
+            {
+                "sClass": "text-center",
+                "targets": 5,//操作按钮目标列
+                "data": null,
+                "render": function (data, type, row) {
+                    var html = "<span class='status status-trans'>运输中</span>";
+                    return html;
+                }
+            }
+        ]
+    }).api();
+    //此处需调用api()方法,否则返回的是JQuery对象而不是DataTables的API对象
 }
 
 /**
@@ -1653,127 +1630,123 @@ function initTransOrderTable() {
  */
 var completeOrderTable;
 function initCompleteOrderTable() {
-    try {
-        var scrollY = $('.orderTableDiv').height() - $('.queryDiv').height() - 85;
-        //提示信息
-        var lang = {
-            "sProcessing": "处理中...",
-            "sLengthMenu": "每页 _MENU_ 项",
-            "sZeroRecords": "没有匹配结果",
-            "sInfo": "当前显示第 _START_ 至 _END_ 项，共 _TOTAL_ 项。",
-            "sInfoEmpty": "当前显示第 0 至 0 项，共 0 项",
-            "sInfoFiltered": "(由 _MAX_ 项结果过滤)",
-            "sInfoPostFix": "",
-            "sSearch": "搜索:",
-            "sUrl": "",
-            "sEmptyTable": "表中数据为空",
-            "sLoadingRecords": "载入中...",
-            "sInfoThousands": ",",
-            "oPaginate": {
-                "sFirst": "首页",
-                "sPrevious": "上页",
-                "sNext": "下页",
-                "sLast": "末页",
-                "sJump": "跳转"
-            },
-            "oAria": {
-                "sSortAscending": ": 以升序排列此列",
-                "sSortDescending": ": 以降序排列此列"
-            }
-        };
 
-        //初始化表格
-        completeOrderTable = $("#completeOrderTable").dataTable({
-            language: lang,  //提示信息
-            autoWidth: false,  //禁用自动调整列宽
-            scrollY: scrollY,
-            stripeClasses: ["odd", "even"],  //为奇偶行加上样式，兼容不支持CSS伪类的场合
-            processing: true,  //隐藏加载提示,自行处理
-            serverSide: true,  //启用服务器端分页
-            searching: false,  //禁用原生搜索
-            orderMulti: false,  //启用多列排序
-            ordering: false,
-            order: [],  //取消默认排序查询,否则复选框一列会出现小箭头
-            renderer: "Bootstrap",  //渲染样式：Bootstrap和jquery-ui
-            pagingType: "full_numbers",  //分页样式：simple,simple_numbers,full,full_numbers
-            /*columnDefs: [
-             {
-             "targets":[0,1,2,4],
-             "orderable":false
-             }
-             ],*/
-            ajax: function (data, callback, settings) {
-                //封装请求参数
-                var param = {};
-                param.limit = data.length;//页面显示记录条数，在页面显示每页显示多少项的时候
-                param.start = data.start;//开始的记录序号
-                param.page = (data.start / data.length) + 1;//当前页码
-                //请求数据
-                param.queryData = {
-                    username: data.username,
-                    phone: data.phone,
+    var scrollY = $('.orderTableDiv').height() - $('.queryDiv').height() - 85;
+    //提示信息
+    var lang = {
+        "sProcessing": "处理中...",
+        "sLengthMenu": "每页 _MENU_ 项",
+        "sZeroRecords": "没有匹配结果",
+        "sInfo": "当前显示第 _START_ 至 _END_ 项，共 _TOTAL_ 项。",
+        "sInfoEmpty": "当前显示第 0 至 0 项，共 0 项",
+        "sInfoFiltered": "(由 _MAX_ 项结果过滤)",
+        "sInfoPostFix": "",
+        "sSearch": "搜索:",
+        "sUrl": "",
+        "sEmptyTable": "表中数据为空",
+        "sLoadingRecords": "载入中...",
+        "sInfoThousands": ",",
+        "oPaginate": {
+            "sFirst": "首页",
+            "sPrevious": "上页",
+            "sNext": "下页",
+            "sLast": "末页",
+            "sJump": "跳转"
+        },
+        "oAria": {
+            "sSortAscending": ": 以升序排列此列",
+            "sSortDescending": ": 以降序排列此列"
+        }
+    };
+
+    //初始化表格
+    completeOrderTable = $("#completeOrderTable").dataTable({
+        language: lang,  //提示信息
+        autoWidth: false,  //禁用自动调整列宽
+        scrollY: scrollY,
+        stripeClasses: ["odd", "even"],  //为奇偶行加上样式，兼容不支持CSS伪类的场合
+        processing: true,  //隐藏加载提示,自行处理
+        serverSide: true,  //启用服务器端分页
+        searching: false,  //禁用原生搜索
+        orderMulti: false,  //启用多列排序
+        ordering: false,
+        order: [],  //取消默认排序查询,否则复选框一列会出现小箭头
+        renderer: "Bootstrap",  //渲染样式：Bootstrap和jquery-ui
+        pagingType: "full_numbers",  //分页样式：simple,simple_numbers,full,full_numbers
+        /*columnDefs: [
+         {
+         "targets":[0,1,2,4],
+         "orderable":false
+         }
+         ],*/
+        ajax: function (data, callback, settings) {
+            //封装请求参数
+            var param = {};
+            param.limit = data.length;//页面显示记录条数，在页面显示每页显示多少项的时候
+            param.start = data.start;//开始的记录序号
+            param.page = (data.start / data.length) + 1;//当前页码
+            //请求数据
+            param.queryData = {
+                username: data.username,
+                phone: data.phone,
+                order_id: data.order_id,
+                car_id: data.car_id,
+                location_id: data.location_id
+            };
+            if (data.username == '' || data.phone == '' || data.order_id == '' || data.car_id == '' || data.location_id == '') {
+                param.queryData = {};
+            } else {
+                aram.queryData = {
+                    queryUser: data.username,
+                    queryPhone: data.phone,
                     order_id: data.order_id,
                     car_id: data.car_id,
                     location_id: data.location_id
-                };
-                if(data.username==''|| data.phone==''||data.order_id==''||data.car_id==''||data.location_id==''){
-                    param.queryData = {};
-                }else{
-                    aram.queryData = {
-                        queryUser:data.username,
-                        queryPhone:data.phone,
-                        order_id: data.order_id,
-                        car_id: data.car_id,
-                        location_id: data.location_id
-                    }
                 }
-                //ajax请求数据
-                $.ajax({
-                    type: 'POST',
-                    url:'http://111.204.101.170:8184',
-                    data: '{"action":"completeOrder","params":' + param + '}',
-                    dataType: 'jsonp',
-                    jsonp : "callback",
-                    jsonpCallback:"success_jsonpCallback",
-                    success: function (result) {
-                        //setTimeout仅为测试延迟效果
-                        setTimeout(function () {
-                            //封装返回数据
-                            var returnData = {};
-                            returnData.draw = data.draw;//这里直接自行返回了draw计数器,应该由后台返回
-                            returnData.recordsTotal = result.total;//返回数据全部记录
-                            returnData.recordsFiltered = result.total;//后台不实现过滤功能，每次查询均视作全部结果
-                            returnData.data = result.data;//返回的数据列表
-                            //调用DataTables提供的callback方法，代表数据已封装完成并传回DataTables进行渲染
-                            //此时的数据需确保正确无误，异常判断应在执行此回调前自行处理完毕
-                            callback(returnData);
-                        }, 500);
-                    }
-                });
-            },
-            //列表表头字段
-            columns: [
-                {"data": "orderNum"},
-                {"data": "recPerson"},
-                {"data": "recPosition"},
-                {"data": "recPhone"},
-                {"data": "demand"},
-                {
-                    "sClass": "text-center",
-                    "targets": 5,//操作按钮目标列
-                    "data": null,
-                    "render": function (data, type, row) {
-                        var html = "<span class='status status-success'>已完成</span>";
-                        return html;
-                    }
+            }
+            //ajax请求数据
+            $.ajax({
+                type: 'POST',
+                url: 'http://111.204.101.170:8184',
+                data: '{"action":"completeOrder","params":' + param + '}',
+                dataType: 'jsonp',
+                jsonp: "callback",
+                jsonpCallback: "success_jsonpCallback",
+                success: function (result) {
+                    //setTimeout仅为测试延迟效果
+                    setTimeout(function () {
+                        //封装返回数据
+                        var returnData = {};
+                        returnData.draw = data.draw;//这里直接自行返回了draw计数器,应该由后台返回
+                        returnData.recordsTotal = result.total;//返回数据全部记录
+                        returnData.recordsFiltered = result.total;//后台不实现过滤功能，每次查询均视作全部结果
+                        returnData.data = result.data;//返回的数据列表
+                        //调用DataTables提供的callback方法，代表数据已封装完成并传回DataTables进行渲染
+                        //此时的数据需确保正确无误，异常判断应在执行此回调前自行处理完毕
+                        callback(returnData);
+                    }, 500);
                 }
-            ]
-        }).api();
-        //此处需调用api()方法,否则返回的是JQuery对象而不是DataTables的API对象
-    } catch (ex) {
-        catchTheException('initCompleteOrderTable', ex);
-    }
-
+            });
+        },
+        //列表表头字段
+        columns: [
+            {"data": "orderNum"},
+            {"data": "recPerson"},
+            {"data": "recPosition"},
+            {"data": "recPhone"},
+            {"data": "demand"},
+            {
+                "sClass": "text-center",
+                "targets": 5,//操作按钮目标列
+                "data": null,
+                "render": function (data, type, row) {
+                    var html = "<span class='status status-success'>已完成</span>";
+                    return html;
+                }
+            }
+        ]
+    }).api();
+    //此处需调用api()方法,否则返回的是JQuery对象而不是DataTables的API对象
 }
 
 /**
@@ -1781,123 +1754,120 @@ function initCompleteOrderTable() {
  */
 var carsTable;
 function initCarsTable() {
-    try {
-        var scrollY = $('.carsTableDiv').height() - $('.queryDiv').height() - 85;
-        //提示信息
-        var lang = {
-            "sProcessing": "处理中...",
-            "sLengthMenu": "每页 _MENU_ 项",
-            "sZeroRecords": "没有匹配结果",
-            "sInfo": "当前显示第 _START_ 至 _END_ 项，共 _TOTAL_ 项。",
-            "sInfoEmpty": "当前显示第 0 至 0 项，共 0 项",
-            "sInfoFiltered": "(由 _MAX_ 项结果过滤)",
-            "sInfoPostFix": "",
-            "sSearch": "搜索:",
-            "sUrl": "",
-            "sEmptyTable": "表中数据为空",
-            "sLoadingRecords": "载入中...",
-            "sInfoThousands": ",",
-            "oPaginate": {
-                "sFirst": "首页",
-                "sPrevious": "上页",
-                "sNext": "下页",
-                "sLast": "末页",
-                "sJump": "跳转"
-            },
-            "oAria": {
-                "sSortAscending": ": 以升序排列此列",
-                "sSortDescending": ": 以降序排列此列"
-            }
-        };
 
-        //初始化表格
-        carsTable = $("#carsTableContent").dataTable({
-            language: lang,  //提示信息
-            autoWidth: false,  //禁用自动调整列宽
-            scrollY: scrollY,
-            stripeClasses: ["odd", "even"],  //为奇偶行加上样式，兼容不支持CSS伪类的场合
-            processing: true,  //隐藏加载提示,自行处理
-            serverSide: true,  //启用服务器端分页
-            searching: false,  //禁用原生搜索
-            orderMulti: false,  //启用多列排序
-            order: [],  //取消默认排序查询,否则复选框一列会出现小箭头
-            renderer: "Bootstrap",  //渲染样式：Bootstrap和jquery-ui
-            pagingType: "full_numbers",  //分页样式：simple,simple_numbers,full,full_numbers
-            columnDefs: [{
-                "targets": [0, 1, 2, 5, 6],
-                "orderable": false
-            }],
-            ajax: function (data, callback, settings) {
-                //封装请求参数
-                var param = {};
-                param.limit = data.length;//每页显示的条数
-                param.start = data.start;//数据库开始查询的序号
-                param.page = (data.start / data.length) + 1;//当前页码
-                //请求数据
-                param.queryData = {
-                   car_id:data.car_id,
-                    area:data.area,
-                    hitch:data.hitch
-                 };
+    var scrollY = $('.carsTableDiv').height() - $('.queryDiv').height() - 85;
+    //提示信息
+    var lang = {
+        "sProcessing": "处理中...",
+        "sLengthMenu": "每页 _MENU_ 项",
+        "sZeroRecords": "没有匹配结果",
+        "sInfo": "当前显示第 _START_ 至 _END_ 项，共 _TOTAL_ 项。",
+        "sInfoEmpty": "当前显示第 0 至 0 项，共 0 项",
+        "sInfoFiltered": "(由 _MAX_ 项结果过滤)",
+        "sInfoPostFix": "",
+        "sSearch": "搜索:",
+        "sUrl": "",
+        "sEmptyTable": "表中数据为空",
+        "sLoadingRecords": "载入中...",
+        "sInfoThousands": ",",
+        "oPaginate": {
+            "sFirst": "首页",
+            "sPrevious": "上页",
+            "sNext": "下页",
+            "sLast": "末页",
+            "sJump": "跳转"
+        },
+        "oAria": {
+            "sSortAscending": ": 以升序排列此列",
+            "sSortDescending": ": 以降序排列此列"
+        }
+    };
+
+    //初始化表格
+    carsTable = $("#carsTableContent").dataTable({
+        language: lang,  //提示信息
+        autoWidth: false,  //禁用自动调整列宽
+        scrollY: scrollY,
+        stripeClasses: ["odd", "even"],  //为奇偶行加上样式，兼容不支持CSS伪类的场合
+        processing: true,  //隐藏加载提示,自行处理
+        serverSide: true,  //启用服务器端分页
+        searching: false,  //禁用原生搜索
+        orderMulti: false,  //启用多列排序
+        order: [],  //取消默认排序查询,否则复选框一列会出现小箭头
+        renderer: "Bootstrap",  //渲染样式：Bootstrap和jquery-ui
+        pagingType: "full_numbers",  //分页样式：simple,simple_numbers,full,full_numbers
+        columnDefs: [{
+            "targets": [0, 1, 2, 5, 6],
+            "orderable": false
+        }],
+        ajax: function (data, callback, settings) {
+            //封装请求参数
+            var param = {};
+            param.limit = data.length;//每页显示的条数
+            param.start = data.start;//数据库开始查询的序号
+            param.page = (data.start / data.length) + 1;//当前页码
+            //请求数据
+            param.queryData = {
+                car_id: data.car_id,
+                area: data.area,
+                hitch: data.hitch
+            };
 
 
-                if(data.car_id==''|| data.area==''||data.hitch==''){
-                    param.queryData = {};
-                }else {
-                    aram.queryData = {
-                        car_id: data.car_id,
-                        area: data.area,
-                        hitch: data.hitch
-                    }
-                };
-
-                //ajax请求数据
-                $.ajax({
-                    type: 'POST',
-                    url:'http://111.204.101.170:8184',
-                    data: '{"action":"carsTable","params":' + param + '}',
-                    dataType: 'jsonp',
-                    jsonp : "callback",
-                    jsonpCallback:"success_jsonpCallback",
-                    success: function (result) {
-                        //setTimeout仅为测试延迟效果
-                        setTimeout(function () {
-                            //封装返回数据
-                            var returnData = {};
-                            returnData.draw = data.draw;//这里直接自行返回了draw计数器,由后台返回
-                            returnData.recordsTotal = result.total;//返回数据全部记录
-                            returnData.recordsFiltered = result.total;//后台不实现过滤功能，每次查询均视作全部结果
-                            returnData.data = result.data;//返回的数据列表
-                            //调用DataTables提供的callback方法，代表数据已封装完成并传回DataTables进行渲染
-                            //此时的数据需确保正确无误，异常判断应在执行此回调前自行处理完毕
-                            callback(returnData);
-                        }, 500);
-                    }
-                });
-            },
-            //列表表头字段
-            columns: [
-                {"data": "Id"},
-                {"data": "CurrentPosition"},
-                {"data": "allDistance"},
-                {"data": "allGoods"},
-                {"data": "isBreakDown"},
-                {"data": "nextPosition"},
-                {
-                    "sClass": "text-center",
-                    "targets": 6,//操作按钮目标列
-                    "data": null,
-                    "render": function (data, type, row) {
-                        return "<a href='javascript:void(0);' class='viewCarDetail btn btn-primary btn-xs' value=''>查看</a>";
-                    }
+            if (data.car_id == '' || data.area == '' || data.hitch == '') {
+                param.queryData = {};
+            } else {
+                aram.queryData = {
+                    car_id: data.car_id,
+                    area: data.area,
+                    hitch: data.hitch
                 }
-            ]
-        }).api();
-        //此处需调用api()方法,否则返回的是JQuery对象而不是DataTables的API对象
-    } catch (ex) {
-        catchTheException('initCarsTable', ex);
-    }
+            }
+            ;
 
+            //ajax请求数据
+            $.ajax({
+                type: 'POST',
+                url: 'http://111.204.101.170:8184',
+                data: '{"action":"carsTable","params":' + param + '}',
+                dataType: 'jsonp',
+                jsonp: "callback",
+                jsonpCallback: "success_jsonpCallback",
+                success: function (result) {
+                    //setTimeout仅为测试延迟效果
+                    setTimeout(function () {
+                        //封装返回数据
+                        var returnData = {};
+                        returnData.draw = data.draw;//这里直接自行返回了draw计数器,由后台返回
+                        returnData.recordsTotal = result.total;//返回数据全部记录
+                        returnData.recordsFiltered = result.total;//后台不实现过滤功能，每次查询均视作全部结果
+                        returnData.data = result.data;//返回的数据列表
+                        //调用DataTables提供的callback方法，代表数据已封装完成并传回DataTables进行渲染
+                        //此时的数据需确保正确无误，异常判断应在执行此回调前自行处理完毕
+                        callback(returnData);
+                    }, 500);
+                }
+            });
+        },
+        //列表表头字段
+        columns: [
+            {"data": "Id"},
+            {"data": "CurrentPosition"},
+            {"data": "allDistance"},
+            {"data": "allGoods"},
+            {"data": "isBreakDown"},
+            {"data": "nextPosition"},
+            {
+                "sClass": "text-center",
+                "targets": 6,//操作按钮目标列
+                "data": null,
+                "render": function (data, type, row) {
+                    return "<a href='javascript:void(0);' class='viewCarDetail btn btn-primary btn-xs' value=''>查看</a>";
+                }
+            }
+        ]
+    }).api();
+    //此处需调用api()方法,否则返回的是JQuery对象而不是DataTables的API对象
 }
 
 /**
@@ -1905,312 +1875,237 @@ function initCarsTable() {
  */
 var carsTroubleTable;
 function initCarsTroubleTable() {
-    try {
-        var scrollY = $('.carsTroubleTableDiv').height() - $('.queryDiv').height() - 85;
-        //提示信息
-        var lang = {
-            "sProcessing": "处理中...",
-            "sLengthMenu": "每页 _MENU_ 项",
-            "sZeroRecords": "没有匹配结果",
-            "sInfo": "当前显示第 _START_ 至 _END_ 项，共 _TOTAL_ 项。",
-            "sInfoEmpty": "当前显示第 0 至 0 项，共 0 项",
-            "sInfoFiltered": "(由 _MAX_ 项结果过滤)",
-            "sInfoPostFix": "",
-            "sSearch": "搜索:",
-            "sUrl": "",
-            "sEmptyTable": "表中数据为空",
-            "sLoadingRecords": "载入中...",
-            "sInfoThousands": ",",
-            "oPaginate": {
-                "sFirst": "首页",
-                "sPrevious": "上页",
-                "sNext": "下页",
-                "sLast": "末页",
-                "sJump": "跳转"
-            },
-            "oAria": {
-                "sSortAscending": ": 以升序排列此列",
-                "sSortDescending": ": 以降序排列此列"
-            }
-        };
 
-        //初始化表格
-        carsTroubleTable = $("#carsTroubleTable").dataTable({
-            language: lang,  //提示信息
-            autoWidth: false,  //禁用自动调整列宽
-            scrollY: scrollY,
-            stripeClasses: ["odd", "even"],  //为奇偶行加上样式，兼容不支持CSS伪类的场合
-            processing: true,  //隐藏加载提示,自行处理
-            serverSide: true,  //启用服务器端分页
-            searching: false,  //禁用原生搜索
-            orderMulti: false,  //启用多列排序
-            order: [],  //取消默认排序查询,否则复选框一列会出现小箭头
-            renderer: "Bootstrap",  //渲染样式：Bootstrap和jquery-ui
-            pagingType: "full_numbers",  //分页样式：simple,simple_numbers,full,full_numbers
-            columnDefs: [{
-                "targets": [0, 1, 2, 4],  //列号
-                "orderable": false  //禁止排序
-            }],
-            ajax: function (data, callback, settings) {
-                //封装请求参数
-                var param = {};
-                param.limit = data.length;//页面显示记录条数，在页面显示每页显示多少项的时候
-                param.start = data.start;//开始的记录序号
-                param.page = (data.start / data.length) + 1;//当前页码
-                //请求数据
-                //hitch=1 故障
-              /*  param.queryData = {
-                   car_id:"",
-                    area:"",
-                    hitch:""
-                 };*/
-
-                $('.fuzzySearchInp').val() == '' ? param.queryData = {} : param.queryData = {
-                    queryUser: $('.fuzzySearchInp').val()
-                }
-                //ajax请求数据
-                $.ajax({
-                    type: 'POST',
-                    url:'http://111.204.101.170:8184',
-                    data: '{"action":"carsTable","params":' + param + '}',
-                    dataType: 'jsonp',
-                    jsonp : "callback",
-                    jsonpCallback:"success_jsonpCallback",
-                    success: function (result) {
-                        //console.log(result);
-                        //setTimeout仅为测试延迟效果
-                        setTimeout(function () {
-                            //封装返回数据
-                            var returnData = {};
-                            returnData.draw = data.draw;//这里直接自行返回了draw计数器,应该由后台返回
-                            returnData.recordsTotal = result.total;//返回数据全部记录
-                            returnData.recordsFiltered = result.total;//后台不实现过滤功能，每次查询均视作全部结果
-                            returnData.data = result.data;//返回的数据列表
-                            //console.log(returnData);
-                            //调用DataTables提供的callback方法，代表数据已封装完成并传回DataTables进行渲染
-                            //此时的数据需确保正确无误，异常判断应在执行此回调前自行处理完毕
-                            callback(returnData);
-                        }, 500);
-                    }
-                });
-            },
-            //列表表头字段
-            columns: [
-                {"data": "carId"},
-                {"data": "troubleType"},
-                {"data": "CurrentPosition"},
-                {"data": "stopTime"},
-                {
-                    "sClass": "text-center",
-                    "targets": 6,//操作按钮目标列
-                    "data": null,
-                    "render": function (data, type, row) {
-                        return "<a href='javascript:void(0);'  class='delete btn btn-primary btn-xs'>查看</a>";
-                    }
-                }
-            ]
-        }).api();
-        //此处需调用api()方法,否则返回的是JQuery对象而不是DataTables的API对象
-    } catch (ex) {
-        catchTheException('initCarsTroubleTable', ex);
-    }
-
-}
-
-/**
- * 车辆分布地图初始化
- */
-function initDisMap() {
-    try {
-        //初始化
-        var map = new AMap.Map('carDistributeDiv', {
-            center: [116.404, 39.915],//默认中心点
-            zoom: 11//地图缩放级别
-        });
-
-        //添加地图工具条
-        map.plugin(["AMap.ToolBar"], function () {
-            map.addControl(new AMap.ToolBar());
-        });
-
-        //后台点坐标数据
-        var positions = [
-            "116.339850587,40.0780911672",
-            "116.339950587,40.0785911672",
-            "116.339750587,40.0784911672",
-            "116.339450587,40.0781911672",
-            "116.339350587,40.0783911672"
-        ];
-
-        //定义空数组，保存要添加的点
-        var marks = [];
-
-        //清空地图上的覆盖物
-        map.clearMap();
-
-        //遍历点数据，进行画点
-        for (var i = 0; i < positions.length; i++) {
-            //先将gps点转换为高德地图坐标点，然后地图画点
-            AMap.convertFrom(positions[i], "gps", function (status, result) {
-                var marker = new AMap.Marker({
-                    position: [result.locations[0].lng, result.locations[0].lat],
-                    title: 'hwh',
-                    map: map
-                });
-
-                //给每一个点添加双击事件
-                AMap.event.addListener(marker, 'click', renderDataShowModal);
-
-                //保存已经添加了的点
-                marks.push(marker);
-            });
+    var scrollY = $('.carsTroubleTableDiv').height() - $('.queryDiv').height() - 85;
+    //提示信息
+    var lang = {
+        "sProcessing": "处理中...",
+        "sLengthMenu": "每页 _MENU_ 项",
+        "sZeroRecords": "没有匹配结果",
+        "sInfo": "当前显示第 _START_ 至 _END_ 项，共 _TOTAL_ 项。",
+        "sInfoEmpty": "当前显示第 0 至 0 项，共 0 项",
+        "sInfoFiltered": "(由 _MAX_ 项结果过滤)",
+        "sInfoPostFix": "",
+        "sSearch": "搜索:",
+        "sUrl": "",
+        "sEmptyTable": "表中数据为空",
+        "sLoadingRecords": "载入中...",
+        "sInfoThousands": ",",
+        "oPaginate": {
+            "sFirst": "首页",
+            "sPrevious": "上页",
+            "sNext": "下页",
+            "sLast": "末页",
+            "sJump": "跳转"
+        },
+        "oAria": {
+            "sSortAscending": ": 以升序排列此列",
+            "sSortDescending": ": 以降序排列此列"
         }
-    } catch (ex) {
-        catchTheException('initDisMap', ex);
-    }
+    };
 
+    //初始化表格
+    carsTroubleTable = $("#carsTroubleTable").dataTable({
+        language: lang,  //提示信息
+        autoWidth: false,  //禁用自动调整列宽
+        scrollY: scrollY,
+        stripeClasses: ["odd", "even"],  //为奇偶行加上样式，兼容不支持CSS伪类的场合
+        processing: true,  //隐藏加载提示,自行处理
+        serverSide: true,  //启用服务器端分页
+        searching: false,  //禁用原生搜索
+        orderMulti: false,  //启用多列排序
+        order: [],  //取消默认排序查询,否则复选框一列会出现小箭头
+        renderer: "Bootstrap",  //渲染样式：Bootstrap和jquery-ui
+        pagingType: "full_numbers",  //分页样式：simple,simple_numbers,full,full_numbers
+        columnDefs: [{
+            "targets": [0, 1, 2, 4],  //列号
+            "orderable": false  //禁止排序
+        }],
+        ajax: function (data, callback, settings) {
+            //封装请求参数
+            var param = {};
+            param.limit = data.length;//页面显示记录条数，在页面显示每页显示多少项的时候
+            param.start = data.start;//开始的记录序号
+            param.page = (data.start / data.length) + 1;//当前页码
+            //请求数据
+            //hitch=1 故障
+            /*  param.queryData = {
+             car_id:"",
+             area:"",
+             hitch:""
+             };*/
 
-}
+            $('.fuzzySearchInp').val() == '' ? param.queryData = {} : param.queryData = {
+                queryUser: $('.fuzzySearchInp').val()
+            }
+            //ajax请求数据
+            $.ajax({
+                type: 'POST',
+                url: 'http://111.204.101.170:8184',
+                data: '{"action":"carsTable","params":' + param + '}',
+                dataType: 'jsonp',
+                jsonp: "callback",
+                jsonpCallback: "success_jsonpCallback",
+                success: function (result) {
+                    //console.log(result);
+                    //setTimeout仅为测试延迟效果
+                    setTimeout(function () {
+                        //封装返回数据
+                        var returnData = {};
+                        returnData.draw = data.draw;//这里直接自行返回了draw计数器,应该由后台返回
+                        returnData.recordsTotal = result.total;//返回数据全部记录
+                        returnData.recordsFiltered = result.total;//后台不实现过滤功能，每次查询均视作全部结果
+                        returnData.data = result.data;//返回的数据列表
+                        //console.log(returnData);
+                        //调用DataTables提供的callback方法，代表数据已封装完成并传回DataTables进行渲染
+                        //此时的数据需确保正确无误，异常判断应在执行此回调前自行处理完毕
+                        callback(returnData);
+                    }, 500);
+                }
+            });
+        },
+        //列表表头字段
+        columns: [
+            {"data": "carId"},
+            {"data": "troubleType"},
+            {"data": "CurrentPosition"},
+            {"data": "stopTime"},
+            {
+                "sClass": "text-center",
+                "targets": 6,//操作按钮目标列
+                "data": null,
+                "render": function (data, type, row) {
+                    return "<a href='javascript:void(0);'  class='delete btn btn-primary btn-xs'>查看</a>";
+                }
+            }
+        ]
+    }).api();
+    //此处需调用api()方法,否则返回的是JQuery对象而不是DataTables的API对象
 
-/**
- * 显示车辆具体信息
- */
-function viewCarDetail(option) {
-    //给查看按钮动态绑定事件
-    $(document).on('click', '.viewCarDetail', function () {
-
-    });
 }
 
 /**
  * tabs
  */
 function tabsChange() {
-    try {
-        $('.carInfoTabs li').click(function () {
 
-            //tabs
-            $(this).siblings().removeClass('active');
-            $(this).addClass('active');
+    $('.carInfoTabs li').click(function () {
 
-            //对应div
-            $('.carInfoContent>div').hide();
-            $('.carInfoContent>div').eq($(this).val()).show();
-        });
-    } catch (ex) {
-        catchTheException('tabsChange', ex);
-    }
+        //tabs
+        $(this).siblings().removeClass('active');
+        $(this).addClass('active');
+
+        //对应div
+        $('.carInfoContent>div').hide();
+        $('.carInfoContent>div').eq($(this).val()).show();
+    });
 }
 
 /**
- * 车辆控制（视频和车辆操作）选择
+ * 视频和车辆操控
  */
 function checkBox() {
-    try {
 
-        //是否开启视频监控
-        $('#monitorCheckbox').change(function () {
-            //获取当前车辆编号
-            var carId = $('#carId').html();
+    //是否开启视频监控
+    $('#monitorCheckbox').change(function () {
+        //获取当前车辆编号
+        var carId = $('#carId').html();
 
-            if ($('#monitorCheckbox').prop('checked')) {
+        if ($('#monitorCheckbox').prop('checked')) {
 
-                //显示视频
-                $('.carMonitorVideo').show();
+            //显示视频
+            $('.carMonitorVideo').show();
 
-                //隐藏信息和故障
-                $('.carInfoTabsDiv').hide();
-                //连接该车辆视频
-                //code...
-                //发送操作请求
-                var data = {
-                    action:"webControl",
-                    params:{
-                        "car_id":$('#carId').html(),
-                        "opType":5,
-                        "opVal":1//开启
-                    }
+            //隐藏信息和故障
+            $('.carInfoTabsDiv').hide();
+            //连接该车辆视频
+            //code...
+            //发送操作请求
+            var data = {
+                action: "webControl",
+                params: {
+                    "car_id": $('#carId').html(),
+                    "opType": 5,
+                    "opVal": 1//开启
                 }
-                //发送控制请求
-                videoController(data,function(data){
-                    //data.result 0:控制成功   -1：控制失败
-                    if(data.result == 0){
-                        $('.carMonitorVideo').html('<canvas id="video-canvas"></canvas>')
-                        var canvas = $('#video-canvas').get(0);
-                        var url = 'ws://111.204.101.170:8082/';
-                        new JSMpeg.Player(url, {canvas: canvas});
-                    }else{
-                        $('.carMonitorVideo').html('获取视频监控失败！').css({
-                            color:'red',
-                            lineHeight:'333px',
-                            fontSize:'20px'
-                        });
-                    }
-                });
-            } else {
-                $('.carMonitorVideo').hide();
-                $('.carInfoTabsDiv').show();
-                //恢复视频加载动画
-                $('.carMonitorVideo').html('<div class="loadingDiv"><img src="./img/loading.gif" alt=""/></div>');
-                //关闭车辆视频连接
-                //发送操作请求
-                var data = {
-                    action:"webControl",
-                    params:{
-                        "car_id":$('#carId').html(),
-                        "opType":5,
-                        "opVal":0//关闭
-                    }
-                }
-                //发送求情
-                videoController(data);
             }
-        });
+            //发送控制请求
+            videoController(data, function (data) {
+                //data.result 0:控制成功   -1：控制失败
+                if (data.result == 0) {
+                    $('.carMonitorVideo').html('<canvas id="video-canvas"></canvas>')
+                    var canvas = $('#video-canvas').get(0);
+                    var url = 'ws://111.204.101.170:8082/';
+                    new JSMpeg.Player(url, {canvas: canvas});
+                } else {
+                    $('.carMonitorVideo').html('获取视频监控失败！').css({
+                        color: 'red',
+                        lineHeight: '333px',
+                        fontSize: '20px'
+                    });
+                }
+            });
+        } else {
+            $('.carMonitorVideo').hide();
+            $('.carInfoTabsDiv').show();
+            //恢复视频加载动画
+            $('.carMonitorVideo').html('<div class="loadingDiv"><img src="./img/loading.gif" alt=""/></div>');
+            //关闭车辆视频连接
+            //发送操作请求
+            var data = {
+                action: "webControl",
+                params: {
+                    "car_id": $('#carId').html(),
+                    "opType": 5,
+                    "opVal": 0//关闭
+                }
+            }
+            //发送求情
+            videoController(data);
+        }
+    });
 
-        //是否开启车辆操作
-        $('#hanbleCheckbox').change(function () {
-            if ($(this).prop('checked')) {
-                //显示控制台
-                $('.carHandle').show();
+    //是否开启车辆操作
+    $('#hanbleCheckbox').change(function () {
+        if ($(this).prop('checked')) {
+            //显示控制台
+            $('.carHandle').show();
 
-                //隐藏货柜信息
-                $('.counterDiv').hide();
+            //隐藏货柜信息
+            $('.counterDiv').hide();
 
-                //隐藏车辆状态
-                $('.carStatus').hide();
+            //隐藏车辆状态
+            $('.carStatus').hide();
+
+            //隐藏位置信息（针对窝小白）
+            $('.WXBPosition').hide();
+
+            //控制车辆进入控制驾驶
+            handleAjax(10, 0, $('#carId').html(), function (data) {
+                //控制成功
+            });
+        } else {
+            $('.carHandle').hide();
+
+            //显示车辆状态
+            $('.carStatus').show();
+
+            if ($('#carType').val() == 1) {//窝必达
+                //显示窝必达货柜信息
+                $('.counterDiv').show();
+            } else if ($('#carType').val() == 2) {//窝小白
 
                 //隐藏位置信息（针对窝小白）
-                $('.WXBPosition').hide();
-
-                //控制车辆进入控制驾驶
-                handleAjax(10,0,$('#carId').html(),function(data){
-                    //控制成功
-                });
-            } else {
-                $('.carHandle').hide();
-
-                //显示车辆状态
-                $('.carStatus').show();
-
-                if($('#carType').val() == 1){//窝必达
-                    //显示窝必达货柜信息
-                    $('.counterDiv').show();
-                }else if($('#carType').val() == 2){//窝小白
-
-                    //隐藏位置信息（针对窝小白）
-                    //$('.WXBPosition').show();
-                }
-
-                //控制车辆退出控制驾驶
-                handleAjax(4,0,$('#carId').html(),function(data){
-                    //控制成功
-                });
-
+                //$('.WXBPosition').show();
             }
-        });
-    } catch (ex) {
-        catchTheException('checkBox', ex);
-    }
+
+            //控制车辆退出控制驾驶
+            handleAjax(4, 0, $('#carId').html(), function (data) {
+                //控制成功
+            });
+
+        }
+    });
 }
 
 /**
@@ -2219,24 +2114,24 @@ function checkBox() {
  * @param val   操控值
  * @param carId 车辆id
  */
-function handleAjax(type,val,carId,callback){
+function handleAjax(type, val, carId, callback) {
     var data = {
-        action:"webControl",
-        params:{
-            car_id:carId,
-            opType:type,
-            opVal:val
+        action: "webControl",
+        params: {
+            car_id: carId,
+            opType: type,
+            opVal: val
         }
     }
     //发送操作请求
     $.ajax({
-        type:'POST',
-        url:'http://111.204.101.170:8184',
-        data:data,
-        dataType:'jsonp',
-        jsonp:'callback',
-        jsonpCallback:'success_jsonpCallback',
-        success:callback
+        type: 'POST',
+        url: 'http://111.204.101.170:8184',
+        data: data,
+        dataType: 'jsonp',
+        jsonp: 'callback',
+        jsonpCallback: 'success_jsonpCallback',
+        success: callback
     });
 }
 
@@ -2245,15 +2140,15 @@ function handleAjax(type,val,carId,callback){
  * @param data  请求数据
  * @param callback  回调函数
  */
-function videoController(data,callback){
+function videoController(data, callback) {
     $.ajax({
-        type:'POST',
-        url:'http://111.204.101.170:8184',
-        data:data,
-        dataType:'jsonp',
-        jsonp:'callback',
-        jsonpCallback:'success_jsonpCallback',
-        success:callback
+        type: 'POST',
+        url: 'http://111.204.101.170:8184',
+        data: data,
+        dataType: 'jsonp',
+        jsonp: 'callback',
+        jsonpCallback: 'success_jsonpCallback',
+        success: callback
     });
 }
 
@@ -2261,201 +2156,179 @@ function videoController(data,callback){
  * 修改用户信息
  */
 function updateUserInfo() {
-    try {
-        $(document).on('click', '.updateUserInfo', function () {
-            //修改用户信息模态框
-            $('#userUpdateModal').modal('show');
-        });
 
-        //修改用户的后台接口
-        var data = {
-            action:"updateUser",
-            params:{"phone":"","password":"","newphone":""}
-        };
-        $.ajax({
-            type: 'POST',
-            url: 'http://111.204.101.170:8184',
-            data: data,
-            dataType: 'jsonp',
-            jsonp: "callback",
-            jsonpCallback: "success_jsonpCallback",
-            success: function (msg) {
-                var rData = msg.resData
-               if(rData.result == 0){
+    $(document).on('click', '.updateUserInfo', function () {
+        //修改用户信息模态框
+        $('#userUpdateModal').modal('show');
+    });
 
-               }else{
+    //修改用户的后台接口
+    var data = {
+        action: "updateUser",
+        params: {"phone": "", "password": "", "newphone": ""}
+    };
+    $.ajax({
+        type: 'POST',
+        url: 'http://111.204.101.170:8184',
+        data: data,
+        dataType: 'jsonp',
+        jsonp: "callback",
+        jsonpCallback: "success_jsonpCallback",
+        success: function (msg) {
+            var rData = msg.resData
+            if (rData.result == 0) {
 
-               }
+            } else {
+
             }
-        })
-    } catch (ex) {
-        catchTheException('updateUserInfo', ex);
-    }
-
+        }
+    })
 }
 
 /**
  * 删除用户
  */
 function deleteUserInfo() {
-    try {
-        var userPhone;
-        $(document).on('click', '.deleteUserInfo', function () {
-            //修改用户信息模态框
-            $('#deleteUserModal').modal('show');
-            userPhone = $(this).val();
-        });
 
-        //删除用户的后台接
+    var userPhone;
+    $(document).on('click', '.deleteUserInfo', function () {
+        //修改用户信息模态框
+        $('#deleteUserModal').modal('show');
+        userPhone = $(this).val();
+    });
 
-        var data = {
-            action:"deketeUser",
-            params:{deketeUser:userPhone}
-        };
-        $.ajax({
-            type: 'POST',
-            url: 'http://111.204.101.170:8184',
-            data: data,
-            dataType: 'jsonp',
-            jsonp: "callback",
-            jsonpCallback: "success_jsonpCallback",
-            success: function (msg) {
+    //删除用户的后台接
+    var data = {
+        action: "deketeUser",
+        params: {deketeUser: userPhone}
+    };
+    $.ajax({
+        type: 'POST',
+        url: 'http://111.204.101.170:8184',
+        data: data,
+        dataType: 'jsonp',
+        jsonp: "callback",
+        jsonpCallback: "success_jsonpCallback",
+        success: function (msg) {
 
-            }
-        })
-    } catch (ex) {
-        catchTheException('deleteUserInfo', ex);
-    }
-
+        }
+    })
 }
 
 /**
  * 添加管理员
  */
 function addMannager() {
-    try {
-        //含有未通过验证
-        if ($('#addManageForm span').is(':visible')) {
-            return;
-        }
 
-        //点击添加，弹出添加模态框
-        $('#addMannager').click(function () {
-            $('#addManagerModal').modal('show');
-        });
-
-        //添加管理员的后台接口
-
-
-        var data = {
-            action:"AddManager",
-            params:{"phone":"","password":"","username":""}
-        };
-        $.ajax({
-            type: 'POST',
-            url: 'http://111.204.101.170:8184',
-            data: data,
-            dataType: 'jsonp',
-            jsonp: "callback",
-            jsonpCallback: "success_jsonpCallback",
-            success: function (msg) {
-                var rData = msg.resData
-                console.log(rData)
-                if(rData.result == 0){
-
-                }else{
-
-                }
-            }
-        })
-    } catch (ex) {
-        catchTheException('addMannager', ex);
+    //含有未通过验证
+    if ($('#addManageForm span').is(':visible')) {
+        return;
     }
+
+    //点击添加，弹出添加模态框
+    $('#addMannager').click(function () {
+        $('#addManagerModal').modal('show');
+    });
+
+    //添加管理员的后台接口
+    var data = {
+        action: "AddManager",
+        params: {"phone": "", "password": "", "username": ""}
+    };
+    $.ajax({
+        type: 'POST',
+        url: 'http://111.204.101.170:8184',
+        data: data,
+        dataType: 'jsonp',
+        jsonp: "callback",
+        jsonpCallback: "success_jsonpCallback",
+        success: function (msg) {
+            var rData = msg.resData
+            console.log(rData)
+            if (rData.result == 0) {
+
+            } else {
+
+            }
+        }
+    })
 }
 
 /**
  * 修改管理员信息
  */
 function updateManagerInfo() {
-    try {
-        $(document).on('click', '.updateManagerInfo', function () {
-            //修改用户信息模态框
-            $('#managerUpdateModal').modal('show');
-        });
 
-        //修改管理员的后台接口
+    $(document).on('click', '.updateManagerInfo', function () {
+        //修改用户信息模态框
+        $('#managerUpdateModal').modal('show');
+    });
 
-        var data = {
-            action:"updateManager",
-            params:{"phone":"","password":"","newphone":""}
-        };
-        $.ajax({
-            type: 'POST',
-            url: 'http://111.204.101.170:8184',
-            data: data,
-            dataType: 'jsonp',
-            jsonp: "callback",
-            jsonpCallback: "success_jsonpCallback",
-            success: function (msg) {
-                var rData = msg.resData
-                console.log(rData)
-                if(rData.result == 0){
+    //修改管理员的后台接口
+    var data = {
+        action: "updateManager",
+        params: {"phone": "", "password": "", "newphone": ""}
+    };
+    $.ajax({
+        type: 'POST',
+        url: 'http://111.204.101.170:8184',
+        data: data,
+        dataType: 'jsonp',
+        jsonp: "callback",
+        jsonpCallback: "success_jsonpCallback",
+        success: function (msg) {
+            var rData = msg.resData
+            console.log(rData)
+            if (rData.result == 0) {
 
-                }else{
+            } else {
 
-                }
             }
-        })
-    } catch (ex) {
-        catchTheException('updateManagerInfo', ex);
-    }
+        }
+    })
 }
 
 /**
  * 删除管理员
  */
 function deleteManagerInfo() {
-    try {
-        $(document).on('click', '.deleteManagerInfo', function () {
-            //修改用户信息模态框
-            $('#deleteManagerModal').modal('show');
-        });
+
+    $(document).on('click', '.deleteManagerInfo', function () {
+        //修改用户信息模态框
+        $('#deleteManagerModal').modal('show');
+    });
 
     //删除管理员的后台接口
-
-        var data = {
-            action:"deleteManager",
-            params:{
-                deleteManager:""
+    var data = {
+        action: "deleteManager",
+        params: {
+            deleteManager: ""
+        }
+    };
+    $.ajax({
+        type: 'POST',
+        url: 'http://111.204.101.170:8184',
+        data: data,
+        dataType: 'jsonp',
+        jsonp: "callback",
+        jsonpCallback: "success_jsonpCallback",
+        success: function (msg) {
+            var rData = msg.resData
+            console.log(rData)
+            if (rData.result == 0) {
             }
-        };
-        $.ajax({
-            type: 'POST',
-            url: 'http://111.204.101.170:8184',
-            data: data,
-            dataType: 'jsonp',
-            jsonp: "callback",
-            jsonpCallback: "success_jsonpCallback",
-            success: function (msg) {
-                var rData = msg.resData
-                console.log(rData)
-                if(rData.result == 0){
-
-                }
-            }
-        })
-    } catch (ex) {
-        catchTheException('deleteManagerInfo', ex);
-    }
+        }
+    })
 }
 
 /**
  * 创建websocket连接
  * @param options 自定义连接
- * @param callback 自定义接收数据胡函数
+ * @param callback 自定义接收数据callback函数
  */
 
 function handleWebsocket(options, callback) {
+
     var defaultOption = {
         data: ''//请求数据
     }
