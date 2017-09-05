@@ -1308,13 +1308,13 @@ function initAllOrderTable() {
             param.start = data.start;//开始的记录序号
             param.page = (data.start / data.length) + 1;//当前页码
             //请求数据
-            param.queryData = {
+           /* param.queryData = {
                 username: data.username,
                 phone: data.phone,
                 order_id: data.order_id,
                 car_id: data.car_id,
                 location_id: data.location_id
-            };
+            };*/
             //$('.queryInput>ul input').val() == '' ? param.queryData = {} : param.queryData = {
             //    queryUser: $('.queryInput>ul input').val()
             //}
