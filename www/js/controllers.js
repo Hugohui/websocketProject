@@ -658,6 +658,8 @@ function creatCarWs(carOptions) {
             var carStatus = rData.data.status,
                 carStatusStr;
 
+            console.log(rData.data);
+
             //切换小车图标显示
             var WXB_imgPng = 'img/WXB_static.png',
                 WXB_imgGif = 'img/WXB_gif.gif',
@@ -714,50 +716,52 @@ function creatCarWs(carOptions) {
             /***********显示机电信息*************/
 
             //机电信息对象
-            var mechelecinfo = rData.data.mechelecinfo[0];
+                if(rData.data.mechelecinfo.length>0){
+                    var mechelecinfo = rData.data.mechelecinfo[0];
 
-            //获取数据中的各个机电信息
-            var batter_voltage = mechelecinfo.batter_voltage + 'V',//电压
-                batter_templature = mechelecinfo.batter_templature + '℃',//电池温度
-                //battery_totquantity = mechelecinfo.battery_totquantity + 'C',//电池总电量
-                battery_totquantity = 100,//电池总电量
-                battery_quantity = mechelecinfo.battery_quantity + '%',//剩余电量
-                battery_current = mechelecinfo.battery_current + 'A',//电流情况
-                ugv_memory = mechelecinfo.ugv_memory + '%',//内存使用率
-                ugv_cpu = mechelecinfo.ugv_cpu + '%',//cpu使用率
-                ugv_storage = mechelecinfo.ugv_storage + '%',//存储使用率
-                ugv_restdistance = mechelecinfo.ugv_restdistance + 'km';//续航里程
+                    //获取数据中的各个机电信息
+                    var batter_voltage = mechelecinfo.batter_voltage + 'V',//电压
+                        batter_templature = mechelecinfo.batter_templature + '℃',//电池温度
+                    //battery_totquantity = mechelecinfo.battery_totquantity + 'C',//电池总电量
+                        battery_totquantity = 100,//电池总电量
+                        battery_quantity = mechelecinfo.battery_quantity + '%',//剩余电量
+                        battery_current = mechelecinfo.battery_current + 'A',//电流情况
+                        ugv_memory = mechelecinfo.ugv_memory + '%',//内存使用率
+                        ugv_cpu = mechelecinfo.ugv_cpu + '%',//cpu使用率
+                        ugv_storage = mechelecinfo.ugv_storage + '%',//存储使用率
+                        ugv_restdistance = mechelecinfo.ugv_restdistance + 'km';//续航里程
 
-            //给页面上的机电信息赋值
-            $('#batter_voltage').html(batter_voltage),//电压
-                $('#batter_templature').html(batter_templature),//电池温度
-                //$('#battery_totquantity').html(battery_totquantity),//电池总电量
-                $('#battery_quantity').html(battery_quantity),//剩余电量
-                $('#battery_current').html(battery_current),//电流情况
-                $('#ugv_memory').html(ugv_memory),//内存使用率
-                $('#ugv_cpu').html(ugv_cpu),//cpu使用率
-                $('#ugv_storge').html(ugv_storage),//存储使用率
-                $('#ugv_restdistance').html(ugv_restdistance);//续航里程
+                    //给页面上的机电信息赋值
+                    $('#batter_voltage').html(batter_voltage),//电压
+                        $('#batter_templature').html(batter_templature),//电池温度
+                        //$('#battery_totquantity').html(battery_totquantity),//电池总电量
+                        $('#battery_quantity').html(battery_quantity),//剩余电量
+                        $('#battery_current').html(battery_current),//电流情况
+                        $('#ugv_memory').html(ugv_memory),//内存使用率
+                        $('#ugv_cpu').html(ugv_cpu),//cpu使用率
+                        $('#ugv_storge').html(ugv_storage),//存储使用率
+                        $('#ugv_restdistance').html(ugv_restdistance);//续航里程
 
-            //电池电量示意图显示batteryBody battery battery60
-            var batteryParent = mechelecinfo.battery_quantity / battery_totquantity * 100;
+                    //电池电量示意图显示batteryBody battery battery60
+                    var batteryParent = mechelecinfo.battery_quantity / battery_totquantity * 100;
 
-            console.log(batteryParent);
+                    console.log(batteryParent);
 
-            //var batteryParent = mechelecinfo.battery_quantity / mechelecinfo.battery_totquantity * 100;
-            if (batteryParent == 0) {
-                $('.batteryBody').attr('class', 'batteryBody battery battery0');
-            } else if (batteryParent < 20) {
-                $('.batteryBody').attr('class', 'batteryBody battery battery0_20');
-            } else if (batteryParent < 45) {
-                $('.batteryBody').attr('class', 'batteryBody battery battery20_45');
-            } else if (batteryParent < 75) {
-                $('.batteryBody').attr('class', 'batteryBody battery battery45_75');
-            } else if (batteryParent < 100) {
-                $('.batteryBody').attr('class', 'batteryBody battery battery75_100');
-            } else if (batteryParent == 100) {
-                $('.batteryBody').attr('class', 'batteryBody battery battery100');
-            }
+                    //var batteryParent = mechelecinfo.battery_quantity / mechelecinfo.battery_totquantity * 100;
+                    if (batteryParent == 0) {
+                        $('.batteryBody').attr('class', 'batteryBody battery battery0');
+                    } else if (batteryParent < 20) {
+                        $('.batteryBody').attr('class', 'batteryBody battery battery0_20');
+                    } else if (batteryParent < 45) {
+                        $('.batteryBody').attr('class', 'batteryBody battery battery20_45');
+                    } else if (batteryParent < 75) {
+                        $('.batteryBody').attr('class', 'batteryBody battery battery45_75');
+                    } else if (batteryParent < 100) {
+                        $('.batteryBody').attr('class', 'batteryBody battery battery75_100');
+                    } else if (batteryParent == 100) {
+                        $('.batteryBody').attr('class', 'batteryBody battery battery100');
+                    }
+                }
 
             /*            /!***********显示位置信息*************!/
              var position = rData.data.position;
