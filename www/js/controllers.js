@@ -434,12 +434,12 @@ function renderDataShowModal(e) {
     hideMapRight();
 
     //窝小白绘制路径
-    if (carId == '1234567893') {
-        /*
+    /*if (carId == '1234567893') {
+        /!*
          |--------------------------------------
          |请求车辆的路径规划信息，并在地图上显示
          |--------------------------------------
-         */
+         *!/
         var uploadDate = {
             action: "uploadMap",
             params: {
@@ -449,7 +449,7 @@ function renderDataShowModal(e) {
         };
         var jsonpCallbackName = "success_jsonpCallback";
         ajaxQueryLine(uploadDate, jsonpCallbackName, true);
-    }
+    }*/
 
     //建立单车websocket
     creatCarWs({
@@ -836,10 +836,12 @@ function creatCarWs(carOptions) {
                 lineArr.push([Number(value.split(',')[0]), Number(value.split(',')[1])]);
             });
 
+            //carLineMap.clearMap();
+
             //绘制折线
             var polyline = new AMap.Polyline({
                 path: lineArr,          //设置线覆盖物路径
-                strokeColor: "red", //线颜色
+                strokeColor: "#3366FF", //线颜色
                 strokeOpacity: 0.8,       //线透明度
                 strokeWeight: 3,        //线宽
                 strokeStyle: "solid",   //线样式
