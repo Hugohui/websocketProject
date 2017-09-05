@@ -433,12 +433,15 @@ function renderDataShowModal(e) {
     //隐藏高德地图版本等信息
     hideMapRight();
 
-    if (carId == '1234567893') {
-        /*
+    //窝小白绘制路径
+    /**change by hwh 2017-09-05 13:39:54*/
+    //取消路径规划绘制
+    /*if (carId == '1234567893') {
+        /!*
          |--------------------------------------
          |请求车辆的路径规划信息，并在地图上显示
          |--------------------------------------
-         */
+         *!/
         var uploadDate = {
             action: "uploadMap",
             params: {
@@ -447,8 +450,8 @@ function renderDataShowModal(e) {
             }
         };
         var jsonpCallbackName = "success_jsonpCallback";
-        ajaxQueryLine(uploadDate, jsonpCallbackName, true);
-    }
+        ajaxQueryLine(uploadDate, jsonpCallbackName, false);
+    }*/
 
     //建立单车websocket
     creatCarWs({
