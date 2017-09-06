@@ -1322,15 +1322,16 @@ function initAllOrderTable() {
             //$('.queryInput>ul input').val() == '' ? param.queryData = {} : param.queryData = {
             //    queryUser: $('.queryInput>ul input').val()
             //}
-            if (data.username == '' || data.phone == '' || data.order_id == '' || data.car_id == '' || data.location_id == '') {
+            if ($('#username').val()=='' && $('#phone').val() == '' && $('#order_id').val()== '' &&
+                $('#car_id').val() == '' && $('#location_id').val() == '') {
                 param.queryData = {};
             } else {
                 param.queryData = {
-                    queryUser: data.username,
-                    queryPhone: data.phone,
-                    order_id: data.order_id,
-                    car_id: data.car_id,
-                    location_id: data.location_id
+                    username: $('#username').val(),
+                    phone: $('#phone').val(),
+                    order_id:$('#order_id').val(),
+                    car_id:$('#car_id').val(),
+                    location_id: $('#location_id').val()
                 }
             }
             //ajax请求数据
@@ -1453,25 +1454,26 @@ function initUnusualOrderTable() {
             param.start = data.start;//开始的记录序号
             param.page = (data.start / data.length) + 1;//当前页码
             //请求数据
-            param.queryData = {
+           /* param.queryData = {
                 username: data.username,
                 phone: data.phone,
                 order_id: data.order_id,
                 car_id: data.car_id,
                 location_id: data.location_id
-            };
+            };*/
             //$(".queryInput>ul>input").val() == '' ? param.queryData = {} : param.queryData = {
             //    queryUser: $(".queryInput>ul>input").val()
             //}
-            if (data.username == '' || data.phone == '' || data.order_id == '' || data.car_id == '' || data.location_id == '') {
+            if ($('#username').val()=='' && $('#phone').val() == '' && $('#order_id').val()== '' &&
+                $('#car_id').val() == '' && $('#location_id').val() == '') {
                 param.queryData = {};
             } else {
                 param.queryData = {
-                    queryUser: data.username,
-                    queryPhone: data.phone,
-                    order_id: data.order_id,
-                    car_id: data.car_id,
-                    location_id: data.location_id
+                    username: $('#username').val(),
+                    phone: $('#phone').val(),
+                    order_id:$('#order_id').val(),
+                    car_id:$('#car_id').val(),
+                    location_id: $('#location_id').val()
                 }
             }
             //ajax请求数据
@@ -1580,22 +1582,23 @@ function initTransOrderTable() {
             param.start = data.start;//开始的记录序号
             param.page = (data.start / data.length) + 1;//当前页码
             //请求数据
-            param.queryData = {
-                username: data.username,
-                phone: data.phone,
-                order_id: data.order_id,
-                car_id: data.car_id,
-                location_id: data.location_id
-            };
-            if (data.username == '' || data.phone == '' || data.order_id == '' || data.car_id == '' || data.location_id == '') {
+           /* param.queryData = {
+                username: $('#username').val(),
+                phone: $('#phone').val(),
+                order_id:$('#order_id').val(),
+                car_id:$('#car_id').val(),
+                location_id: $('#location_id').val()
+            };*/
+            if ($('#username').val()=='' && $('#phone').val() == '' && $('#order_id').val()== '' &&
+                $('#car_id').val() == '' && $('#location_id').val() == '') {
                 param.queryData = {};
             } else {
                 param.queryData = {
-                    queryUser: data.username,
-                    queryPhone: data.phone,
-                    order_id: data.order_id,
-                    car_id: data.car_id,
-                    location_id: data.location_id
+                    username: $('#username').val(),
+                    phone: $('#phone').val(),
+                    order_id:$('#order_id').val(),
+                    car_id:$('#car_id').val(),
+                    location_id: $('#location_id').val()
                 }
             }
             ;
@@ -1705,22 +1708,23 @@ function initCompleteOrderTable() {
             param.start = data.start;//开始的记录序号
             param.page = (data.start / data.length) + 1;//当前页码
             //请求数据
-            param.queryData = {
+            /*param.queryData = {
                 username: data.username,
                 phone: data.phone,
                 order_id: data.order_id,
                 car_id: data.car_id,
                 location_id: data.location_id
-            };
-            if (data.username == '' || data.phone == '' || data.order_id == '' || data.car_id == '' || data.location_id == '') {
+            };*/
+            if ($('#username').val()=='' && $('#phone').val() == '' && $('#order_id').val()== '' &&
+                $('#car_id').val() == '' && $('#location_id').val() == '') {
                 param.queryData = {};
             } else {
                 param.queryData = {
-                    queryUser: data.username,
-                    queryPhone: data.phone,
-                    order_id: data.order_id,
-                    car_id: data.car_id,
-                    location_id: data.location_id
+                    username: $('#username').val(),
+                    phone: $('#phone').val(),
+                    order_id:$('#order_id').val(),
+                    car_id:$('#car_id').val(),
+                    location_id: $('#location_id').val()
                 }
             }
             //ajax请求数据
@@ -1826,20 +1830,20 @@ function initCarsTable() {
             param.start = data.start;//数据库开始查询的序号
             param.page = (data.start / data.length) + 1;//当前页码
             //请求数据
-            param.queryData = {
-                car_id: data.car_id,
-                area: data.area,
-                hitch: data.hitch
-            };
+            /*param.queryData = {
+                car_id: $('#car_id').val(),
+                area: $('#area').val(),
+                hitch:$('#hitch').val()
+            };*/
 
 
-            if (data.car_id == '' || data.area == '' || data.hitch == '') {
+            if ($('#car_id').val() == '' && $('#area').val() == '' && $('#hitch').val() == '') {
                 param.queryData = {};
             } else {
                 param.queryData = {
-                    car_id: data.car_id,
-                    area: data.area,
-                    hitch: data.hitch
+                    car_id: $('#car_id').val(),
+                    area: $('#area').val(),
+                    hitch:$('#hitch').val()
                 }
             }
             ;
