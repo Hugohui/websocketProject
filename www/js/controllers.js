@@ -619,6 +619,9 @@ function creatSearchWs(map, options) {
         }
 
         var rData = $.parseJSON(msg.data).resData;
+
+        console.log(rData);
+
         var status = rData.status;
         if (!msg.data.result) {
 
@@ -953,29 +956,29 @@ function searchMapCar() {
 
     var status, hitch, carId;
     //车辆编号
-    carId = $('#searchCarId').val();
+    carId = $('#searchCarId').val() != ""?$('#searchCarId').val():null;
     //状态
-    status = $('.isTransDiv>div.active').length > 0?$('.isTransDiv>div.active').attr('valuetype'):'';
+    status = $('.isTransDiv>div.active').length > 0?$('.isTransDiv>div.active').attr('valuetype'):null;
     //是否故障
-    hitch = $('.isHitchDiv>div.active').length > 0?$('.isHitchDiv>div.active').attr('valuetype'):'';
+    hitch = $('.isHitchDiv>div.active').length > 0?$('.isHitchDiv>div.active').attr('valuetype'):null;
 
     //当没有输入查询条件时查询所有，即关闭查询socket，显示首页socket
-    if(carId == '' && status == '' && hitch == ''){
-        //return;
+    if(carId == null && status == null && hitch == null){
         closeSearchWs();
-    }else{
-        //关闭首页websocket
-        homeWs.close();
-        searchWs && searchWs.readyState == 1 && searchWs.close();
-
-        //打开查询sebsocket
-        var dataOption = {
-            //data: '{"action":"home","params":{"car_id ":'+carId+',"status":'+status+',"hitch":'+hitch+'}}'
-            data: '{"action":"home","params":{}}'
-        };
-
-        creatSearchWs(homeMap, dataOption);
+        return;
     }
+
+    //关闭首页websocket
+    homeWs.close();
+    searchWs && searchWs.readyState == 1 && searchWs.close();
+
+    //打开查询sebsocket
+    var dataOption = {
+        data: '{"action":"home","params":{"car_id":'+carId+',"status":'+status+',"hitch":'+hitch+'}}'
+        //data: '{"action":"home","params":{}}'
+    };
+
+    creatSearchWs(homeMap, dataOption);
 }
 
 /**
