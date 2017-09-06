@@ -938,9 +938,7 @@ function drawMarker(map, rData) {
  */
 function searchMapCar() {
 
-    var status = '5',
-        hitch = '6',
-        carId;
+    var status,hitch,carId;
     //车辆编号
     carId = $('#searchCarId').val();
 
