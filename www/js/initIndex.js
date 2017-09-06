@@ -70,4 +70,9 @@ $(function () {
     $('#changePwd').click(function () {
         $('#changePwdModal').modal('show');
     });
+
+    //用户指南
+    $('#userGuideA').click(function () {
+        $('#userGuideAModal').modal('show');
+    });
 });
