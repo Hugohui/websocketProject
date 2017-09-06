@@ -349,7 +349,7 @@
     border-radius: 8px 8px 0 0;
 }
 .carDetailDiv .carDetailRight>div:first-child canvas{
-    border-radius: 8px 8px 0 0;
+    border-radius: 8px;
 }
 .carDetailDiv .carDetailRight .carMapDiv{
     width: 100%;
