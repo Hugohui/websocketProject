@@ -463,7 +463,7 @@ function renderDataShowModal(e) {
      |  根据车辆类型，设置弹层显示不同的样式
      |-----------------------------------------
      */
-    if (carType == 2) {//窝小白
+    if (carType == 2||carType == 3) {//窝小白
 
         //隐藏窝必达位置信息
         $('.carLineDiv').hide();
@@ -507,6 +507,13 @@ function renderDataShowModal(e) {
 
         //隐藏窝小白位置信息
         $('.WXBPosition').hide();
+    }
+
+    //新石器
+    if(carType == 3){
+        $('.radioBox ').hide();
+    }else{
+        $('.radioBox ').show();
     }
 
     //显示模态框
