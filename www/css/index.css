@@ -203,3 +203,14 @@ header .headerRight .headerMsg{
         padding-left: 0;
     }
 }
+/*用户指南弹层大小*/
+.modal-userGuide{
+    width: 50%;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%,-50%);
+}
+#userGuideAModal .modal-body{
+    height: 500px;
+}
