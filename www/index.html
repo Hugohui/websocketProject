@@ -139,13 +139,39 @@
                 </ul>
             </li>
             <!--<li class="header">HELPS</li>-->
-            <li><a class="userGuideA" href="doc/用户指南.docx"><i class="fa fa-file text-red"></i> <span>用户指南</span></a></li>
+            <!--<a class="userGuideA" href="doc/用户指南.docx"></a>-->
+            <li> <a href="javascript:;" id="userGuideA"><i class="fa fa-file text-red"></i>用户指南</a></li>
         </ul>
     </section>
 </aside>
 <section class="mainView">
     <div data-ui-view=""></div>
 </section>
+
+<!--用户指南模态框-->
+<div class="modal fade" id="userGuideAModal" tabindex="-1" role="dialog" aria-labelledby=userGuideAModalLabel">
+    <div class="modal-userGuide" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                <h4 class="modal-title" id="userGuideAModalLabel">用户指南</h4>
+            </div>
+            <div class="modal-body" style="overflow: hidden">
+                <h2 class="text-center">idriver+后台管理系统用户指南</h2>
+                <p class="lead">1.</p>
+                <p class="lead">2.</p>
+                <p class="lead">3.</p>
+                <p class="lead">4.</p>
+                <p class="lead">5.</p>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default" data-dismiss="modal">取消</button>
+                <a class="btn btn-primary" href="doc/用户指南.docx">下载</a>
+            </div>
+        </div>
+    </div>
+</div>
+
 <!--退出系统模态框-->
 <div class="modal fade" id="signOutModal" tabindex="-1" role="dialog" aria-labelledby="signOutModalLabel">
     <div class="modal-dialog" role="document">
