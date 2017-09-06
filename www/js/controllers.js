@@ -671,7 +671,9 @@ function creatCarWs(carOptions) {
             var WXB_imgPng = 'img/WXB_static.png',
                 WXB_imgGif = 'img/WXB_gif.gif',
                 WBD_imgPng = 'img/WBD_static.png',
-                WBD_imgGif = 'img/WBD_gif.gif';
+                WBD_imgGif = 'img/WBD_gif.gif',
+                XSQ_imgPng = 'img/XSQ_static.png',
+                XSQ_imgGif = 'img/XSQ_gif.gif';
 
             //根据车辆类型设置车辆状态图标
             switch (carOptions.carType) {
@@ -682,6 +684,10 @@ function creatCarWs(carOptions) {
                 case '2'://窝小白
                     carStatus == 0 ? $('.carIconDiv>img').attr('src', WXB_imgGif) : $('.carIconDiv>img').attr('src', WXB_imgPng);
                     carStatusStr = carStatus == 0 ? '清扫中' : '停止';//0 清扫中  1停止
+                    break;
+                case '3'://新石器
+                    carStatus == 0 ? $('.carIconDiv>img').attr('src', XSQ_imgGif) : $('.carIconDiv>img').attr('src', XSQ_imgPng);
+                    carStatusStr = carStatus == 0 ? '运输中' : '停止';//0 运输中  1停止
                     break;
             }
 
