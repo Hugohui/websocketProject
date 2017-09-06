@@ -212,5 +212,6 @@ header .headerRight .headerMsg{
     transform: translate(-50%,-50%);
 }
 #userGuideAModal .modal-body{
+    overflow: auto
     height: 500px;
 }
