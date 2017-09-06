@@ -907,7 +907,7 @@ function drawMarker(map, rData) {
         //获取对应车辆的类型，后续做类型判断和显示
         let carType = typeArr[i];
 
-        if (carType != 3) {//不显示其他类型车辆
+        //if (carType != 3) {//不显示其他类型车辆
             //先将gps点转换为高德地图坐标点，然后地图画点
             let point = GPS.gcj_encrypt(carPositionArr[i].split(',')[1], carPositionArr[i].split(',')[0]);
             var marker = new AMap.Marker({
@@ -927,7 +927,7 @@ function drawMarker(map, rData) {
 
             //保存已经添加了的点，方便后续做只显示可视区域内的点
             marks.push(marker);
-        }
+        //}
     }
     //map.setFitView();
 }
