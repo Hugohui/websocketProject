@@ -938,29 +938,31 @@ function drawMarker(map, rData) {
  */
 function searchMapCar() {
 
-    var status,hitch,carId;
+    var status, hitch, carId;
     //车辆编号
     carId = $('#searchCarId').val();
-
     //状态
-    if ($('.isTransDiv>div.active').length > 0) {
-        status = $('.isTransDiv>div.active').attr('valuetype');
-    }
+    status = $('.isTransDiv>div.active').length > 0?$('.isTransDiv>div.active').attr('valuetype'):'';
     //是否故障
-    if ($('.isHitchDiv>div.active').length > 0) {
-        hitch = $('.isHitchDiv>div.active').attr('valuetype');
+    hitch = $('.isHitchDiv>div.active').length > 0?$('.isHitchDiv>div.active').attr('valuetype'):'';
+
+    //当没有输入查询条件时查询所有，即关闭查询socket，显示首页socket
+    if(carId == '' && status == '' && hitch == ''){
+        //return;
+        closeSearchWs();
+    }else{
+        //关闭首页websocket
+        homeWs.close();
+        searchWs && searchWs.readyState == 1 && searchWs.close();
+
+        //打开查询sebsocket
+        var dataOption = {
+            //data: '{"action":"home","params":{"car_id ":'+carId+',"status":'+status+',"hitch":'+hitch+'}}'
+            data: '{"action":"home","params":{}}'
+        };
+
+        creatSearchWs(homeMap, dataOption);
     }
-
-    //关闭首页websocket
-    homeWs.close();
-
-    //打开查询sebsocket
-    var dataOption = {
-        //data: '{"action":"home","params":{"car_id":'+carId+',"status":'+status+',"hitch":'+hitch+'}}'
-        data: '{"action":"home","params":{}}'
-    };
-
-    creatSearchWs(homeMap, dataOption);
 }
 
 /**
@@ -969,13 +971,12 @@ function searchMapCar() {
 function closeSearchWs() {
 
     //关闭搜索websocket
-    searchWs.close();
-
-    //打开首页sebsocket
-    var dataOption = {
-        data: '{"action":"home","params":{}}'
-    };
-    creatHomeWs(homeMap, dataOption);
+    searchWs && searchWs.close();
+        //打开首页sebsocket
+        var dataOption = {
+            data: '{"action":"home","params":{}}'
+        };
+    homeWs && homeWs.readyState == 3 && creatHomeWs(homeMap, dataOption);
 }
 
 /**
