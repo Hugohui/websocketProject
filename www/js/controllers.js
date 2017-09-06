@@ -744,9 +744,6 @@ function creatCarWs(carOptions) {
 
                     //电池电量示意图显示batteryBody battery battery60
                     var batteryParent = mechelecinfo.battery_quantity / battery_totquantity * 100;
-
-                    console.log(batteryParent);
-
                     //var batteryParent = mechelecinfo.battery_quantity / mechelecinfo.battery_totquantity * 100;
                     if (batteryParent == 0) {
                         $('.batteryBody').attr('class', 'batteryBody battery battery0');
@@ -912,28 +909,27 @@ function drawMarker(map, rData) {
 
         if (carType != 3) {//不显示其他类型车辆
             //先将gps点转换为高德地图坐标点，然后地图画点
-            AMap.convertFrom(carPositionArr[i], "gps", function (status, result) {
-                var marker = new AMap.Marker({
-                    position: [result.locations[0].lng, result.locations[0].lat],
-                    extData: {       //给点设置自定义属性
-                        type: carType,
-                        carPoint: result.locations[0].lng + ',' + result.locations[0].lat
-                    },
-                    title: title,   //点的title
-                    map: map,
-                    icon: carIcon[carType],    //点的图标
-                    offset: new AMap.Pixel(-15, -10),//图标以点为中心
-                });
-
-                //给每一个点添加双击事件
-                AMap.event.addListener(marker, 'click', renderDataShowModal);
-
-                //保存已经添加了的点，方便后续做只显示可视区域内的点
-                marks.push(marker);
+            let point = GPS.gcj_encrypt(carPositionArr[i].split(',')[1], carPositionArr[i].split(',')[0]);
+            var marker = new AMap.Marker({
+                position: [point.lon, point.lat],
+                extData: {       //给点设置自定义属性
+                    type: carType,
+                    carPoint: point.lon + ',' + point.lat
+                },
+                title: title,   //点的title
+                map: map,
+                icon: carIcon[carType],    //点的图标
+                offset: new AMap.Pixel(-15, -10),//图标以点为中心
             });
+
+            //给每一个点添加双击事件
+            AMap.event.addListener(marker, 'click', renderDataShowModal);
+
+            //保存已经添加了的点，方便后续做只显示可视区域内的点
+            marks.push(marker);
         }
     }
-    map.setFitView();
+    //map.setFitView();
 }
 
 
