@@ -836,17 +836,25 @@ function creatCarWs(carOptions) {
              //给页面上赋值
              $('#currentPositon').html(currentPositon);
              $('#nextPosition').html(nextPosition);
-             $('#allPosition').html(allPosition);
+             $('#allPosition').html(allPosition);*/
 
 
-             /!***********故障信息***************!/
-             var hitchinfo = rData.data.hitchinfo;
+             /***********故障信息***************/
+             var hitchinfoArr = rData.data.hitchinfoArr;
              var strInfo = '';
+             var strInfoObj = {
+                 1:"激光雷达故障",
+                 2:"清扫装置故障",
+                 3:"EPS故障",
+                 4:"驱动电机故障",
+                 5:"底层控制器故障",
+                 6:"算法异常"
+             };
              //遍历故障信息添加到页面上
-             $.each(hitchinfo,function(index,vlaue){
-             strInfo +='<p class="pr"><span class="pa carTroubleTime">'+vlaue.timestamp+'</span>'+value.timestamp+'</p>';
+             $.each(hitchinfoArr,function(index,value){
+                strInfo +='<p class="pr"><span class="pa carTroubleTime">'+value.updtime+'</span>'+strInfoObj[value.hitchinfo]+'</p>';
              });
-             $('.carTroubleInfo').html(strInfo);*/
+             $('.carTroubleInfo').html(strInfo);
 
             /***********车辆路径规划***************/
             var path_id = rData.data.position.path_id,//路径编号
@@ -922,6 +930,80 @@ function creatCarWs(carOptions) {
                 strokeDasharray: [10, 5] //补充线样式
             });
             polyline.setMap(carLineMap);
+
+            /*AMapUI.load(['ui/misc/PathSimplifier', 'lib/$'], function(PathSimplifier, $) {
+                var emptyLineStyle = {
+                    lineWidth: 0,
+                    fillStyle: null,
+                    strokeStyle: null,
+                    borderStyle: null
+                };
+
+                var pathSimplifierIns = new PathSimplifier({
+                    zIndex: 100,
+                    //autoSetFitView:false,
+                    getPath: function(pathData, pathIndex) {
+
+                        return pathData.path;
+                    },
+                    getHoverTitle: function(pathData, pathIndex, pointIndex) {
+
+                        return null;
+                    },
+                    map: carLineMap, //所属的地图实例
+                    renderOptions: {
+                        //将点、线相关的style全部置emptyLineStyle
+                        pathLineStyle: emptyLineStyle,
+                        pathLineSelectedStyle: emptyLineStyle,
+                        pathLineHoverStyle: emptyLineStyle,
+                        keyPointStyle: emptyLineStyle,
+                        startPointStyle: emptyLineStyle,
+                        endPointStyle: emptyLineStyle,
+                        keyPointHoverStyle: emptyLineStyle,
+                        keyPointOnSelectedPathLineStyle: emptyLineStyle
+                    }
+                });
+
+                window.pathSimplifierIns = pathSimplifierIns;
+
+                pathSimplifierIns.setData([{
+                    name: '测试',
+                    path: lineArr
+                }]);
+
+                function onload() {
+                    pathSimplifierIns.renderLater();
+                }
+
+                function onerror(e) {
+                    alert('图片加载失败！');
+                }
+
+                var navg1 = pathSimplifierIns.createPathNavigator(0, {
+                    loop: false,
+                    speed: 3000,
+                    pathNavigatorStyle: {
+                        width: 24,
+                        height: 24,
+                        //使用图片
+                        content: PathSimplifier.Render.Canvas.getImageContent('img/carMap.png', onload, onerror),
+                        strokeStyle: null,
+                        fillStyle: null,
+                        //经过路径的样式
+                        pathLinePassedStyle: {
+                            lineWidth: 6,
+                            strokeStyle: 'black',
+                            dirArrowStyle: {
+                                stepSpace: 15,
+                                strokeStyle: 'red'
+                            }
+                        }
+                    }
+                });
+
+                navg1.start();
+
+            });*/
         }
     })
 }
