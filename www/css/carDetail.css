@@ -288,7 +288,7 @@
 }
 .carInfoTabsDiv .carInfoContent .carBasicInfo .infoTitle{
     float: left;
-    width:90px;
+    width:145px;
     height: 97px;
     line-height: 97px;
     text-align: center;
@@ -317,7 +317,7 @@
 }
 
 .carInfoTabsDiv .carTroubleInfo p{
-    padding-left: 130px;
+    padding-left: 150px;
 }
 
 .carInfoTabsDiv .carTroubleInfo .carTroubleTime{
