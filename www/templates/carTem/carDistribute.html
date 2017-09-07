@@ -17,30 +17,30 @@
         <div class="carDistrQueryCar">
             <div class="queryInput">
                 <ul>
-                    <li><input type="text" placeholder="车辆编号"/></li>
+                    <li><input type="text" placeholder="车辆编号" id="searchCarId"/></li>
                     <li>
                         <div class="isTransDiv selectGroup">
-                            <div>
+                            <div valueType = '0'>
                                 <i class="fa fa-check"></i>运输中
                             </div>
-                            <div><i class="fa fa-check"></i>静止</div>
+                            <div valueType = '1'><i class="fa fa-check"></i>静止</div>
                         </div>
                     </li>
                     <li>
                         <div class="isTransDiv selectGroup">
-                            <div>
+                            <div valueType = '0'>
                                 <i class="fa fa-check"></i>无故障
                             </div>
-                            <div><i class="fa fa-check"></i>故障</div>
+                            <div valueType = '1'><i class="fa fa-check"></i>故障</div>
                         </div>
                     </li>
                 </ul>
             </div>
             <div class="btnGroup">
-                <button class="btn btn-primary btn-sm">
+                <button class="btn btn-primary btn-sm" ng-click="searchCar()">
                     <i class="fa fa-search" aria-hidden="true"></i> 搜索
                 </button>
-                <button class="btn btn-default btn-sm" ng-click="clearQueryInp()">
+                <button class="btn btn-default btn-sm" ng-click="clearQuery()">
                     清空条件
                 </button>
             </div>
@@ -172,7 +172,6 @@
                                             <!--<div class="batteryHeader"></div>-->
                                         </div>
                                         <div class="batteryMsg">
-                                            <p>总电量：<span id="battery_totquantity">--</span></p>
                                             <p>剩余电量：<span id="battery_quantity">--</span></p>
                                             <p>电池温度：<span id="batter_templature">--</span></p>
                                             <p>续航里程：<span id="ugv_restdistance">--</span></p>
@@ -196,36 +195,9 @@
                                         <div class="infoTitle">存储使用率</div>
                                         <div class="infoMsg" id="ugv_storge">--</div>
                                     </div>
-                                    <!--<div>
-                                        <div class="infoTitle">电池温度</div>
-                                        <div class="infoMsg">30℃</div>
-                                    </div>-->
-                                    <div>
-                                        <div class="infoTitle">速度</div>
-                                        <div class="infoMsg">--</div>
-                                    </div>
-                                </div>
-                                <div>
-                                    <div>
-                                        <div class="infoTitle">前轮转角</div>
-                                        <div class="infoMsg">--</div>
-                                    </div>
-                                    <!--<div>
-                                        <div class="infoTitle">油门阀值</div>
-                                        <div class="infoMsg">20</div>
-                                    </div>
-                                    <div>
-                                        <div class="infoTitle">刹车</div>
-                                        <div class="infoMsg">0</div>
-                                    </div>-->
                                 </div>
                             </div>
                             <div class="carTroubleInfo">
-                                <p class="pr"><span class="pa carTroubleTime">2017.7.12 10:20:32</span>我到底有没有故障我到底有没有故障我到底有没有故障我到底有没有故障我到底有没有故障我到底有没有故障我到底有没有故障我到底有没有故障我到底有没有故障我到底有没有故障我到底有没有故障我到底有没有故障我到底有没有故障我到底有没有故障我到底有没有故障</p>
-                                <p class="pr"><span class="pa carTroubleTime">2017.7.12 10:20:32</span>没有故障没有故障没有故障没有故障没有故障没有故障没有故障没有故障没有故障没有故障没有故障没有故障没有故障没有故障没有故障没有故障~~~~</p>
-                                <p class="pr"><span class="pa carTroubleTime">2017.7.12 10:20:32</span>没有故障没有故障没有故障没有故障没有故障没有故障没有故障没有故障没有故障没有故障没有故障没有故障没有故障没有故障没有故障没有故障~~~~</p>
-                                <p class="pr"><span class="pa carTroubleTime">2017.7.12 10:20:32</span>没有故障没有故障没有故障没有故障没有故障没有故障没有故障没有故障没有故障没有故障没有故障没有故障没有故障没有故障没有故障没有故障~~~~</p>
-                                <p class="pr"><span class="pa carTroubleTime">2017.7.12 10:20:32</span>没有故障没有故障没有故障没有故障没有故障没有故障没有故障没有故障没有故障没有故障没有故障没有故障没有故障没有故障没有故障没有故障~~~~</p>
                             </div>
                             <!--<div class="carStatInfo">统计信息</div>-->
                         </div>

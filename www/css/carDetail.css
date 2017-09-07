@@ -189,7 +189,7 @@
     font-weight: 600;
 }
 .carInfoTabsDiv .carInfoContent>div:first-child>div{
-    width: 33.33%;
+    width: 50%;
     height: 100%;
     float: left;
     border-right: 1px solid rgb(160,160,160);
@@ -203,7 +203,7 @@
 /*µç³ØÐÅÏ¢*/
 .carInfoTabsDiv .carInfoContent .batteryInfo>div:first-child{
     float: left;
-    width: 45px;
+    width: 55px;
     height: 100%;
     border-right: 1px solid rgb(160,160,160);
     text-align: center;
@@ -231,7 +231,7 @@
     position: absolute;
     top: 50%;
     left: 50%;
-    transform: translate(-25%,-50%);
+    transform: translate(-25%,-20%);
 }
 .batteryInfo .batteryContent>div .batteryBody ul{
     height: 100%;
@@ -265,21 +265,21 @@
     margin-left: 62px;
 }
 .carInfoContent .batteryInfo .batteryContent .batteryMsg{
-    margin-top: -10px;
+    margin-top: 10px;
 }
 .carInfoContent .batteryInfo .batteryContent>div>p{
     margin: 0;
     font-size: 16px;
-    padding: 0 0 5px 30%;
+    padding: 0 0 5px 40%;
 }
 
 .carInfoTabsDiv .carInfoContent>div:first-child>div:not(.batteryInfo)>div{
-    height: 25%;
+    height: 33.33%;
 }
 .carInfoTabsDiv .carInfoContent>div:first-child>div:not(.batteryInfo)>div{
     border-bottom: 1px solid rgb(160,160,160);
 }
-.carInfoTabsDiv .carInfoContent>div:first-child>div:not(.batteryInfo)>div:nth-child(4){
+.carInfoTabsDiv .carInfoContent>div:first-child>div:not(.batteryInfo)>div:nth-child(3){
     border-bottom: none;
 }
 
@@ -289,8 +289,8 @@
 .carInfoTabsDiv .carInfoContent .carBasicInfo .infoTitle{
     float: left;
     width:90px;
-    height: 73px;
-    line-height: 73px;
+    height: 97px;
+    line-height: 97px;
     text-align: center;
     border-right: 1px solid rgb(160,160,160);
 }
@@ -298,8 +298,8 @@
     width: 50%;
     float: left;
     text-align: center;
-    height: 73px;
-    line-height: 73px;
+    height: 97px;
+    line-height: 97px;
     padding-left: 20px;
 }
 .pt25{

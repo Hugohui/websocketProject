@@ -326,10 +326,15 @@ mainStart
             }
         }
 
+        $scope.searchCar = searchMapCar;
+
         //清空查询条件
-        $scope.clearQueryInp = function () {
+        $scope.clearQuery = function () {
             $('.carDistrQueryCar input').val('');
             $('.selectGroup>div.active').click();
+
+            //websocket切换
+            closeSearchWs();
         }
     }])
     .controller('carsTableContr', ['$scope', '$compile', function ($scope, $compile) {//车辆列表
@@ -369,7 +374,11 @@ mainStart
  * 主页地图初始化
  */
 var homeWs, homeMap, searchWs;
+var pathUrl ='';
 function initHomeMap() {
+
+    var currentUrl = window.location.href.split('#')[1];
+
     //初始化
     homeMap = new AMap.Map('homeMap', {
         resizeEnable: true,
@@ -404,7 +413,15 @@ function initHomeMap() {
     var dataOption = {
         data: '{"action":"home","params":{}}'
     };
-    creatHomeWs(homeMap, dataOption);
+
+    //当url变化是，先关闭socket，再开启
+    if(pathUrl != currentUrl){
+        homeWs && homeWs.close();
+        creatHomeWs(homeMap, dataOption);
+    }
+
+    //赋值
+    pathUrl = currentUrl;
 }
 
 /**
@@ -463,7 +480,7 @@ function renderDataShowModal(e) {
      |  根据车辆类型，设置弹层显示不同的样式
      |-----------------------------------------
      */
-    if (carType == 2||carType == 3) {//窝小白
+    if (carType == 2||carType == 4) {//窝小白
 
         //隐藏窝必达位置信息
         $('.carLineDiv').hide();
@@ -510,7 +527,7 @@ function renderDataShowModal(e) {
     }
 
     //新石器
-    if(carType == 3){
+    if(carType == 4){
         $('.radioBox ').hide();
     }else{
         $('.radioBox ').show();
@@ -701,12 +718,14 @@ function creatCarWs(carOptions) {
             console.log(rData.data);
 
             //切换小车图标显示
-            var WXB_imgPng = 'img/WXB_static.png',
+            var WXB_imgPng = 'img/WXB_static.png',//窝小白
                 WXB_imgGif = 'img/WXB_gif.gif',
-                WBD_imgPng = 'img/WBD_static.png',
+                WBD_imgPng = 'img/WBD_static.png',//窝必达
                 WBD_imgGif = 'img/WBD_gif.gif',
-                XSQ_imgPng = 'img/XSQ_static.png',
-                XSQ_imgGif = 'img/XSQ_gif.gif';
+                XSQ_imgPng = 'img/XSQ_static.png',//新石器
+                XSQ_imgGif = 'img/XSQ_gif.gif',
+                RC_imgPng = 'img/RC_static.png',//睿骋
+                RC_imgGif = 'img/RC_gif.gif';
 
             //根据车辆类型设置车辆状态图标
             switch (carOptions.carType) {
@@ -718,7 +737,11 @@ function creatCarWs(carOptions) {
                     carStatus == 0 ? $('.carIconDiv>img').attr('src', WXB_imgGif) : $('.carIconDiv>img').attr('src', WXB_imgPng);
                     carStatusStr = carStatus == 0 ? '清扫中' : '停止';//0 清扫中  1停止
                     break;
-                case '3'://新石器
+                case '3'://睿骋
+                    carStatus == 0 ? $('.carIconDiv>img').attr('src', RC_imgGif) : $('.carIconDiv>img').attr('src', RC_imgPng);
+                    carStatusStr = carStatus == 0 ? '运行中' : '停止';//0 运输中  1停止
+                    break;
+                case '4'://新石器
                     carStatus == 0 ? $('.carIconDiv>img').attr('src', XSQ_imgGif) : $('.carIconDiv>img').attr('src', XSQ_imgPng);
                     carStatusStr = carStatus == 0 ? '运输中' : '停止';//0 运输中  1停止
                     break;
@@ -857,7 +880,8 @@ function creatCarWs(carOptions) {
             var carIcon = {
                 "1": "img/carMap.png",   //窝必达
                 "2": "img/WXB_map.png",    //窝小白
-                "3": "img/XSQ_map.png"    //新石器
+                "3": "img/RC_map.png",   //睿骋
+                "4": "img/XSQ_map.png"    //新石器
             }
 
             //车辆实时位置点
@@ -871,7 +895,9 @@ function creatCarWs(carOptions) {
                 markersLine.push(currentPosition.lon + ',' + currentPosition.lat);
             }
 
-            carLineMap.remove(markers);
+            //carLineMap.remove(markers);
+
+            carLineMap.clearMap();
 
             //在地图上画点
             var marker = new AMap.Marker({
@@ -889,14 +915,12 @@ function creatCarWs(carOptions) {
                 lineArr.push([Number(value.split(',')[0]), Number(value.split(',')[1])]);
             });
 
-            //carLineMap.clearMap();
-
             //绘制折线
             var polyline = new AMap.Polyline({
                 path: lineArr,          //设置线覆盖物路径
                 strokeColor: "#3366FF", //线颜色
                 strokeOpacity: 0.8,       //线透明度
-                strokeWeight: 3,        //线宽
+                strokeWeight: 5,        //线宽
                 strokeStyle: "solid",   //线样式
                 strokeDasharray: [10, 5] //补充线样式
             });
@@ -931,8 +955,9 @@ function drawMarker(map, rData) {
     //点的图标
     var carIcon = {
         "1": "img/carMap.png",   //窝必达
-        "2": "img/WXB_map.png",    //扫地车
-        "3": "img/XSQ_map.png"    //新石器
+        "2": "img/WXB_map.png",    //窝小白
+        "3": "img/RC_map.png",   //睿骋
+        "4": "img/XSQ_map.png"    //新石器
     }
     $.each(pointData, function (index, value) {
         carIdArr.push(value.car_id);
@@ -1037,10 +1062,9 @@ function drawCarPie(status) {
 
     //首页车辆活动统计
     var carData = [
-        {value: status.trans_car, name: '运输中'},
-        {value: status.hitch_car, name: '故障车辆'},
-        {value: status.idle_car, name: '空闲车辆'},
-        {value: status.waiting_car, name: '等待车辆'}
+        {value: status.trans_car, name: '运行中'},
+        {value: status.idle_car, name: '停止'},
+        {value: status.hitch_car, name: '故障'}
     ];
 
     $('.carStatistic').height($('.carStatistic').width());
@@ -1059,7 +1083,7 @@ function drawCarPie(status) {
         legend: {
             orient: 'vertical',
             left: 'right',
-            data: ['运输中', '故障车辆', '空闲车辆', '等待车辆']
+            data: ['运行中', '停止', '故障']
         },
         //color:['red', 'green','yellow','blueviolet'],
         series: [
