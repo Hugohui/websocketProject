@@ -826,7 +826,8 @@ function creatCarWs(carOptions) {
             //点的图标
             var carIcon = {
                 "1": "img/carMap.png",   //窝必达
-                "2": "img/WXB_map.png"    //窝小白
+                "2": "img/WXB_map.png",    //窝小白
+                "3": "img/XSQ_map.png"    //新石器
             }
 
             //车辆实时位置点
@@ -900,7 +901,8 @@ function drawMarker(map, rData) {
     //点的图标
     var carIcon = {
         "1": "img/carMap.png",   //窝必达
-        "2": "img/WXB_map.png"    //扫地车
+        "2": "img/WXB_map.png",    //扫地车
+        "3": "img/XSQ_map.png"    //扫地车
     }
     $.each(pointData, function (index, value) {
         carIdArr.push(value.car_id);
