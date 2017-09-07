@@ -373,7 +373,7 @@ function initHomeMap() {
     //初始化
     homeMap = new AMap.Map('homeMap', {
         resizeEnable: true,
-        //center: [116.45645, 40.079607],//默认中心点
+        center: [116.45645, 40.079607],//默认中心点
         zoom: 11//地图缩放级别
     });
 
@@ -572,6 +572,8 @@ function ajaxQueryLine(option, jsonpCallbackName, isTrans) {
  */
 function creatHomeWs(map, options) {
 
+    var flag = true;
+
     //websocket配置
     var websocketOptions = options;
     homeWs = handleWebsocket(websocketOptions, function (msg) {
@@ -588,7 +590,15 @@ function creatHomeWs(map, options) {
         var status = rData.status;
         if (!msg.data.result) {
 
+            setTimeout(function(){
+                flag = false;
+            },1000);
+
             drawMarker(map, rData);
+
+            if(flag){
+                map.setFitView();
+            }
 
             /**********车辆活动状态************/
             //车辆分布页面不需要画饼状图
@@ -598,6 +608,7 @@ function creatHomeWs(map, options) {
 
         }
     });
+
 }
 
 /**
@@ -606,6 +617,10 @@ function creatHomeWs(map, options) {
  * @param options   数据
  */
 function creatSearchWs(map, options) {
+
+    //设置地图中心点为查询到的点
+    var resultPoint = '';
+
     //websocket配置
     var websocketOptions = options;
     searchWs = handleWebsocket(websocketOptions, function (msg) {
@@ -620,12 +635,27 @@ function creatSearchWs(map, options) {
 
         var rData = $.parseJSON(msg.data).resData;
 
-        console.log(rData);
+        console.log(rData.data);
 
         var status = rData.status;
         if (!msg.data.result) {
 
             drawMarker(map, rData);
+
+            //查找调整最佳位置
+            if(setFitVIewFlag&&rData.data.length == 0){
+                toastr.warning('无查询结果！');
+            }else if(setFitVIewFlag && $('#searchCarId').val() != '' && rData.data.length != 0){//根据车辆编号查询
+                resultPoint = rData.data[0];
+                map.setZoomAndCenter(14, [resultPoint.gps_lon, resultPoint.gps_lat]);
+            }else if(setFitVIewFlag && $('#searchCarId').val() == ''&& rData.data.length == 1){//不输入车辆编号，但是仅右一条数据
+                resultPoint = rData.data[0];
+                map.setZoomAndCenter(14, [resultPoint.gps_lon, resultPoint.gps_lat]);
+            }else if(setFitVIewFlag && $('#searchCarId').val() == ''&&rData.data.length>1){
+                map.setFitView();
+            }
+
+            setFitVIewFlag = false;//改变记录
 
             /**********车辆活动状态************/
             //车辆分布页面不需要画饼状图
@@ -902,7 +932,7 @@ function drawMarker(map, rData) {
     var carIcon = {
         "1": "img/carMap.png",   //窝必达
         "2": "img/WXB_map.png",    //扫地车
-        "3": "img/XSQ_map.png"    //扫地车
+        "3": "img/XSQ_map.png"    //新石器
     }
     $.each(pointData, function (index, value) {
         carIdArr.push(value.car_id);
@@ -950,11 +980,13 @@ function drawMarker(map, rData) {
     //map.setFitView();
 }
 
-
+var setFitVIewFlag = true;//只是第一次查询结果设置中心点
 /**
  * 地图车辆条件查询
  */
 function searchMapCar() {
+
+    setFitVIewFlag = true;
 
     var status, hitch, carId;
     //车辆编号
@@ -981,6 +1013,7 @@ function searchMapCar() {
     };
 
     creatSearchWs(homeMap, dataOption);
+
 }
 
 /**
@@ -994,7 +1027,7 @@ function closeSearchWs() {
         var dataOption = {
             data: '{"action":"home","params":{}}'
         };
-    homeWs && homeWs.readyState == 3 && creatHomeWs(homeMap, dataOption);
+    homeWs && homeWs.readyState != 1 && creatHomeWs(homeMap, dataOption);
 }
 
 /**
