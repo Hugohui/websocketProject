@@ -932,77 +932,55 @@ function creatCarWs(carOptions) {
             polyline.setMap(carLineMap);
 
             /*AMapUI.load(['ui/misc/PathSimplifier', 'lib/$'], function(PathSimplifier, $) {
-                var emptyLineStyle = {
-                    lineWidth: 0,
-                    fillStyle: null,
-                    strokeStyle: null,
-                    borderStyle: null
-                };
-
+                if (!PathSimplifier.supportCanvas) {
+                    alert('当前环境不支持 Canvas！');
+                    return;
+                }
                 var pathSimplifierIns = new PathSimplifier({
                     zIndex: 100,
                     //autoSetFitView:false,
-                    getPath: function(pathData, pathIndex) {
+                    map: carLineMap, //所属的地图实例
 
+                    getPath: function(pathData, pathIndex) {
                         return pathData.path;
                     },
-                    getHoverTitle: function(pathData, pathIndex, pointIndex) {
-
-                        return null;
-                    },
-                    map: carLineMap, //所属的地图实例
                     renderOptions: {
-                        //将点、线相关的style全部置emptyLineStyle
-                        pathLineStyle: emptyLineStyle,
-                        pathLineSelectedStyle: emptyLineStyle,
-                        pathLineHoverStyle: emptyLineStyle,
-                        keyPointStyle: emptyLineStyle,
-                        startPointStyle: emptyLineStyle,
-                        endPointStyle: emptyLineStyle,
-                        keyPointHoverStyle: emptyLineStyle,
-                        keyPointOnSelectedPathLineStyle: emptyLineStyle
-                    }
-                });
-
-                window.pathSimplifierIns = pathSimplifierIns;
-
-                pathSimplifierIns.setData([{
-                    name: '测试',
-                    path: lineArr
-                }]);
-
-                function onload() {
-                    pathSimplifierIns.renderLater();
-                }
-
-                function onerror(e) {
-                    alert('图片加载失败！');
-                }
-
-                var navg1 = pathSimplifierIns.createPathNavigator(0, {
-                    loop: false,
-                    speed: 3000,
-                    pathNavigatorStyle: {
-                        width: 24,
-                        height: 24,
-                        //使用图片
-                        content: PathSimplifier.Render.Canvas.getImageContent('img/carMap.png', onload, onerror),
-                        strokeStyle: null,
-                        fillStyle: null,
-                        //经过路径的样式
-                        pathLinePassedStyle: {
-                            lineWidth: 6,
-                            strokeStyle: 'black',
-                            dirArrowStyle: {
-                                stepSpace: 15,
-                                strokeStyle: 'red'
-                            }
+                        pathLineStyle: {
+                            dirArrowStyle: true
+                        },
+                        getPathStyle: function(pathItem, zoom) {
+                            var color = "#3366FF",
+                                lineWidth = 8;
+                            return {
+                                pathLineStyle: {
+                                    strokeStyle: color,
+                                    lineWidth: lineWidth
+                                }
+                            };
                         }
                     }
                 });
+                window.pathSimplifierIns = pathSimplifierIns;
+                pathSimplifierIns.setData([
+                    [116.405289, 39.904987],
+                    [113.964458, 40.54664],
+                    [111.47836, 41.135964],
+                    [108.949297, 41.670904],
+                    [106.380111, 42.149509],
+                    [103.774185, 42.56996],
+                    [101.135432, 42.930601],
+                    [98.46826, 43.229964],
+                    [95.777529, 43.466798],
+                    [93.068486, 43.64009],
+                    [90.34669, 43.749086],
+                    [87.61792, 43.793308]
+                ]);
 
-                navg1.start();
-
+                $.getJSON('http://a.amap.com/amap-ui/static/data/big-routes.json', function(d) {
+                    var flyRoutes = [];
+                    d.push.apply(d, flyRoutes);
+                    pathSimplifierIns.setData(d);
+                });
             });*/
         }
     })
