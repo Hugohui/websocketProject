@@ -902,7 +902,9 @@ function creatCarWs(carOptions) {
 
             //carLineMap.remove(markers);
 
-            carLineMap.clearMap();
+            if(carOptions.carType == 2){
+                carLineMap.clearMap();
+            }
 
             //在地图上画点
             var marker = new AMap.Marker({
