@@ -2004,8 +2004,10 @@ function initCarsTable() {
             {
                 "data": "car_id",
                 "sClass": "text-center",
+                "width":"20%"
             },
             {
+                "width":"20%",
                 "sClass": "text-center",
                 "targets": 1,//操作按钮目标列
                 "data": null,
@@ -2021,15 +2023,18 @@ function initCarsTable() {
                 }
             },
             {
+                "width":"20%",
                 "data": "total_distance",
                 "sClass": "text-center"
             },
             //{"data": "allGoods"},
             {
+                "width":"20%",
                 "data": "hitch",
                 "sClass": "text-center"
             },
             {
+                "width":"20%",
                 "sClass": "text-center",
                 "targets": 4,//操作按钮目标列
                 "data": null,
