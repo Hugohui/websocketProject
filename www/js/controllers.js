@@ -354,10 +354,10 @@ mainStart
         $scope.clearQueryInp = function () {
             $('.queryInput input').val('');
             $('.selectGroup>div.active').click()
-        }
 
-        //查看具体车辆信息
-        viewCarDetail();
+            //websocket切换
+            closeSearchWs();
+        }
     }])
     .controller('carsTroubleTableContr', ['$scope', function ($scope) {//故障列表
 
@@ -374,7 +374,7 @@ mainStart
  * 主页地图初始化
  */
 var homeWs, homeMap, searchWs;
-var pathUrl ='',currentUrl;
+var orderUrl,currentUrl;
 function initHomeMap() {
 
     currentUrl = window.location.href.split('#')[1];
@@ -415,13 +415,13 @@ function initHomeMap() {
     };
 
     //当url变化是，先关闭socket，再开启
-    if(pathUrl != currentUrl){
+    if(orderUrl != currentUrl){
         homeWs && homeWs.close();
         creatHomeWs(homeMap, dataOption);
     }
 
     //赋值
-    pathUrl = currentUrl;
+    orderUrl = currentUrl;
 }
 
 /**
@@ -602,7 +602,7 @@ function creatHomeWs(map, options) {
             homeWs.close();
 
             //记录当前位置
-            currentUrl = window.location.href.split('#')[1];;
+            orderUrl = window.location.href.split('#')[1];;
             return;
         }
 
