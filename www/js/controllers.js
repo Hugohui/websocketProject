@@ -1955,7 +1955,7 @@ function initCarsTable() {
         renderer: "Bootstrap",  //渲染样式：Bootstrap和jquery-ui
         pagingType: "full_numbers",  //分页样式：simple,simple_numbers,full,full_numbers
         columnDefs: [{
-            "targets": [0, 1, 2, 5, 6],
+            "targets": [0, 1, 2, 3,4],
             "orderable": false
         }],
         ajax: function (data, callback, settings) {
