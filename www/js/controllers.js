@@ -374,10 +374,10 @@ mainStart
  * 主页地图初始化
  */
 var homeWs, homeMap, searchWs;
-var pathUrl ='';
+var pathUrl ='',currentUrl;
 function initHomeMap() {
 
-    var currentUrl = window.location.href.split('#')[1];
+    currentUrl = window.location.href.split('#')[1];
 
     //初始化
     homeMap = new AMap.Map('homeMap', {
@@ -600,6 +600,9 @@ function creatHomeWs(map, options) {
         if (!(pathUrl.split('#')[1] == '/' || pathUrl.split('#')[1] == '/carManage/carDistribute')) {
             //在其他页面关闭已经连接的websocket
             homeWs.close();
+
+            //记录当前位置
+            currentUrl = window.location.href.split('#')[1];;
             return;
         }
 
