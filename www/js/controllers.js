@@ -480,7 +480,7 @@ function renderDataShowModal(e) {
      |  根据车辆类型，设置弹层显示不同的样式
      |-----------------------------------------
      */
-    if (carType == 2||carType == 4) {//窝小白
+    if (carType == 2||carType == 4||carType == 3) {//窝小白 新石器 雨燕
 
         //隐藏窝必达位置信息
         $('.carLineDiv').hide();
