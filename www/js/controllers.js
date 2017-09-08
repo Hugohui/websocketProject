@@ -933,7 +933,7 @@ function creatCarWs(carOptions) {
                 path: lineArr,          //设置线覆盖物路径
                 strokeColor: "#3366FF", //线颜色
                 strokeOpacity: 0.8,       //线透明度
-                strokeWeight: 5,        //线宽
+                strokeWeight: 3,        //线宽
                 strokeStyle: "solid",   //线样式
                 strokeDasharray: [10, 5] //补充线样式
             });
