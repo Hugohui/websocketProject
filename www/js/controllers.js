@@ -2006,11 +2006,22 @@ function initCarsTable() {
                 "sClass": "text-center",
             },
             {
-                "data": "car_id",
-                "sClass": "text-center"
+                "sClass": "text-center",
+                "targets": 1,//操作按钮目标列
+                "data": null,
+                "render": function (data) {
+                    //车辆类型
+                    var carType = {
+                        1: "窝必达",
+                        2: "窝小白",
+                        3: "雨燕",
+                        4: "新石器"
+                    }
+                    return carType[data.type];
+                }
             },
             {
-                "data": "car_id",
+                "data": "total_distance",
                 "sClass": "text-center"
             },
             //{"data": "allGoods"},
@@ -2023,8 +2034,6 @@ function initCarsTable() {
                 "targets": 4,//操作按钮目标列
                 "data": null,
                 "render": function (data, type, row) {
-
-                    console.log(data);
 
                     //订单状态
                     var status = {
