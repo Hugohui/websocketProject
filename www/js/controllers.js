@@ -1230,20 +1230,20 @@ function initUsersTable() {
             param.start = data.start;//开始的记录序号
             param.page = (data.start / data.length) + 1;//当前页码
             //请求数据
-            $('#queryUserInp').val() == '' ? param.queryData = {} : param.queryData = {
+            /*$('#queryUserInp').val() == '' ? param.queryData = {} : param.queryData = {
                 queryUser: $('#queryUserInp').val()
-            }
+            }*/
             //var url = 'http://111.204.101.170:8484';
             //ajax请求数据
             $.ajax({
                 type: 'POST',
-                url: '../data/users.txt',
+                url: 'data/users.txt',
                 //url:'http://111.204.101.170:8184',
                 //data: '{action:"usersManage",params:' + param + '}',
                 data: param,
-                dataType: 'jsonp',
-                jsonp: "callback",
-                jsonpCallback: "success_jsonpCallback",
+                dataType: 'json',
+                //jsonp: "callback",
+                //jsonpCallback: "success_jsonpCallback",
                 success: function (result) {
                     //封装返回数据
                     var returnData = {};
@@ -1946,6 +1946,8 @@ function initCarsTable() {
         language: lang,  //提示信息
         autoWidth: false,  //禁用自动调整列宽
         scrollY: scrollY,
+        lengthMenu : [20, 40, 60], //更改显示记录数选项
+        displayLength : 20, //默认显示的记录数
         stripeClasses: ["odd", "even"],  //为奇偶行加上样式，兼容不支持CSS伪类的场合
         processing: true,  //隐藏加载提示,自行处理
         serverSide: true,  //启用服务器端分页
@@ -1965,14 +1967,10 @@ function initCarsTable() {
             param.start = data.start;//数据库开始查询的序号
             param.page = (data.start / data.length) + 1;//当前页码
             //请求数据
-            /*param.queryData = {
-                car_id: $('#car_id').val(),
-                area: $('#area').val(),
-                hitch:$('#hitch').val()
-            };*/
+            param.queryData = null;
 
 
-            if ($('#car_id').val() == '' && $('#area').val() == '' && $('#hitch').val() == '') {
+            /*if ($('#car_id').val() == '' && $('#area').val() == '' && $('#hitch').val() == '') {
                 param.queryData = {};
             } else {
                 param.queryData = {
@@ -1980,49 +1978,79 @@ function initCarsTable() {
                     area: $('#area').val(),
                     hitch:$('#hitch').val()
                 }
-            }
-            ;
+            };*/
 
             //ajax请求数据
             $.ajax({
                 type: 'POST',
                 url: 'http://111.204.101.170:8184',
-                data: '{"action":"carsTable","params":' + param + '}',
+                data: {action:"carsTable",params:param},
                 dataType: 'jsonp',
                 jsonp: "callback",
                 jsonpCallback: "success_jsonpCallback",
                 success: function (result) {
-                    //setTimeout仅为测试延迟效果
-                    setTimeout(function () {
                         //封装返回数据
                         var returnData = {};
                         returnData.draw = data.draw;//这里直接自行返回了draw计数器,由后台返回
-                        returnData.recordsTotal = result.total;//返回数据全部记录
-                        returnData.recordsFiltered = result.total;//后台不实现过滤功能，每次查询均视作全部结果
-                        returnData.data = result.data;//返回的数据列表
-                        //调用DataTables提供的callback方法，代表数据已封装完成并传回DataTables进行渲染
-                        //此时的数据需确保正确无误，异常判断应在执行此回调前自行处理完毕
+                        returnData.recordsTotal = result.resData.data.total;//返回数据全部记录
+                        returnData.recordsFiltered = result.resData.data.total;//后台不实现过滤功能，每次查询均视作全部结果
+                        returnData.data = result.resData.data.data;//返回的数据列表
                         callback(returnData);
-                    }, 500);
                 }
             });
         },
         //列表表头字段
         columns: [
-            {"data": "Id"},
-            {"data": "CurrentPosition"},
-            {"data": "allDistance"},
-            {"data": "allGoods"},
-            {"data": "isBreakDown"},
-            {"data": "nextPosition"},
             {
+                "data": "car_id",
+                "sClass": "text-center",
+            },
+            {
+                "data": "car_id",
+                "sClass": "text-center"
+            },
+            {
+                "data": "car_id",
+                "sClass": "text-center"
+            },
+            //{"data": "allGoods"},
+            {
+                "data": "hitch",
+                "sClass": "text-center"
+            },
+            {
+                "sClass": "text-center",
+                "targets": 4,//操作按钮目标列
+                "data": null,
+                "render": function (data, type, row) {
+
+                    console.log(data);
+
+                    //订单状态
+                    var status = {
+                        0: "运行中",
+                        1: "停止",
+                    }
+                    //订单状态class
+                    var statusClass = {
+                        0: "status-success",
+                        1: "status-trans",
+                    }
+                    var orderStatusStr = status[data.status];//状态
+                    var orderStatusClass = statusClass[data.status];//状态类
+                    var html = "<span class='status " + orderStatusClass + "'>" + orderStatusStr + "</span>";
+                    return html;
+                }
+            }
+            //{"data": "nextPosition"},
+            /*{
                 "sClass": "text-center",
                 "targets": 6,//操作按钮目标列
                 "data": null,
                 "render": function (data, type, row) {
                     return "<a href='javascript:void(0);' class='viewCarDetail btn btn-primary btn-xs' value=''>查看</a>";
                 }
-            }
+            }*/
         ]
     }).api();
     //此处需调用api()方法,否则返回的是JQuery对象而不是DataTables的API对象
