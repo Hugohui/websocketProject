@@ -2014,8 +2014,8 @@ function initCarsTable() {
                 "render": function (data) {
                     //车辆类型
                     var carType = {
-                        1: "窝必达",
-                        2: "窝小白",
+                        1: "蜗必达",
+                        2: "蜗小白",
                         3: "雨燕",
                         4: "新石器"
                     }
