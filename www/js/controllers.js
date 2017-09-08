@@ -906,7 +906,7 @@ function creatCarWs(carOptions) {
                 markersLine.push(currentPosition.lon + ',' + currentPosition.lat);
             }
 
-            //carLineMap.remove(markers);
+            carLineMap.remove(markers);
 
             if(carOptions.carType == 2){
                 carLineMap.clearMap();
