@@ -12,12 +12,12 @@ body {
     text-align: center;
 }
 .content-logo {
-    width: 100px;
-    height: 100px;
+    width: 179px;
+    height: 68px;
 }
 .content-title {
     margin: 10px 0 25px 0;
-    font-size: 2em;
+    font-size: 1.8em;
     color: #747474;
     font-weight: normal;
     height: 30px;
@@ -189,8 +189,8 @@ body {
         text-align: center;
     }
     .content-logo {
-        width: 100px;
-        height: 100px;
+        width: 179px;
+        height: 68px;
     }
     .content-title {
         margin: 10px auto;
@@ -217,8 +217,8 @@ body {
         padding-right: 70px;
     }
     .content-logo {
-        width: 100px;
-        height: 100px;
+        width: 179px;
+        height: 68px;
         padding-left: 70px;
     }
     .content-title {
@@ -248,8 +248,8 @@ body {
 
     }
     .content-logo {
-        width: 100px;
-        height: 100px;
+        width: 179px;
+        height: 68px;
 
     }
     .content-title {
