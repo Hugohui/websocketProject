@@ -107,7 +107,7 @@ function okLogin(){
         };
         $.ajax({
             type: 'POST',
-            url:'http://192.168.1.105:8184',
+            url:'http://111.204.101.170:8184',
             data:data,
             dataType: 'jsonp',
             jsonp : "callback",
